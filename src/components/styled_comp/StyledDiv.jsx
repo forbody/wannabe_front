@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 export const BackgroundBox = styled.div`
     width: 90%;
     height: fit-content;
-    padding: 24px 12px;
+    padding: 32px 16px;
     margin: 4px;
 
     display: flex;
@@ -30,6 +30,7 @@ export const ForegroundBox = styled.div`
     margin: 4px;
 
     display: flex;
+    flex-direction: column;
     justify-content: center;
 
     border-radius: 16px;
