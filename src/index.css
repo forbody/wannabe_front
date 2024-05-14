@@ -1,13 +1,60 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* App.css */
+body { font-family: Arial, sans-serif; }
+.navbar { display: flex; background-color: #f8f8f8; padding: 10px; }
+.navbar a { margin: 0 10px; text-decoration: none; color: black; }
+.container { display: flex; }
+.sidebar { width: 25%; padding: 10px; }
+.content { width: 75%; padding: 10px; }
+.post { border: 1px solid #ddd; margin-bottom: 10px; padding: 10px; }
+.post img { width: 100px; height: auto; }
+.buttons { display: flex; gap: 10px; }
+
+.app {
+  text-align: center;
+  padding: 20px;
+  max-width: 375px;
+  margin: 0 auto;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.app-header {
+  margin-bottom: 20px;
 }
+
+.logo {
+  font-family: '이누아리두리', sans-serif;
+  font-size: 54px;
+  color: #000000;
+  margin: 0;
+}
+
+.logo .star {
+  color: #b1e33d;
+}
+
+.app-main button {
+  display: block;
+  width: 90%;
+  margin: 10px auto;
+  padding: 15px 0;
+  border: none;
+  border-radius: 30px;
+  font-size: 18px;
+  cursor: pointer;
+  max-width: 335px;
+}
+
+.continue-button {
+  background-color: #b1e33d;
+  color: #000000;
+}
+
+.kakao-button {
+  background-color: #33cc33;
+  color: #000000;
+}
+
+.instagram-button {
+  background-color: #ff3366;
+  color: #ffffff;
+}
+
