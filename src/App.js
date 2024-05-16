@@ -11,6 +11,8 @@ import Landing from './pages/Landing';
 import Login from './pages/Login';
 import { useState } from 'react';
 import TodoForm from './pages/TodoForm';
+import Test from './pages/Test';
+
 
 function App() {
   
@@ -19,6 +21,9 @@ function App() {
       <Layout>
         <Routes>
           <Route path='/' element={<Landing />} />
+          <Route path='/signup' element={<SignUp />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/test' element={<Test/>} />
           <Route path='/exercise' element={<Exercise/>} />
           <Route path='/food' element={<Food />} />
           <Route path='/todolist' element={<TodoList/>} />
