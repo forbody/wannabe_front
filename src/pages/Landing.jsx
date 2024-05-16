@@ -1,8 +1,8 @@
-import { Box, Divider, TextField, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Button from '@mui/material/Button'
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
-import { BackgroundBox, ForegroundBox } from '../components/styled_comp/StyledDiv';
+import { BackgroundBox } from '../components/styled_comp/StyledDiv';
 
 const Landing = () => {
     const navigate = useNavigate()

@@ -1,7 +1,7 @@
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import { useAuth } from '../../hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { IoIosFitness } from "react-icons/io";
 import { PiBowlFoodFill } from "react-icons/pi";
 import { HiHome } from "react-icons/hi2";
@@ -21,8 +21,7 @@ const BottomNavi = () => {
     const [value, setValue] = useState(0);
     const location = useLocation();
     
-    const noShowBottomNavi = ['/', '/login', 'signup']
-
+    const noShowBottomNavi = ['/', '/login', '/signup'] // 여기에 페이지 주소를 넣으면 하단 바가 사라집니다.
     if (noShowBottomNavi.includes(location.pathname)) {
         return null;
     }
