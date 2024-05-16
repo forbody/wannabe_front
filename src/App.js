@@ -12,6 +12,12 @@ import SignUp from './pages/SignUp';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 
+import { useState } from 'react';
+import TodoForm from './pages/TodoForm';
+import Test from './pages/Test';
+
+
+
 function App() {
   
   const auth = useProvideAuth(); 
@@ -28,7 +34,9 @@ function App() {
           <Route path='/todolist' element={<TodoList/>} />
           <Route path='/wannabe' element={<Wannabe />} />
           <Route path='/my' element={<My />} />
-
+          <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<SignUp />} />
+          <Route path='/todolist/form' element={<TodoForm />} />
           {/* <Route path='/error' element={<h1>에러</h1>} />
           <Route path='*' element={<h1>Not Found</h1>} /> */}
         </Routes>
