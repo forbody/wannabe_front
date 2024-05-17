@@ -63,6 +63,7 @@ const Login = () => {
         >
             <Typography
                 variant='h6'
+                fontWeight='600'
             >
             로그인
             </Typography>
@@ -126,7 +127,6 @@ const Login = () => {
                         href={`${process.env.REACT_APP_API_URL}/auth/kakao`}
                         startIcon=<RiKakaoTalkFill/>
                     >
-                    
                     카카오 로그인
                     </Button>
                     </form>

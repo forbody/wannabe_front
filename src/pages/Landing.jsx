@@ -89,6 +89,7 @@ const Landing = () => {
                         variant="contained"
                         fullWidth
                         style={{
+                            width:'240px',
                             marginTop:'16px',
                             backgroundColor:'#FAE100'
                         }}

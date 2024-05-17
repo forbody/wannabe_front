@@ -24,6 +24,17 @@ const TodoList = () => {
     const [date, setDate] = useState(today);
     const [food, setFood] = useState([]);
     const [exercise, setExercise] = useState([]);
+import { Cookies } from "react-cookie";
+
+const TodoList = () => {
+    const cookies = new Cookies();
+    if (cookies.get('accessToken') && cookies.get("userId")) {
+        localStorage.setItem('token', cookies.get('accessToken'));
+        localStorage.setItem('userId', cookies.get('userId'));
+        cookies.remove('accessToken');
+        cookies.remove('userId');
+    }
+
     const navigate = useNavigate()
 
     const goTodoShareForm = () => {
@@ -60,41 +71,36 @@ const TodoList = () => {
     }
 
     const { loginUser }= useAuth();
-    const [userProfile, setUserProfile] = useState();
+    const [userProfile, setUserProfile] = useState(null);
 
     const getInfo = async () => {
         try {
-            console.log("loginUser: ", loginUser);
             const userId = loginUser.id;
-            console.log("userId: ", userId);
             const res = await userApi.getUser(`${userId}`);
-            console.log("API Response: ", res);
-            setUserProfile(res.data.payload);
+            setUserProfile(res.payload);
         } catch (err) {
             console.error("Error: ", err);
         }
     }
     
     useEffect(() => {
-        if (loginUser) {
             getInfo();
-        }
-    }, [loginUser]);
+    }, []);
 
-    // 로그인 사용자 정보 조회 (유즈이펙트)
-    // 1 생년월일과 성별이 널!
-    //이프 ( 생년월일==널 || 성별 ===널 ) {
-    //    리턴 (
-    //        <사용자정보입력></사용자정보입력>
-    //    )
-    //}
-    
+    if (userProfile === null) {
+        return <div>Loading...</div>;
+    }
+
     return (
-        <Box
+        userProfile.birthday === null || userProfile.gender === null ? (
+            <InfoUpdate />
+        ) : (
+            <Box
             height="100vh"
             display="flex"
             flexDirection="column"
             alignItems="center"
+
         >
             <Weekly setDate={setDate} />
             <BackgroundBox
@@ -109,27 +115,47 @@ const TodoList = () => {
                         display: "flex",
                         justifyContent: "flex-end",
                     }}
+
                 >
-                    <IconButton
-                        sx={{ margin: "0", padding: "0" }}
-                        onClick={() => goTodoShareForm()}
+                    <Weekly />
+                    <BackgroundBox
+                        style={{
+                            width: "90%",
+                            justifyContent: "center",
+                        }}
                     >
-                        <FileUploadIcon
-                            sx={{ color: cyan[400] }}
-                            fontSize="large"
-                        />
-                    </IconButton>
-                    <IconButton
-                        sx={{ margin: "0", padding: "0" }}
-                        onClick={() => goTodoForm()}
-                    >
-                        <AddBoxRoundedIcon color="secondary" fontSize="large" />
-                    </IconButton>
+                        <Box
+                            sx={{
+                                width: "90%",
+                                display: "flex",
+                                justifyContent: "flex-end",
+                            }}
+                        >
+                            <IconButton
+                                sx={{ margin: "0", padding: "0" }}
+                                onClick={() => goTodoShareForm()}
+                            >
+                                <FileUploadIcon
+                                    sx={{ color: cyan[400] }}
+                                    fontSize="large"
+                                />
+                            </IconButton>
+                            <IconButton
+                                sx={{ margin: "0", padding: "0" }}
+                                onClick={() => goTodoForm()}
+                            >
+                                <AddBoxRoundedIcon color="secondary" fontSize="large" />
+                            </IconButton>
+                        </Box>
+                        <TodoBox />
+                        <TodoBox />
+                    </BackgroundBox>
                 </Box>
                 <TodoBox exercise={exercise} />
                 <TodoBox food={food} />
             </BackgroundBox>
         </Box>
+        )
     );
 }
 
