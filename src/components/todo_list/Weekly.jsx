@@ -5,28 +5,32 @@ import { BackgroundBox } from '../styled_comp/StyledDiv';
 import { Button } from '@mui/material'
 
 
-const onselectDate = (date) => {
-    console.log(date);
-}
 
-const Weekly = () => {
 
+const Weekly = ({ setDate }) => {
+    const onselectDate = (date) => {
+        const offset = new Date().getTimezoneOffset() * 60000;
+        const temp = new Date(date - offset);
+        const selectDate = temp.toISOString().slice(0, 10);
+        setDate(selectDate);
+    };
     return (
         <>
             <h1>TODO LIST</h1>
-            <BackgroundBox 
+            <BackgroundBox
                 style={{
-                        width : '90%',
-                        justifyContent : 'center'
-                    }}
+                    width: "90%",
+                    justifyContent: "center",
+                }}
             >
                 <Datepicker
                     display="inline"
                     calendarType="week"
-                    calendarSize={1} 
-                    theme='ios'
-                    themeVariant='dark'
-                    onCellClick={e => onselectDate(e.date)}/>
+                    calendarSize={1}
+                    theme="ios"
+                    themeVariant="dark"
+                    onCellClick={(e) => onselectDate(e.date)}
+                />
             </BackgroundBox>
         </>
     );
