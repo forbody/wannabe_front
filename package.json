@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@mobiscroll/react": "npm:@mobiscroll/react-trial@5.29.2",
     "@mui/icons-material": "^5.15.15",
     "@mui/material": "^5.15.15",
     "@testing-library/jest-dom": "^5.14.1",
@@ -15,7 +16,10 @@
     "react-cookie": "^7.1.4",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.3",
+    "react-horizontal-datepicker": "^2.0.3",
+    "react-horizontal-strip-datepicker": "^3.0.2",
     "react-icons": "^5.1.0",
+    "react-native-slideable-calendar-strip": "^0.4.0",
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
     "sweetalert2": "^11.10.8",

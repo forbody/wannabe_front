@@ -2,6 +2,7 @@ import { Box, Typography } from '@mui/material';
 import Button from '@mui/material/Button'
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
+import { BackgroundBox } from '../components/styled_comp/StyledDiv';
 
 const Landing = () => {
     const navigate = useNavigate()
@@ -11,53 +12,52 @@ const Landing = () => {
                 height='100vh'
                 display='flex'
                 flexDirection='column'
-                justifyContent='center'
+                justifyContent='space-around'
                 alignItems='center'
             >
-                <Typography
-                    variant='h2'
-                    fontWeight={900}
+                <Box>
+                    <Typography variant='h2' fontWeight={800}>Wannabe</Typography>
+                    <Typography>당신이 꿈꾸는 그대로, 워너비</Typography>
+                </Box>
+                <BackgroundBox
+                display='flex'
+                justifyContent='spaceAround'
+                style={{
+                    width:'80%',
+                    padding:'32px'
+                }}
                 >
-                Wannabe
-                </Typography>
-            
-                <Typography
-                    variant='h8'
-                >
-                당신이 꿈꾸는 그대로, 워너비
-                </Typography>
-                <Button
+                    <Button
                     variant="contained"
+                    color='white'
                     fullWidth
-                    sx={{
-                        marginTop:'72px',
-                        backgroundColor: 'white',
-                        color: '#000000'
-                    }}
                     onClick={
-                        () => navigate('/login')
+                        () => navigate('/signup')
                     }
-                >
-                시작하기
-                </Button>
-                <Button
-                    variant="contained"
-                    fullWidth
-                    style={{
-                        marginTop:'24px',
-                        backgroundColor:'#FAE100'
-                    }}
-                >
-                <RiKakaoTalkFill 
-                    style={{
-                        position: 'relative',
-                        right: '50px'
-                    }}
-                />
-                카카오로 시작하기
-                </Button>
+                    >
+                    시작하기
+                    </Button>
+                    <Typography variant="caption" style={{ margin: '24px auto 0', color:'white'}}>간편 로그인</Typography>
+                    <hr width='100%' color='white' style={{ margin: '0'}}/>
+                    <Button
+                        variant="contained"
+                        fullWidth
+                        style={{
+                            marginTop:'16px',
+                            backgroundColor:'#FAE100'
+                        }}
+                    >
+                    <RiKakaoTalkFill 
+                        style={{
+                            position: 'relative',
+                            right: '50px'
+                        }}
+                    />
+                    카카오로 시작하기
+                    </Button>
+                </BackgroundBox>
+                
             </Box>
-            
         </>
     );
 }

@@ -1,132 +1,89 @@
-import { Button, InputLabel, TextField, Box, FormControl, OutlinedInput } from '@mui/material/'
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Box, Button, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { BackgroundBox, ForegroundBox } from './../components/styled_comp/StyledDiv';
+import { useState } from "react";
 import Swal from 'sweetalert2';
-import Typography from '@mui/material/Typography'
-import axios from 'axios'
+import male from "../assets/MaleBodyShape.JPG";
+import female from "../assets/FemaleBodyShape.JPG";
+import axios from 'axios';
+import Step from "../components/signup/Step";
 
 const SignUp = () => {
-    const navigate = useNavigate()
-    const {
-        register,
-        handleSubmit,
-        watch,
-        reset,
-        formState: { errors },
-    } = useForm()
+    const [step, setStep] = useState(1);
+    const [joinData, setJoinData] = useState({
+        email: "",
+        password: "",
+        pwdchk: "",
+        gender: "",
+        birthday: "",
+        height: "",
+        weight: "",
+        bodyshape: "",
+        img: "",
+        user_name: "",
+    });
+    
+    let stepComp;
 
-    // 회원가입 버튼 동작
-    const onRegist = (async (data) => {
-        const { email, nickname, password, passwordCheck } = data
-        try {
-            if (email && nickname && password && passwordCheck && (password === passwordCheck)) {
-                const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/join`, {
-                    email,
-                    nickname,
-                    password
-                })
-                if (res.data.code === 200){
-                    Swal.fire({
-                        title: "축하합니다!",
-                        text: res.data.message,
-                        icon: "success"
-                    });
-                    navigate('/')
-                } else {
-                    throw new Error(res.data.message);
-                }
-            } else {
-                throw new Error("입력값을 확인해주세요.")
-            }
-        } catch (err) {
-            Swal.fire({
-                title: "입력값을 확인 후 다시 시도해주세요!",
-                text: err.message,
-                icon: "error"
-            });
-        }
-    })
-
-    return (
-        <>
-            <Typography variant="h4" sx={{marginTop:"16px"}}>회원가입</Typography>
-            {/* form tag 시작 */}
-            <Box
-                component="form"
-                my={4}
-                p={4}
-                borderRadius={4}
-                boxShadow={'0 0 4px grey'}
-                sx={{
-                    '& > :not(style)': { m: 1, width: '25ch' },
-                    display:"flex",
-                    flexDirection:"column"
-                }}
-                noValidate
-                autoComplete="off"
-                onSubmit={handleSubmit(onRegist)}
-                backgroundColor='#fff'
-            >
-                <TextField
-                    error={errors.email ? true : false}
-                    helperText={errors.email && "이메일은 필수 입력값입니다."}
-                    label="이메일"
-                    variant="outlined"
-                    sx={{ display: 'block' }}
-                    autoFocus
-                    fullWidth
-                    required
-                    {...register("email", { required: true })}
-                />
-                {/* nickname */}
-                <TextField
-                    error={errors.nickname ? true : false}
-                    helperText={errors.nickname && "닉네임은 필수 입력값입니다."}
-                    label="닉네임"
-                    variant="outlined"
-                    sx={{ display: 'block' }}
-                    fullWidth
-                    required
-                    {...register("nickname", { required: true })}
-                />
-                {/* password */}
-                <FormControl sx={{ m: 1, width: '25ch', display: 'block' }} variant="outlined">
-                    <InputLabel htmlFor="password">비밀번호</InputLabel>
-                    <OutlinedInput
-                        {...register("password", { required: true })}
-                        id="password"
-                        autoComplete="new-password"
-                        type='password'
-                        error={errors.password ? true : false}
-                        fullWidth
-                        required
-                        helperText={errors.password && "비밀번호는 필수 입력값입니다."}
-                        label="비밀번호"
-                    />
-                </FormControl>
-                {/* password check */}
-                <FormControl sx={{ m: 1, width: '25ch', display: 'block' }} variant="outlined">
-                    <InputLabel htmlFor="PasswordCheck">비밀번호 확인</InputLabel>
-                    <OutlinedInput
-                        {...register("passwordCheck", { required: true })}
-                        id="PasswordCheck"
-                        autoComplete="new-password"
-                        error={errors.passwordCheck ? true : false}
-                        type='password'
-                        fullWidth
-                        label="비밀번호 확인"
-                    />
-                </FormControl>
-                {/* button */}
-                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Button type='suibmit' variant="contained"  sx={{ display: 'block', width: '49%', color: "#f2f2f2" }}>회원가입</Button>
-                    <Button variant="contained"  sx={{ display: 'block', width: '49%', color: "#f2f2f2"}} onClick={(e) => {
-                        e.preventDefault()
-                        reset();
-                    }} >초기화</Button>
-                </Box>
-            </Box>
-        </>
-    );
+    if (step === 1) {
+        stepComp = (
+            <>
+                <Step title="이메일 입력"
+                    inputData={[
+                        {"inputName":"email", "type":"email", "message":"먼저, 이메일을 입력해 주세요 😊", "label":"이메일" }
+                    ]} 
+                    step={step} setStep={setStep} joinData={joinData} setJoinData={setJoinData} />
+            </>
+        );    
+    } else if (step === 2) {
+        stepComp = (
+            <>
+                <Step title="비밀번호 입력" 
+                    inputData={[
+                        {"inputName":"password", "type":"password", "message":"비밀번호는 대소문자와 숫자를 포함하여 6자 이상 입력해 주세요.", "label":"비밀번호" },
+                        {"inputName":"pwdchk", "type":"password", "message":"비밀번호를 다시 한번 입력해 주세요.", "label":"비밀번호 확인" },
+                    ]}
+                    step={step} setStep={setStep} joinData={joinData} setJoinData={setJoinData} />
+            </>
+        )
+    } else if (step === 3) {
+        stepComp = (
+            <>
+                <Step title="개인정보 입력" 
+                    inputData={[
+                        {"inputName":"gender", "type":"radio", "message":"성별을 입력해 주세요.", "label":"성별" },
+                        {"inputName":"birthday", "type":"date", "message":"생일을 입력해 주세요.", "label":"생일" },
+                        {"inputName":"height", "type":"number", "message":"키를 입력해 주세요.", "label":"키" },
+                        {"inputName":"weight", "type":"number", "message":"몸무게를 입력해 주세요.", "label":"몸무게" },
+                    ]}
+                    step={step} setStep={setStep} joinData={joinData} setJoinData={setJoinData} />
+            </>
+            
+        )
+    } else if (step === 4) {
+        stepComp = (
+            <>
+                <Step title="맞춤 추천정보 입력" 
+                    inputName="bodyshape" label="체형" 
+                    inputData={[
+                        {"img": joinData.gender === "M" ? male : female, "inputName":"bodyshape", "type":"checkbox", "message":"나에게 가장 적절한 체형을 선택해 주세요.", "label":"체형" },
+                    ]}
+                    step={step} setStep={setStep} joinData={joinData} setJoinData={setJoinData} />
+            </>
+        )
+    } else {
+        stepComp = (
+            <>
+                <Step title="프로필 설정"
+                    inputData={[
+                        {"inputName":"img", "type":"file", "accept":"image/*", "message":"프로필 사진을 등록해 주세요.", "label":"프로필 사진" },
+                        {"inputName":"user_name", "type":"text", "message":"이름을 입력해 주세요.", "label":"이름" },
+                    ]}
+                    step={step} setStep={setStep} joinData={joinData} setJoinData={setJoinData} />
+            </>
+        );
+    }
+    return stepComp;
 }
+
 export default SignUp;
