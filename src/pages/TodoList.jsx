@@ -11,8 +11,19 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import InfoUpdate from "../components/signup/InfoUpdate";
 import { userApi } from "../api/services/user";
+import { todoApi } from "../api/services/TodoList";
+
+// let year = new Date().getFullYear(); // 년도
+// let month = new Date().getMonth(); // 월
+// let date = new Date().getDate(); // 날짜
+// let today = `${year}-${month}-${date}`;
 
 const TodoList = () => {
+    const offset = new Date().getTimezoneOffset() * 60000;
+    const today = new Date(Date.now() - offset).toISOString().slice(0,10);
+    const [date, setDate] = useState(today);
+    const [food, setFood] = useState([]);
+    const [exercise, setExercise] = useState([]);
     const navigate = useNavigate()
 
     const goTodoShareForm = () => {
@@ -20,6 +31,32 @@ const TodoList = () => {
     }
     const goTodoForm =() => {
         navigate('/todolist/form')
+    }
+    useEffect(() => {
+        getTodo()
+    },[date])
+
+    const getTodo = async () => {
+        try {
+            const res1 = await todoApi.getList(date);
+            const listId = res1.payload?.id;
+            const res2 = await todoApi.getEle(listId);
+            if (res2.payload.length === 0) {
+                setExercise([]);
+                setFood([]);
+                console.log(1);
+            } else {
+                res2.payload.map((e) =>
+                    e.category_id == 1
+                        ? setExercise((prev) => [...prev, { ...e }])
+                        : setFood((prev) => [...prev, { ...e }])
+                );
+            }
+            
+            
+        } catch (err) {
+            console.error("Error: ", err);
+        }
     }
 
     const { loginUser }= useAuth();
@@ -59,7 +96,7 @@ const TodoList = () => {
             flexDirection="column"
             alignItems="center"
         >
-            <Weekly />
+            <Weekly setDate={setDate} />
             <BackgroundBox
                 style={{
                     width: "90%",
@@ -89,8 +126,8 @@ const TodoList = () => {
                         <AddBoxRoundedIcon color="secondary" fontSize="large" />
                     </IconButton>
                 </Box>
-                <TodoBox />
-                <TodoBox />
+                <TodoBox exercise={exercise} />
+                <TodoBox food={food} />
             </BackgroundBox>
         </Box>
     );
