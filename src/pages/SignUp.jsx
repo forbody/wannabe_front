@@ -9,6 +9,7 @@ import axios from 'axios';
 import Step from "../components/signup/Step";
 
 const SignUp = () => {
+    const navigate = useNavigate();
     const [step, setStep] = useState(1);
     const [joinData, setJoinData] = useState({
         email: "",
@@ -23,6 +24,64 @@ const SignUp = () => {
         user_name: "",
     });
     
+    const goJoin = (async () => {
+        console.log(joinData);
+        const { email,
+            password,
+            pwdchk,
+            gender,
+            birthday,
+            height,
+            weight,
+            bodyshape,
+            img,
+            user_name } = joinData
+        try {
+            if (
+                email && 
+                password && 
+                pwdchk && 
+                (password === pwdchk) && 
+                gender && 
+                birthday && 
+                height &&
+                weight && 
+                bodyshape &&
+                img && 
+                user_name) {
+                const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/join`, {
+                    email,
+                    user_name,
+                    password,
+                    gender,
+                    birthday,
+                    height,
+                    weight,
+                    bodyshape,
+                    img,
+                    
+                })
+                if (res.data.code === 200) {
+                    Swal.fire({
+                        title: "회원가입을 축하합니다!",
+                        text: res.data.message,
+                        icon: "success"
+                    });
+                    navigate('/login');
+                } else {
+                    throw new Error(res.data.message);
+                }
+            } else {
+                throw new Error("입력값을 확인해주세요");
+            }
+        } catch (err) {
+            Swal.fire({
+                title: "에러 발생",
+                text: err.message,
+                icon: "error"
+            });
+        }
+    });
     let stepComp;
 
     if (step === 1) {
@@ -79,7 +138,7 @@ const SignUp = () => {
                         {"inputName":"img", "type":"file", "accept":"image/*", "message":"프로필 사진을 등록해 주세요.", "label":"프로필 사진" },
                         {"inputName":"user_name", "type":"text", "message":"이름을 입력해 주세요.", "label":"이름" },
                     ]}
-                    step={step} setStep={setStep} joinData={joinData} setJoinData={setJoinData} />
+                    step={step} setStep={setStep} joinData={joinData} setJoinData={setJoinData} goJoin={goJoin}/>
             </>
         );
     }

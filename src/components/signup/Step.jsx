@@ -6,8 +6,7 @@ import { BackgroundBox, ForegroundBox } from "../styled_comp/StyledDiv";
 import male from "../../assets/MaleBodyShape.JPG";
 import { useState } from "react";
 
-const Step = ({title, inputData, step, setStep, joinData, setJoinData}) => {
-    const navigate = useNavigate();
+const Step = ({title, inputData, step, setStep, joinData, setJoinData, goJoin}) => {
     const [error, setError] = useState();
     const [pass, setPass] = useState(false);
 
@@ -19,65 +18,6 @@ const Step = ({title, inputData, step, setStep, joinData, setJoinData}) => {
     const goPrev = () => {
         setStep(step-1);
     }
-
-    const goJoin = (async () => {
-        console.log(joinData);
-        const { email,
-            password,
-            pwdchk,
-            gender,
-            birthday,
-            height,
-            weight,
-            bodyshape,
-            img,
-            user_name } = joinData
-        try {
-            if (
-                email && 
-                password && 
-                pwdchk && 
-                (password === pwdchk) && 
-                gender && 
-                birthday && 
-                height &&
-                weight && 
-                bodyshape &&
-                img && 
-                user_name) {
-                const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/join`, {
-                    email,
-                    user_name,
-                    password,
-                    gender,
-                    birthday,
-                    height,
-                    weight,
-                    bodyshape,
-                    img,
-                    
-                })
-                if (res.data.code === 200) {
-                    Swal.fire({
-                        title: "회원가입을 축하합니다!",
-                        text: res.data.message,
-                        icon: "success"
-                    });
-                    navigate('/login');
-                } else {
-                    throw new Error(res.data.message);
-                }
-            } else {
-                throw new Error("입력값을 확인해주세요");
-            }
-        } catch (err) {
-            Swal.fire({
-                title: "에러 발생",
-                text: err.message,
-                icon: "error"
-            });
-        }
-    });
 
     const bodyShape = {
         male : ['표준 체형','작은 역삼각 체형','사각 체형','큰 사각 체형'],
@@ -302,7 +242,7 @@ const Step = ({title, inputData, step, setStep, joinData, setJoinData}) => {
                 }
                 { step !== 5 ? 
                 <Button disabled={!pass} onClick={goNext} variant="contained" color="secondary" style={{ padding: '6px 36px'}}>계속하기</Button>:
-                <Button onClick={goJoin} variant="contained" color="secondary" style={{ padding: '6px 36px'}}>회원가입</Button>
+                <Button onClick={goJoin} variant="contained" color="secondary" style={{ padding: '6px 36px'}}>완료하기</Button>
                 }
             </BackgroundBox>
             <Button variant="text" href="/login" color="white" style={{textDecoration:"underline"}}>이미 계정이 있으신가요?</Button>
