@@ -14,7 +14,7 @@ import Login from './pages/Login';
 
 import { useState } from 'react';
 import TodoForm from './pages/TodoForm';
-import Test from './pages/Test';
+import TodoShare from './pages/TodoShare';
 
 
 
@@ -37,6 +37,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
           <Route path='/todolist/form' element={<TodoForm />} />
+          <Route path='/todolist/share' element={<TodoShare />} />
           {/* <Route path='/error' element={<h1>에러</h1>} />
           <Route path='*' element={<h1>Not Found</h1>} /> */}
         </Routes>
