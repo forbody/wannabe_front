@@ -28,14 +28,12 @@ const Landing = () => {
                 </Typography>
                 <Button
                     variant="contained"
-                    color='white'
-                    
                     fullWidth
-
-                    style={{
-                        marginTop:'72px'
+                    sx={{
+                        marginTop:'72px',
+                        backgroundColor: 'white',
+                        color: '#000000'
                     }}
-
                     onClick={
                         () => navigate('/login')
                     }
@@ -44,9 +42,7 @@ const Landing = () => {
                 </Button>
                 <Button
                     variant="contained"
-                    
                     fullWidth
-
                     style={{
                         marginTop:'24px',
                         backgroundColor:'#FAE100'

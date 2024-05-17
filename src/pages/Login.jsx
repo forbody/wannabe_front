@@ -8,14 +8,11 @@ const Login = () => {
         <h1>로그인</h1>
         <Button
             variant="contained"
-            color='white'
-            
             fullWidth
-
-            style={{
-                marginTop:'72px'
+            sx={{
+                marginTop:'72px',
+                color:'white'
             }}
-
             onClick={
                 () => navigate('/signup')
             }
