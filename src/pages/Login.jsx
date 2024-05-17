@@ -123,14 +123,10 @@ const Login = () => {
                             margin:'16px 0 32px',
                             backgroundColor:'#FAE100'
                         }}
-                        to={`${process.env.REACT_APP_API_URL}/auth/kakao`}
+                        href={`${process.env.REACT_APP_API_URL}/auth/kakao`}
+                        startIcon=<RiKakaoTalkFill/>
                     >
-                    <RiKakaoTalkFill 
-                        style={{
-                            position: 'relative',
-                            right: '50px'
-                        }}
-                    />
+                    
                     카카오 로그인
                     </Button>
                     </form>
