@@ -31,6 +31,7 @@ const TodoList = () => {
 
     // getTodo()함수 호출 
     useEffect(() => {
+        localStorage.setItem('date' , date)
         setExercise([]);
         setFood([]);
         getTodo()

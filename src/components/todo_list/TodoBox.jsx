@@ -11,8 +11,7 @@ const TodoBox = ({ element, setIsAchieve ,children}) => {
     const onIsTrue = () => {
         setIsTrue(!isTrue);
     };
-
-    console.log(element);
+    
     /// 이부분 실시간 연동
     let total = element?.length;
     let achieve = element?.filter((e) => e.achieve === true).length;
