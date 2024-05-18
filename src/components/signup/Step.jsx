@@ -22,7 +22,7 @@ const Step = ({title, inputData, step, setStep, joinData, setJoinData, goJoin}) 
         female: ['표준 체형','작은 역삼각 체형','역삼각 체형', '삼각 체형', '사각 체형']
     }
 
-    // state 변화 한발짝 느림 ?? 어케하지
+    // ⚠️state 변화 한발짝 느림
     const addJoinData = (e) => {
         const { name, value } = e.target;
         const validators = {
