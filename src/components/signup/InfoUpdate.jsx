@@ -8,6 +8,8 @@ import female from "../../assets/FemaleBodyShape.JPG";
 import axios from 'axios';
 import Step from "../../components/signup/Step";
 
+import { userApi } from "../../api/services/user";
+
 const InfoUpdate = () => {
     const [step, setStep] = useState(1);
     const [joinData, setJoinData] = useState({
@@ -23,11 +25,36 @@ const InfoUpdate = () => {
         user_name: "",
     });
     
-    let stepComp;
-
-    const goUpdate = () =>{
-
+    // ⚠️ res1, res2 무한반복 오류, 마지막 스텝은 왜 씹지?
+    const goUpdate = async (joinData) =>{
+        try{
+            const res1 = await userApi.addUserDetail(joinData)
+            console.log(res1);
+            if (res1.code !== 200) {
+                throw new Error(res1.message);
+                };
+            const res2 = await userApi.modifyUser(joinData)
+            console.log(res2);
+            if (res2.code === 200) {
+                Swal.fire({
+                    title: "이제 워너비를 이용하실 수 있습니다!",
+                    text: res2.message,
+                    icon: "success"
+                });
+                window.location.reload();
+            } else {
+                throw new Error(res2.message);
+            }
+        }catch(err) {
+            Swal.fire({
+                title: "에러 발생",
+                text: err.message,
+                icon: "error"
+            });
+        }
     }
+
+    let stepComp;
     
     if (step === 1) {
         stepComp = (
@@ -79,9 +106,10 @@ const InfoUpdate = () => {
             <>
                 <Step title="프로필 설정"
                     inputData={[
-                        {"inputName":"img", "type":"file", "accept":"image/*", "message":"프로필 사진을 등록해 주세요.", "label":"프로필 사진" }
+                        {"inputName":"img", "type":"file", "accept":"image/*", "message":"프로필 사진을 등록해 주세요.", "label":"프로필 사진" },
+                        {"inputName":"user_name", "type":"text", "message":"이름을 입력해 주세요.", "label":"이름" },
                     ]}
-                    step={step} setStep={setStep} joinData={joinData} setJoinData={setJoinData} goJoin={goUpdate} />
+                    step={step} setStep={setStep} joinData={joinData} setJoinData={setJoinData} goJoin={goUpdate(joinData)} />
             </>
         );
     }

@@ -85,7 +85,13 @@ const TodoList = () => {
 
     if (userProfile === null) {
         return <div>Loading...</div>;
-    }
+    } 
+
+    /* 유저 프로필을 가져온 뒤 자동 화면 새로고침 ㅠㅠ 조건문이랑 use에펙 같이 사용 x 조건문안에 넣으면 무한 새로고침 아 어쩌란말이냐
+    useEffect(() => {
+        window.location.reload();
+        }, [userProfile]);
+    */
 
     return userProfile.birthday === null || userProfile.gender === null ? (
         <InfoUpdate />
