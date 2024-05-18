@@ -6540,6 +6540,11 @@ jiti@^1.21.0:
   resolved "https://registry.yarnpkg.com/jiti/-/jiti-1.21.0.tgz#7c97f8fe045724e136a397f7340475244156105d"
   integrity sha512-gFqAIbuKyyso/3G2qhiO2OM6shY6EPP/R0+mkDbyspxKazh8BXDC5FiFsUjlczgdNz/vfra0da2y+aHrusLG/Q==
 
+jquery@>=1.7:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.7.1.tgz#083ef98927c9a6a74d05a6af02806566d16274de"
+  integrity sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==
+
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
@@ -7013,6 +7018,13 @@ mkdirp@~0.5.1:
   integrity sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==
   dependencies:
     minimist "^1.2.6"
+
+mobiscroll@^3.0.0-beta6:
+  version "3.0.0-beta6"
+  resolved "https://registry.yarnpkg.com/mobiscroll/-/mobiscroll-3.0.0-beta6.tgz#8a090acf23df1b977c0a2f693ac7823a5da72182"
+  integrity sha512-fjxkATRLG0450bSfv2lAYjTRgr289Z9Y23Gfz302zH8LaJ+JtMhPOOOp7RZj+ZBVlTHapyr+987F2G7AEM0XpA==
+  dependencies:
+    jquery ">=1.7"
 
 ms@2.0.0:
   version "2.0.0"

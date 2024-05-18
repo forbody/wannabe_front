@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const BackgroundBox = styled.div`
-    width: 90%;
+    width: ${props => (props.half ? '45%' : '90%')};
     height: fit-content;
     padding: 32px 16px;
     margin: 4px;
