@@ -1,10 +1,8 @@
 import { Box, Button, Typography } from "@mui/material";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
-import { BackgroundBox, ForegroundBox } from "../styled_comp/StyledDiv";
-import male from "../../assets/MaleBodyShape.JPG";
+import { BackgroundBox } from "../styled_comp/StyledDiv";
 import { useState } from "react";
+import StepInput from "./StepInput";
 
 const Step = ({title, inputData, step, setStep, joinData, setJoinData, goJoin}) => {
     const [error, setError] = useState();
@@ -24,73 +22,65 @@ const Step = ({title, inputData, step, setStep, joinData, setJoinData, goJoin}) 
         female: ['표준 체형','작은 역삼각 체형','역삼각 체형', '삼각 체형', '사각 체형']
     }
 
+    // state 변화 한발짝 느림 ?? 어케하지
     const addJoinData = (e) => {
-        const { name, value, type } = e.target;
-        if (name === 'email') {
-            const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
-            if (!emailRegex.test(value) || !value ) {
-                setError('올바른 이메일 형식이 아닙니다.');
-                setPass(false)
+        const { name, value } = e.target;
+        const validators = {
+            email: {
+                regex: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i,
+                errorMsg: '올바른 이메일 형식이 아닙니다.'
+            },
+            password: {
+                regex: /^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{5,})\S$/,
+                errorMsg: '올바른 비밀번호 형식이 아닙니다.'
+            },
+            pwdchk: {
+                validate: (value) => value === joinData.password,
+                errorMsg: '비밀번호가 같지 않습니다.'
+            },
+            gender: {
+                validate: () => !!joinData.gender,
+                errorMsg: '성별을 선택해 주세요.'
+            },
+            birthday: {
+                validate: () => joinData.birthday && new Date(joinData.birthday) <= new Date(),
+                errorMsg: '생일을 올바르게 선택해 주세요.'
+            },
+            height: {
+                validate: () => !!joinData.height,
+                errorMsg: '키를 입력해 주세요.'
+            },
+            weight: {
+                validate: () => !!joinData.weight,
+                errorMsg: '몸무게를 입력해 주세요.'
+            },
+            bodyshape: {
+                validate: () => !!joinData.bodyshape,
+                errorMsg: '체형을 선택해 주세요'
+            },
+            img: {
+                validate: () => !!joinData.img,
+                errorMsg: '프로필 사진을 선택해 주세요'
+            },
+            user_name: {
+                validate: () => !!joinData.user_name,
+                errorMsg: '이름을 입력해 주세요'
+            }
+        };
+    
+        const validator = validators[name];
+        if (validator) {
+            const isValid = validator.regex ? validator.regex.test(value) : validator.validate(value);
+            if (!isValid) {
+                setError(validator.errorMsg);
+                setPass(false);
             } else {
                 setError();
                 setPass(true);
             }
         }
-        if (name === 'password') {
-            const passwordRegex = /^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{5,})\S$/;
-            if (!passwordRegex.test(value)) {
-                setError('올바른 비밀번호 형식이 아닙니다.')
-                setPass(false)
-            } else {
-                setError();
-                setPass(true);
-            }
-        }
-        if (name === 'pwdchk') {
-            if (joinData.password != value) {
-                setError('비밀번호가 같지 않습니다.')
-                setPass(false)
-            } else {
-                setError();
-                setPass(true);
-            }
-        }
-
-        if (name === 'gender' || name === 'birthday' || name === 'height' || name === 'weight') {
-            if(joinData.birthday && joinData.gender && joinData.height && joinData.weight){
-                if(new Date(joinData.birthday) > new Date()){
-                    setError('시간여행자다~~👽')
-                    setPass(false)
-                } else {
-                    setError();
-                    setPass(true);
-                }
-            } else {
-                setError('값을 전부 입력해 주세요');
-                setPass(false)
-            }
-        }
-        if (name === 'bodyshape') {
-            if(joinData.bodyshape){
-                setError();
-                setPass(true);
-            } else {
-                setError('체형을 선택해 주세요');
-                setPass(false)
-            }
-        }
-        if (name === 'img' || name === 'user_name') {
-            console.log(joinData.img);
-            if(joinData.img && joinData.user_name){
-                setError();
-                setPass(true);
-            } else {
-                setError('값을 전부 입력해 주세요');
-                setPass(false)
-            }
-        }
-
-        setJoinData({...joinData, [name]: value});
+    
+        setJoinData({ ...joinData, [name]: value });
     }
 
     const uploadProfileImage = async(e) => {
@@ -124,119 +114,7 @@ const Step = ({title, inputData, step, setStep, joinData, setJoinData, goJoin}) 
                     justifyContent: 'space-around'
                 }}
             >
-                <ForegroundBox
-                    style={{
-                        width:'100%',
-                        margin:'24px 0',
-                        padding: '16px'
-                    }}
-                >
-                    {
-                        inputData.map(i => (
-                            <div
-                                key={i.inputName}
-                            >
-                                {i.type === 'radio' ? ( // 라디오 타입 분기처리
-                                    <div
-                                        style={{
-                                            width: '100%',
-                                            margin: '12px 0 24px',
-                                        }}
-                                        >
-                                        <Typography>{i.message}</Typography>
-                                        <label>
-                                            <input
-                                                type={i.type}
-                                                name={i.inputName}
-                                                value="M"
-                                                checked={joinData[i.inputName] === "M"}
-                                                onChange={(e) => addJoinData(e)}
-                                            />
-                                            남성
-                                        </label>
-                                        <label>
-                                            <input
-                                                type={i.type}
-                                                name={i.inputName}
-                                                value="F"
-                                                checked={joinData[i.inputName] === "F"}
-                                                onChange={(e) => addJoinData(e)}
-                                            />
-                                            여성
-                                        </label>
-                                    </div>
-                                ) : 
-                                i.type === 'checkbox' ? // 체크박스 타입 분기 처리
-                                (<>
-                                    {i.img && <img src={i.img} alt="bodyshape"/>} 
-                                    <Typography>{i.message}</Typography>
-                                    {i.img === male ? // 체크박스 타입 분기 처리 - 남성일 때
-                                    <>
-                                        {
-                                            bodyShape.male.map((shape, idx) => (
-                                                <>
-                                                    <br/>
-                                                    <label>
-                                                        <input
-                                                            type={i.type}
-                                                            name={i.inputName}
-                                                            value={idx+1}
-                                                            checked={joinData[i.inputName] == idx+1}
-                                                            onChange={(e) => addJoinData(e)}
-                                                        />
-                                                        {shape}
-                                                    </label>
-                                                </>
-                                            ))
-                                        }
-                                    </>
-                                    :  // 체크박스 타입 분기 처리 - 여성일 때
-                                    <>
-                                        {
-                                            bodyShape.female.map((shape, idx) => (
-                                                <>
-                                                    <br/>
-                                                    <label>
-                                                        <input
-                                                            type={i.type}
-                                                            name={i.inputName}
-                                                            value={idx+5}
-                                                            checked={joinData[i.inputName] == idx+5}
-                                                            onChange={(e) => addJoinData(e)}
-                                                        />
-                                                        {shape}
-                                                    </label>
-                                                </>
-                                            ))
-                                        }
-                                    </>
-                                    }
-                                </>) : // 나머지 input 타입 처리
-                                (<>
-                                        { (i.type==='file' && i.img) && <img src={i.img} alt="profileimg"/>}
-                                        <Typography>{i.message}</Typography>
-                                        <input
-                                            name={i.inputName}
-                                            type={i.type}
-                                            {...(i.type ==='file' && {accept: i.accept})}
-                                            label={`${i.label}`}
-                                            onChange={i.type==='file' ? (e) => uploadProfileImage(e) : (e) => addJoinData(e)}
-                                            {...(i.type !=='file' && {value: joinData[i.inputName]})}
-                                            style={{
-                                                width: '100%',
-                                                margin: '16px 0 24px',
-                                                padding: '12px',
-                                                border: '1px solid #b1e33d',
-                                                borderRadius: '24px'
-                                            }}
-                                        />
-                                    </>)
-                                }
-                            </div>
-                        ))
-                    }
-                    {error && <Typography color="error">{error}</Typography>}
-                </ForegroundBox>
+                <StepInput inputData={inputData} joinData={joinData} addJoinData={addJoinData} bodyShape={bodyShape} uploadProfileImage={uploadProfileImage} error={error}/>
                 { step > 1 &&
                 <Button onClick={goPrev} variant="contained" color="white" style={{ padding: '6px 36px'}}>이전으로</Button>
                 }
@@ -245,6 +123,7 @@ const Step = ({title, inputData, step, setStep, joinData, setJoinData, goJoin}) 
                 <Button onClick={goJoin} variant="contained" color="secondary" style={{ padding: '6px 36px'}}>완료하기</Button>
                 }
             </BackgroundBox>
+            {/* infoupdate의 경우: loginUser 가져와서 안보이게 막자 */}
             <Button variant="text" href="/login" color="white" style={{textDecoration:"underline"}}>이미 계정이 있으신가요?</Button>
         </Box>
     );
