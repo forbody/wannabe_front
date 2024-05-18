@@ -25,7 +25,7 @@ const InfoUpdate = () => {
         user_name: "",
     });
     
-    // ⚠️ res1, res2 무한반복 오류, 마지막 스텝은 왜 씹지?
+    // ⚠️마지막 스텝이 씹힘
     const goUpdate = async (joinData) =>{
         try{
             const res1 = await userApi.addUserDetail(joinData)

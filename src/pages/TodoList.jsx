@@ -53,14 +53,6 @@ const TodoList = () => {
         }
     }
 
-    const cookies = new Cookies();
-    if (cookies.get('accessToken') && cookies.get("userId")) {
-        localStorage.setItem('token', cookies.get('accessToken'));
-        localStorage.setItem('userId', cookies.get('userId'));
-        cookies.remove('accessToken');
-        cookies.remove('userId');
-    }
-
     const navigate = useNavigate()
 
     const goTodoShareForm = () => {
@@ -70,6 +62,16 @@ const TodoList = () => {
         navigate('/todolist/form')
     }
 
+    // 카카오 로그인 유저의 Auth 처리
+    const cookies = new Cookies(); 
+    if (cookies.get('accessToken') && cookies.get("userId")) {
+        localStorage.setItem('token', cookies.get('accessToken'));
+        localStorage.setItem('userId', cookies.get('userId'));
+        cookies.remove('accessToken');
+        cookies.remove('userId');
+    }
+
+    // 카카오 로그인 유저 가운데 구유저/신유저 구분
     const { loginUser }= useAuth();
     const [userProfile, setUserProfile] = useState(null);
     const getInfo = async () => {
@@ -81,20 +83,24 @@ const TodoList = () => {
             console.error("Error: ", err);
         }
     }
+
+    // getInfo() 함수 호출
     useEffect(() => {
             getInfo();
     }, []);
 
+    // 아직 userProfile을 못 가져온 상태처리
     if (userProfile === null) {
         return <div>Loading...</div>;
     } 
 
-    /* 유저 프로필을 가져온 뒤 자동 화면 새로고침 ㅠㅠ 조건문이랑 use에펙 같이 사용 x 조건문안에 넣으면 무한 새로고침 아 어쩌란말이냐
+    /* userProfile을 가져온 뒤 자동 화면 새로고침 필요: 조건문과 useEffect는 함께 사용 x, 조건문안에 넣으면 무한 새로고침
     useEffect(() => {
         window.location.reload();
         }, [userProfile]);
     */
 
+    // 카카오 신유저는 <InfoUpdate /> 컴포넌트 출력, 로컬 로그인 유저와 카카오 구유저는 <TodoList /> 페이지 출력
     return userProfile.birthday === null || userProfile.gender === null ? (
         <InfoUpdate />
     ) : (
