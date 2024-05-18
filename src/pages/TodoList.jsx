@@ -12,21 +12,20 @@ import { useAuth } from "../hooks/useAuth";
 import InfoUpdate from "../components/signup/InfoUpdate";
 import { userApi } from "../api/services/user";
 import { todoApi } from "../api/services/TodoList";
-
+import { Cookies } from "react-cookie";
 // let year = new Date().getFullYear(); // 년도
 // let month = new Date().getMonth(); // 월
 // let date = new Date().getDate(); // 날짜
 // let today = `${year}-${month}-${date}`;
 
+
 const TodoList = () => {
     const offset = new Date().getTimezoneOffset() * 60000;
-    const today = new Date(Date.now() - offset).toISOString().slice(0,10);
+    const today = new Date(Date.now() - offset).toISOString().slice(0, 10);
     const [date, setDate] = useState(today);
     const [food, setFood] = useState([]);
     const [exercise, setExercise] = useState([]);
-import { Cookies } from "react-cookie";
 
-const TodoList = () => {
     const cookies = new Cookies();
     if (cookies.get('accessToken') && cookies.get("userId")) {
         localStorage.setItem('token', cookies.get('accessToken'));
@@ -55,7 +54,6 @@ const TodoList = () => {
             if (res2.payload.length === 0) {
                 setExercise([]);
                 setFood([]);
-                console.log(1);
             } else {
                 res2.payload.map((e) =>
                     e.category_id == 1
@@ -72,7 +70,6 @@ const TodoList = () => {
 
     const { loginUser }= useAuth();
     const [userProfile, setUserProfile] = useState(null);
-
     const getInfo = async () => {
         try {
             const userId = loginUser.id;
@@ -82,7 +79,6 @@ const TodoList = () => {
             console.error("Error: ", err);
         }
     }
-    
     useEffect(() => {
             getInfo();
     }, []);
@@ -91,16 +87,14 @@ const TodoList = () => {
         return <div>Loading...</div>;
     }
 
-    return (
-        userProfile.birthday === null || userProfile.gender === null ? (
-            <InfoUpdate />
-        ) : (
-            <Box
+    return userProfile.birthday === null || userProfile.gender === null ? (
+        <InfoUpdate />
+    ) : (
+        <Box
             height="100vh"
             display="flex"
             flexDirection="column"
             alignItems="center"
-
         >
             <Weekly setDate={setDate} />
             <BackgroundBox
@@ -115,47 +109,31 @@ const TodoList = () => {
                         display: "flex",
                         justifyContent: "flex-end",
                     }}
-
                 >
-                    <Weekly />
-                    <BackgroundBox
-                        style={{
-                            width: "90%",
-                            justifyContent: "center",
-                        }}
+
+                    <IconButton
+                        sx={{ margin: "0", padding: "0" }}
+                        onClick={() => goTodoShareForm()}
                     >
-                        <Box
-                            sx={{
-                                width: "90%",
-                                display: "flex",
-                                justifyContent: "flex-end",
-                            }}
-                        >
-                            <IconButton
-                                sx={{ margin: "0", padding: "0" }}
-                                onClick={() => goTodoShareForm()}
-                            >
-                                <FileUploadIcon
-                                    sx={{ color: cyan[400] }}
-                                    fontSize="large"
-                                />
-                            </IconButton>
-                            <IconButton
-                                sx={{ margin: "0", padding: "0" }}
-                                onClick={() => goTodoForm()}
-                            >
-                                <AddBoxRoundedIcon color="secondary" fontSize="large" />
-                            </IconButton>
-                        </Box>
-                        <TodoBox />
-                        <TodoBox />
+                        <FileUploadIcon
+                            sx={{ color: cyan[400] }}
+                            fontSize="large"
+                        />
+                    </IconButton>
+                    <IconButton
+                        sx={{ margin: "0", padding: "0" }}
+                        onClick={() => goTodoForm()}
+                    >
+                        <AddBoxRoundedIcon
+                            color="secondary"
+                            fontSize="large"
+                        />
+                    </IconButton>
+                </Box>
+                        <TodoBox exercise={exercise} />
+                        <TodoBox food={food} />
                     </BackgroundBox>
                 </Box>
-                <TodoBox exercise={exercise} />
-                <TodoBox food={food} />
-            </BackgroundBox>
-        </Box>
-        )
     );
 }
 
