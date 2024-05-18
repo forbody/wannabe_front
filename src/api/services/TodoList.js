@@ -10,5 +10,7 @@ const option =
 
 export const todoApi = {
     getList : (date) => api.get(`/todo_list/${date}`, option),
-    getEle : (id) => api.get(`/todo_element/${id}`, option)
+    getEle : (id) => api.get(`/todo_element/${id}`, option),
+    updateEleAchieve : (id) => api.patch(`/todo_element/achieve/${id}`,{} ,option),
+    getCategory : (id) => api.get(`/category/${id}`)
 }
