@@ -2,7 +2,6 @@ import { Grid, styled } from "@mui/material";
 import BottomNavi from "./BottomNavi";
 
 const Main = ({ children }) => {
-    console.log(children);
     return (
         <Grid
                 container
