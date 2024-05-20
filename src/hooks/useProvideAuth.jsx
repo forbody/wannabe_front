@@ -50,9 +50,14 @@ export const useProvideAuth = () => {
     const logout = (callback) => {
         localStorage.removeItem("userId");
         localStorage.removeItem("token");
+
         setLoginUser({
             id: null, token: null
         });
+
+        localStorage.removeItem("date")
+        
+
         // 리프레쉬 토큰 삭제
         callback();
     }

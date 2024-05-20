@@ -52,6 +52,8 @@ const TodoForm = () => {
     }, [category]);
     useEffect(() => {
         onSetSort();
+        setSortValue('');
+        setSelectItem('');
     }, [elements]);
     useEffect(() => {
         onSetItem();
@@ -68,7 +70,22 @@ const TodoForm = () => {
     };
 
     const onUploadTodoEle = async () => {
-        console.log(1);
+        // console.log("todo_id", selectItem);
+        // console.log('category_id', category);
+        try {
+                const res = await todoApi.createTodoList({
+                    date : localStorage.getItem('date')
+                })
+                const res2 = await todoApi.createTodoEle({
+                    category_id: category,
+                    todo_id: selectItem,
+                    date: localStorage.getItem("date"),
+                    todo_list_id: res.payload.id,
+                });
+                console.log(res2);
+        } catch (err) {
+            console.error("Error: ", err);
+        }
     }
 
     return (
@@ -104,15 +121,15 @@ const TodoForm = () => {
                     <Box sx={{ marginTop: "10px" }}>
                         <DropDownForm
                             ele={sort}
-                            setValue={setSortValue}
-                            value={sortValue}
+                            setItem={setSortValue}
+                            item={sortValue}
                         />
                     </Box>
                     <Box sx={{ marginTop: "10px" }}>
                         <DropDownForm
                             ele={sortedItems}
-                            setValue={setSelectItem}
-                            value={selectItem}
+                            setItem={setSelectItem}
+                            item={selectItem}
                         />
                     </Box>
                     <Box sx={{ marginTop: "10px" }}>

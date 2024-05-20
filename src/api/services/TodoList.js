@@ -20,5 +20,7 @@ export const todoApi = {
         }
     }),
     updateEleAchieve : (id) => api.patch(`/todo_element/achieve/${id}`,{} ,option),
-    getCategory : (id) => api.get(`/category/${id}`)
+    getCategory : (id) => api.get(`/category/${id}`),
+    createTodoList : (data) => api.post(`/todo_list`, data ,option),
+    createTodoEle : (data) => api.post(`/todo_element`,data, option)
 }
