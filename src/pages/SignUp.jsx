@@ -1,6 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { BackgroundBox, ForegroundBox } from './../components/styled_comp/StyledDiv';
 import { useState } from "react";
 import Swal from 'sweetalert2';
 import male from "../assets/MaleBodyShape.JPG";
@@ -138,7 +136,7 @@ const SignUp = () => {
                         {"inputName":"img", "type":"file", "accept":"image/*", "message":"프로필 사진을 등록해 주세요.", "label":"프로필 사진" },
                         {"inputName":"user_name", "type":"text", "message":"이름을 입력해 주세요.", "label":"이름" },
                     ]}
-                    step={step} setStep={setStep} joinData={joinData} setJoinData={setJoinData} goJoin={goJoin}/>
+                    lastStep={true} step={step} setStep={setStep} joinData={joinData} setJoinData={setJoinData} goJoin={goJoin}/>
             </>
         );
     }

@@ -17,6 +17,7 @@ import { Cookies } from "react-cookie";
 
 
 const TodoList = () => {
+    const { loginUser, kakaoLogin }= useAuth();
     // 오늘 날짜 받아오기
     const offset = new Date().getTimezoneOffset() * 60000;
     const today = new Date(Date.now() - offset).toISOString().slice(0, 10);
@@ -34,15 +35,15 @@ const TodoList = () => {
         localStorage.setItem('date' , date)
         setExercise([]);
         setFood([]);
-        getTodo()
+        getTodo();
     },[date, isAchieve]) 
 
 
     const getTodo = async () => {
         try {
-            const res1 = await todoApi.getList(date);
+            const res1 = await todoApi.getList(date, loginUser);
             const listId = res1.payload?.id;
-            const res2 = await todoApi.getEle(listId);
+            const res2 = await todoApi.getEle(listId, loginUser);
             res2.payload.map((e) =>
                 e.category_id == 1
                     ? setExercise((prev) => [...prev, { ...e }])
@@ -61,23 +62,18 @@ const TodoList = () => {
     const goTodoForm =() => {
         navigate('/todolist/form')
     }
-
-    // 카카오 로그인 유저의 Auth 처리
-    const cookies = new Cookies(); 
-    if (cookies.get('accessToken') && cookies.get("userId")) {
-        localStorage.setItem('token', cookies.get('accessToken'));
-        localStorage.setItem('userId', cookies.get('userId'));
-        cookies.remove('accessToken');
-        cookies.remove('userId');
+    
+    if (loginUser?.token === null) {
+        kakaoLogin();
     }
 
     // 카카오 로그인 유저 가운데 구유저/신유저 구분
-    const { loginUser }= useAuth();
     const [userProfile, setUserProfile] = useState(null);
     const getInfo = async () => {
         try {
+            console.log(loginUser);
             const userId = loginUser.id;
-            const res = await userApi.getUser(`${userId}`);
+            const res = await userApi.getUser(`${userId}`, loginUser);
             setUserProfile(res.payload);
         } catch (err) {
             console.error("Error: ", err);
@@ -86,19 +82,15 @@ const TodoList = () => {
 
     // getInfo() 함수 호출
     useEffect(() => {
-            getInfo();
-    }, []);
+        getInfo();
+    }, [loginUser]);
+
+
 
     // 아직 userProfile을 못 가져온 상태처리
     if (userProfile === null) {
         return <div>Loading...</div>;
     } 
-
-    /* userProfile을 가져온 뒤 자동 화면 새로고침 필요: 조건문과 useEffect는 함께 사용 x, 조건문안에 넣으면 무한 새로고침
-    useEffect(() => {
-        window.location.reload();
-        }, [userProfile]);
-    */
 
     // 카카오 신유저는 <InfoUpdate /> 컴포넌트 출력, 로컬 로그인 유저와 카카오 구유저는 <TodoList /> 페이지 출력
     return userProfile.birthday === null || userProfile.gender === null ? (

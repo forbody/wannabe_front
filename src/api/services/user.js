@@ -1,32 +1,57 @@
 import api from "../api"
 
-const option = [
-    {
-        headers: {
-            "Authorization": localStorage.getItem("token"),
-        }
-    },
-    {
-        headers: {
-            "Content-Type": "multipart/form-data",
-            "Authorization": localStorage.getItem("token"),
-        }
-    }
-]
-
 // userApi 만드는 중임
 
 export const userApi = {
-    getUsers: () => api.get('users', option[0]),                            // 모든 유저 정보 조회
-    getUser: (id) => api.get(`users/${id}`, option[0]),                     // 특정 유저 정보 조회
-    modifyUser: (data) => api.patch('users', data, option[0]),              // 유저 정보 수정
-    deleteUser: () => api.delete('users', option[0]),                       // 유저 삭제
-    addUserDetail: (data) => api.post('users', data, option[0]),            // 유저 세부 정보 추가
-    uploadUserImg: (data) => api.post('users/image', data, option[1]),      // 유저 세부 정보 이미지 업로드
-    like: (id) => api.post('users/like', {id}, option[0]),                  // 유저 좋아요
-    unlike: (id) => api.delete('users/like',{...option[0], data: {id}}),    // 유저 좋아요 취소
-    getLikers: (id) => api.get(`users/likers/${id}`, option[0]),            // 나를 좋아요 한 유저 조회
-    getLikings: (id) => api.get(`users/likings/${id}`, option[0]),          // 내가 좋아요 한 유저 조회
+    getUsers: (loginUser) => api.get('users', {                        // 모든 유저 정보 조회
+        headers: {
+            "Authorization": loginUser.token // || localStorage.getItem('token'),
+        }
+    }),
+    getUser: (id, loginUser) => api.get(`users/${id}`, {               // 특정 유저 정보 조회
+        headers: {
+            "Authorization": loginUser.token,
+        }
+    }),
+    modifyUser: (data, loginUser) => api.patch('users', data, {        // 유저 정보 수정
+        headers: {
+            "Authorization": loginUser.token,
+        }
+    }),
+    deleteUser: (loginUser) => api.delete('users', {                   // 유저 삭제
+        headers: {
+            "Authorization": loginUser.token,
+        }
+    }),
+    addUserDetail: (data, loginUser) => api.post('users', data, {      // 유저 세부 정보 추가
+        headers: {
+            "Authorization": loginUser.token,
+        }
+    }),
+    uploadUserImg: (data) => api.post('users/image', data, {           // 유저 세부 정보 이미지 업로드
+        headers: {
+            "Content-Type": "multipart/form-data",
+        }
+    }),
+    like: (id, loginUser) => api.post('users/like', {id}, {            // 유저 좋아요
+        headers: {
+            "Authorization": loginUser.token,
+        }
+    }),
+    unlike: (id, loginUser) => api.delete('users/like',{               // 유저 좋아요 취소
+        headers: {
+            "Authorization": loginUser.token,
+        }, data: {id}}),
+    getLikers: (id, loginUser) => api.get(`users/${id}/likers`, {      // 나를 좋아요 한 유저 조회
+        headers: {
+            "Authorization": loginUser.token,
+        }
+    }),
+    getLikings: (id, loginUser) => api.get(`users/${id}/likings`, {    // 내가 좋아요 한 유저 조회
+        headers: {
+            "Authorization": loginUser.token,
+        }
+    }),
 }
 
 

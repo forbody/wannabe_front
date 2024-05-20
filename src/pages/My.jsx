@@ -9,12 +9,12 @@ import MyCalendar from '../components/my/MyCalendar';
 import MyChart from '../components/my/MyChart';
 
 const My = () => {
-    const { loginUser, login, logout } = useAuth()
+    const { loginUser, logout } = useAuth()
     const [userProfile, setUserProfile] = useState(null);
     const getInfo = async () => {
         try {
             const userId = loginUser.id;
-            const res = await userApi.getUser(`${userId}`);
+            const res = await userApi.getUser(`${userId}`, loginUser);
             setUserProfile(res.payload);
         } catch (err) {
             console.error("Error: ", err);
@@ -28,7 +28,23 @@ const My = () => {
         return <div>Loading...</div>;
     }
 
-    const userImg = userProfile.UserDetail[0]?.img
+    const repeat = userProfile.UserDetail.length
+
+    const userImg = userProfile.UserDetail[repeat-1]?.img
+
+    let userBmiArray = [];
+    let bmiDateArray = [];
+    { for (let i=0; i<repeat; i++){
+        if (userProfile.UserDetail[i]?.bmi !== undefined) {
+            userBmiArray.push(userProfile.UserDetail[i].bmi);
+            }
+        if (userProfile.UserDetail[i]?.createdAt !== undefined) {
+            let fullDate = new Date(userProfile.UserDetail[i].createdAt);
+            let onlyDate = fullDate.getDate();
+            bmiDateArray.push(onlyDate)
+            }
+        }
+    }
 
     return ( 
         <Box
@@ -37,10 +53,12 @@ const My = () => {
             flexDirection='column'
             alignItems='center'
             style={{
-                padding:'24px'
+                padding:'36px 0 80px',
+                overflowY: 'scroll',
+                scrollbarWidth: 'none'
             }}
         >
-            {userImg && <img src={ `http://localhost:8000/${userImg}`} width='240' alt={"img"} style={{borderRadius:"240px"}} />}
+            {userImg && <img src={ `http://localhost:8000/${userImg}`} width='200' alt={"img"} style={{borderRadius:"200px"}} />}
             <Typography
             variant='h6'
             fontWeight='600'
@@ -50,14 +68,32 @@ const My = () => {
             >
             {userProfile.user_name}님의 페이지
             </Typography>
-            <BackgroundBox>
-                <MyButtons logout={logout}/>
-            </BackgroundBox>
-            <BackgroundBox>
+            <BackgroundBox style={{ justifyContent: 'center' }}>
                 <MyCalendar />
             </BackgroundBox>
+            <Typography
+                variant='h6'
+                fontWeight='600'
+                style={{
+                    padding:'24px'
+                }}
+                >
+                    BMI 변화 추이
+                </Typography>
+            <BackgroundBox style={{ justifyContent: 'center' }}>
+                <MyChart userBmiArray={userBmiArray} bmiDateArray={bmiDateArray}/>
+            </BackgroundBox>
+            <Typography
+                variant='h6'
+                fontWeight='600'
+                style={{
+                    padding:'24px'
+                }}
+                >
+                    나의 정보 관리
+                </Typography>
             <BackgroundBox>
-                <MyChart />
+                <MyButtons loginUser={loginUser} logout={logout}/>
             </BackgroundBox>
         </Box>
     );
