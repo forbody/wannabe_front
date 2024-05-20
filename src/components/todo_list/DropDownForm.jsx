@@ -20,36 +20,30 @@ const MenuProps = {
 
 
 
-const DropDownForm = ({ ele, value, setValue }) => {
+const DropDownForm = ({ ele, item, setItem }) => {
     const theme = useTheme();
     const [elements, setElements] = useState();
     const handleChange = (event) => {
-        setValue(event.target.value);
+        console.log(event.target.value);
+        setItem(event.target.value);
     };
     useEffect(() => {
         setElements(ele);
     }, [ele]);
     return (
-        <FormControl fullWidth>
-            <Select
-                labelId="demo-select-small-label"
-                id="demo-select-small"
-                value={value}
-                onChange={handleChange}
-            >
-                {elements?.map((e) =>
-                    typeof e === "object" ? (
-                        <MenuItem key={e.id} value={e.id}>
-                            {e.name}
-                        </MenuItem>
-                    ) : (
-                        <MenuItem key={e} value={e}>
-                            {e}
-                        </MenuItem>
-                    )
-                )}
-            </Select>
-        </FormControl>
+        <Select value={item} onChange={handleChange} fullWidth>
+            {elements?.map((e) =>
+                typeof e === "object" ? (
+                    <MenuItem key={e.id} value={e.id}>
+                        {e.name}
+                    </MenuItem>
+                ) : (
+                    <MenuItem key={e} value={e}>
+                        {e}
+                    </MenuItem>
+                )
+            )}
+        </Select>
     );
 };
 

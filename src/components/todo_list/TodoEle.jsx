@@ -15,8 +15,7 @@ const TodoEle = ({ e, setIsAchieve }) => {
 
     const setAchieve = async () => {
         try {
-            console.log(e.id);
-            const res = await todoApi.updateEleAchieve(e.id);
+            await todoApi.updateEleAchieve(e.id);
         } catch (err) {
             console.error("Error: ", err);
         }
@@ -39,7 +38,7 @@ const TodoEle = ({ e, setIsAchieve }) => {
                     />
                 </Grid>
                 <Grid item xs={8}>
-                    {e.Food[0].food_name}
+                    {e.Food[0].name}
                 </Grid>
                 <Grid
                     item
