@@ -128,7 +128,7 @@ const Step = ({title, inputData, step, setStep, joinData, setJoinData, goJoin, l
                 <Button disabled={!pass} onClick={goJoin} variant="contained" color="secondary" style={{ padding: '6px 36px'}}>완료하기</Button>
                 }
             </BackgroundBox>
-            {!loginUser.token &&
+            {!loginUser &&
                 <Button variant="text" href="/login" color="white" style={{textDecoration:"underline"}}>이미 계정이 있으신가요?</Button>
             }
         </Box>

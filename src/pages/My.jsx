@@ -9,43 +9,47 @@ import MyCalendar from '../components/my/MyCalendar';
 import MyChart from '../components/my/MyChart';
 
 const My = () => {
-    const { loginUser, logout } = useAuth()
+    const { loginUser, logout, getUserInfoByToken } = useAuth()
+
+    // 유저 정보 가져오기
     const [userProfile, setUserProfile] = useState(null);
-    const getInfo = async () => {
-        try {
-            const userId = loginUser.id;
-            const res = await userApi.getUser(`${userId}`, loginUser);
-            setUserProfile(res.payload);
-        } catch (err) {
-            console.error("Error: ", err);
-        }
+    const [userImg, setUserImg] = useState("");
+    
+    const getUserInfo = async() => {
+        const up = await getUserInfoByToken();
+        setUserProfile(up);
     }
+    
     useEffect(() => {
-            getInfo();
-    }, []);
+        getUserInfo();
+    }, [loginUser]);
+    
+    const [userBmiArray, setUserBmiArray] = useState([]);
+    const [bmiDateArray, setBmiDateArray] = useState([]);
+    
+    useEffect(()=>{
+        if (userProfile) {
+            const ud = userProfile.UserDetail;
+            const lastProfile = ud.length
+            setUserImg(ud[lastProfile-1]?.img)
+            for (let i=0; i<lastProfile; i++){
+                if (ud[i]?.bmi !== undefined) {
+                    setUserBmiArray([...userBmiArray, ud[i].bmi]);
+                }
+                if (ud[i]?.createdAt !== undefined) {
+                    let fullDate = new Date(ud[i].createdAt);
+                    let onlyDate = fullDate.getDate();
+                    setBmiDateArray([...bmiDateArray, onlyDate])
+                }
+            }
+        }
+    }, [userProfile])
+    
+    
 
     if (userProfile === null) {
         return <div>Loading...</div>;
     }
-
-    const repeat = userProfile.UserDetail.length
-
-    const userImg = userProfile.UserDetail[repeat-1]?.img
-
-    let userBmiArray = [];
-    let bmiDateArray = [];
-    { for (let i=0; i<repeat; i++){
-        if (userProfile.UserDetail[i]?.bmi !== undefined) {
-            userBmiArray.push(userProfile.UserDetail[i].bmi);
-            }
-        if (userProfile.UserDetail[i]?.createdAt !== undefined) {
-            let fullDate = new Date(userProfile.UserDetail[i].createdAt);
-            let onlyDate = fullDate.getDate();
-            bmiDateArray.push(onlyDate)
-            }
-        }
-    }
-
     return ( 
         <Box
             height='100vh'
@@ -78,8 +82,8 @@ const My = () => {
                     padding:'24px'
                 }}
                 >
-                    BMI 변화 추이
-                </Typography>
+                BMI 변화 추이
+            </Typography>
             <BackgroundBox style={{ justifyContent: 'center' }}>
                 <MyChart userBmiArray={userBmiArray} bmiDateArray={bmiDateArray}/>
             </BackgroundBox>
