@@ -11,12 +11,12 @@ const option =
 export const todoApi = {
     getList : (date, loginUser) => api.get(`/todo_list/${date}`, {
         headers: {
-            "Authorization": loginUser.token,
+            "Authorization": loginUser,
         }
     }),
     getEle : (id, loginUser) => api.get(`/todo_element/${id}`, {
         headers: {
-            "Authorization": loginUser.token,
+            "Authorization": loginUser,
         }
     }),
     updateEleAchieve : (id) => api.patch(`/todo_element/achieve/${id}`,{} ,option),

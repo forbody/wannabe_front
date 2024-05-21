@@ -17,7 +17,7 @@ import { Cookies } from "react-cookie";
 
 
 const TodoList = () => {
-    const { loginUser, kakaoLogin }= useAuth();
+    const { loginUser, kakaoLogin, getUserInfoByToken }= useAuth();
     // 오늘 날짜 받아오기
     const offset = new Date().getTimezoneOffset() * 60000;
     const today = new Date(Date.now() - offset).toISOString().slice(0, 10);
@@ -63,29 +63,20 @@ const TodoList = () => {
         navigate('/todolist/form')
     }
     
-    if (loginUser?.token === null) {
+    if (loginUser === null) {
         kakaoLogin();
     }
 
     // 카카오 로그인 유저 가운데 구유저/신유저 구분
     const [userProfile, setUserProfile] = useState(null);
     const getInfo = async () => {
-        try {
-            console.log(loginUser);
-            const userId = loginUser.id;
-            const res = await userApi.getUser(`${userId}`, loginUser);
-            setUserProfile(res.payload);
-        } catch (err) {
-            console.error("Error: ", err);
-        }
+        setUserProfile(getUserInfoByToken())
     }
 
     // getInfo() 함수 호출
     useEffect(() => {
         getInfo();
     }, [loginUser]);
-
-
 
     // 아직 userProfile을 못 가져온 상태처리
     if (userProfile === null) {

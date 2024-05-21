@@ -129,6 +129,7 @@ const Login = () => {
                     </form>
                 </ForegroundBox>
             </BackgroundBox>
+            <Button variant="text" href="/signup" color="white" style={{textDecoration:"underline"}}>회원가입이 필요하신가요?</Button>
         </Box>
     );
 }

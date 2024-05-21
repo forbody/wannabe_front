@@ -44,7 +44,7 @@ function App() {
           <Route path='/my' element={<My />} />
           <Route path='/my/update' element={<MyInfoUpdate />} />
           <Route path='/my/modify' element={<MyInfoModify />} />
-          <Route path='*' element={<h1>Not Found</h1>} /> 
+          {/*<Route path='*' element={<h1>Not Found</h1>} /> */}
         </Routes>
       </Layout>
     </LoginContext.Provider>
