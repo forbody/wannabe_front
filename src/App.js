@@ -3,18 +3,24 @@ import { Routes, Route } from 'react-router-dom';
 import { LoginContext } from './contexts/LoginContext';
 import { useProvideAuth } from './hooks/useProvideAuth';
 import Layout from "./components/layouts/Layout";
-import Exercise from './pages/Exercise';
-import Food from './pages/Food';
-import TodoList from './pages/TodoList';
-import Wannabe from './pages/Wannabe';
-import My from './pages/My';
-import SignUp from './pages/SignUp';
+
 import Landing from './pages/Landing';
+import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 
-import { useState } from 'react';
+import Exercise from './pages/Exercise';
+
+import Food from './pages/Food';
+
+import TodoList from './pages/TodoList';
 import TodoForm from './pages/TodoForm';
 import TodoShare from './pages/TodoShare';
+
+import Wannabe from './pages/Wannabe';
+
+import My from './pages/My';
+import MyInfoModify from './components/my/MyInfoModify';
+import MyInfoUpdate from './components/my/MyInfoUpdate';
 
 
 
@@ -32,14 +38,13 @@ function App() {
           <Route path='/exercise' element={<Exercise/>} />
           <Route path='/food' element={<Food />} />
           <Route path='/todolist' element={<TodoList/>} />
-          <Route path='/wannabe' element={<Wannabe />} />
-          <Route path='/my' element={<My />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/signup' element={<SignUp />} />
           <Route path='/todolist/form' element={<TodoForm />} />
           <Route path='/todolist/share' element={<TodoShare />} />
-          {/* <Route path='/error' element={<h1>에러</h1>} />
-          <Route path='*' element={<h1>Not Found</h1>} /> */}
+          <Route path='/wannabe' element={<Wannabe />} />
+          <Route path='/my' element={<My />} />
+          <Route path='/my/update' element={<MyInfoUpdate />} />
+          <Route path='/my/modify' element={<MyInfoModify />} />
+          <Route path='*' element={<h1>Not Found</h1>} /> 
         </Routes>
       </Layout>
     </LoginContext.Provider>

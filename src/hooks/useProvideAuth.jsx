@@ -8,13 +8,12 @@ export const useProvideAuth = () => {
         token : localStorage.getItem("token")
     })
         
-    const kakaoLogin = (callback) => {
+    const kakaoLogin = () => {
         const cookies = new Cookies();
         if (cookies.get('accessToken') && cookies.get('userId')) {
             localStorage.setItem('userId', cookies.get('userId'))
             localStorage.setItem('token', cookies.get('accessToken'))
-            cookies.remove("accessToken")
-
+            console.log(cookies.get('accessToken'), cookies.get('userId'));
             setLoginUser({
                 id: cookies.get('userId'), 
                 token: cookies.get('accessToken')
@@ -24,7 +23,7 @@ export const useProvideAuth = () => {
         cookies.remove('accessToken')
     }
 
-    const login = async(callback, data) => {
+    const login = async(fCallback, sCallback, data) => {
         try{
             const response = await axios.post(
                 `${process.env.REACT_APP_API_URL}/auth/login`, 
@@ -38,18 +37,27 @@ export const useProvideAuth = () => {
                 setLoginUser({
                     id, token
                 });
+                sCallback(response);
+            } else {
+                fCallback();
             }
-            callback(response);
         } catch(err) {
             console.error(err);
+            fCallback();
         }
     }
 
     const logout = (callback) => {
         localStorage.removeItem("userId");
         localStorage.removeItem("token");
+
+        setLoginUser({
+            id: null, token: null
+        });
+
         localStorage.removeItem("date")
-        setLoginUser(null);
+        
+
         // 리프레쉬 토큰 삭제
         callback();
     }
