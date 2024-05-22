@@ -1,14 +1,10 @@
-import { Box, Button, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { BackgroundBox, ForegroundBox } from '../styled_comp/StyledDiv';
 import { useState } from "react";
 import Swal from 'sweetalert2';
 import male from "../../assets/MaleBodyShape.JPG";
 import female from "../../assets/FemaleBodyShape.JPG";
-import axios from 'axios';
 import Step from "../../components/signup/Step";
-
 import { userApi } from "../../api/services/user";
+import { useAuth } from "../../hooks/useAuth";
 
 const InfoUpdate = () => {
     const [step, setStep] = useState(1);
@@ -25,15 +21,15 @@ const InfoUpdate = () => {
         user_name: "",
     });
     
-    // ⚠️ res1, res2 무한반복 오류, 마지막 스텝은 왜 씹지?
+    const {loginUser} = useAuth();
     const goUpdate = async (joinData) =>{
         try{
-            const res1 = await userApi.addUserDetail(joinData)
+            const res1 = await userApi.addUserDetail(joinData, loginUser)
             console.log(res1);
             if (res1.code !== 200) {
                 throw new Error(res1.message);
                 };
-            const res2 = await userApi.modifyUser(joinData)
+            const res2 = await userApi.modifyUser(joinData, loginUser)
             console.log(res2);
             if (res2.code === 200) {
                 Swal.fire({
@@ -55,13 +51,13 @@ const InfoUpdate = () => {
     }
 
     let stepComp;
-    
+
     if (step === 1) {
         stepComp = (
             <>
                 <Step title="이메일 입력"
                     inputData={[
-                        {"inputName":"email", "type":"email", "message":"워너비에 오신 것을 환영해요! 먼저, 이메일을 입력해 주세요 😊", "label":"이메일" }
+                        {"inputName":"email", "type":"email", "message":`워너비에 오신 것을 환영해요! 😊😊 워너비를 사용하시려면 이메일이 필요해요.`, "label":"이메일" }
                     ]} 
                     step={step} setStep={setStep} joinData={joinData} setJoinData={setJoinData} />
             </>
@@ -72,25 +68,15 @@ const InfoUpdate = () => {
                 <Step title="개인정보 입력" 
                     inputData={[
                         {"inputName":"gender", "type":"radio", "message":"성별을 입력해 주세요.", "label":"성별" },
-                        {"inputName":"birthday", "type":"date", "message":"생일을 입력해 주세요.", "label":"생일" }
+                        {"inputName":"birthday", "type":"date", "message":"생일을 입력해 주세요.", "label":"생일" },
+                        {"inputName":"height", "type":"number", "message":"키를 입력해 주세요.", "label":"키" },
+                        {"inputName":"weight", "type":"number", "message":"몸무게를 입력해 주세요.", "label":"몸무게" },
                     ]}
                     step={step} setStep={setStep} joinData={joinData} setJoinData={setJoinData} />
             </>
             
         )
-    }    else if (step === 3) {
-            stepComp = (
-                <>
-                    <Step title="개인정보 입력" 
-                        inputData={[
-                            {"inputName":"height", "type":"number", "message":"키를 입력해 주세요.", "label":"키" },
-                            {"inputName":"weight", "type":"number", "message":"몸무게를 입력해 주세요.", "label":"몸무게" },
-                        ]}
-                        step={step} setStep={setStep} joinData={joinData} setJoinData={setJoinData} />
-                </>
-                
-            )
-    } else if (step === 4) {
+    }   else if (step === 3) {
         stepComp = (
             <>
                 <Step title="맞춤 추천정보 입력" 
@@ -109,7 +95,7 @@ const InfoUpdate = () => {
                         {"inputName":"img", "type":"file", "accept":"image/*", "message":"프로필 사진을 등록해 주세요.", "label":"프로필 사진" },
                         {"inputName":"user_name", "type":"text", "message":"이름을 입력해 주세요.", "label":"이름" },
                     ]}
-                    step={step} setStep={setStep} joinData={joinData} setJoinData={setJoinData} goJoin={goUpdate(joinData)} />
+                    lastStep={true} step={step} setStep={setStep} joinData={joinData} setJoinData={setJoinData} goJoin={() => goUpdate(joinData)} />
             </>
         );
     }

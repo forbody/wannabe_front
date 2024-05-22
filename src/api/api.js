@@ -31,6 +31,7 @@ const useRefreshHandler = async (error) => {
         return Promise.reject(error);
     } else {
         // accessToken으로 검증 요청 API
+        console.log(localStorage.getItem('token'));
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/refresh`,
             {
                 accessToken: localStorage.getItem('token')

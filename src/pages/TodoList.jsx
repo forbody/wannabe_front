@@ -18,6 +18,7 @@ import Swal from "sweetalert2";
 
 
 const TodoList = () => {
+    const { loginUser, kakaoLogin, getUserInfoByToken }= useAuth();
     // 오늘 날짜 받아오기
     const offset = new Date().getTimezoneOffset() * 60000;
     const currentDate = new Date(Date.now() - offset).toISOString().slice(0, 10);
@@ -38,15 +39,15 @@ const TodoList = () => {
         localStorage.setItem('day', day)
         setExercise([]);
         setFood([]);
-        getTodo()
+        getTodo();
     },[date, isAchieve]) 
 
 
     const getTodo = async () => {
         try {
-            const res1 = await todoApi.getList(date);
+            const res1 = await todoApi.getList(date, loginUser);
             const listId = res1.payload?.id;
-            const res2 = await todoApi.getEle(listId);
+            const res2 = await todoApi.getEle(listId, loginUser);
             res2.payload.map((e) =>
                 e.category_id == 1
                     ? setExercise((prev) => [...prev, { ...e }])
@@ -55,14 +56,6 @@ const TodoList = () => {
         } catch (err) {
             console.error("Error: ", err);
         }
-    }
-
-    const cookies = new Cookies();
-    if (cookies.get('accessToken') && cookies.get("userId")) {
-        localStorage.setItem('token', cookies.get('accessToken'));
-        localStorage.setItem('userId', cookies.get('userId'));
-        cookies.remove('accessToken');
-        cookies.remove('userId');
     }
 
     const navigate = useNavigate()
@@ -91,32 +84,28 @@ const TodoList = () => {
     const goTodoForm =() => {
         navigate('/todolist/form')
     }
+    
+    if (loginUser === null) {
+        kakaoLogin();
+    }
 
-    const { loginUser }= useAuth();
+    // 카카오 로그인 유저 가운데 구유저/신유저 구분
     const [userProfile, setUserProfile] = useState(null);
     const getInfo = async () => {
-        try {
-            const userId = loginUser.id;
-            const res = await userApi.getUser(`${userId}`);
-            setUserProfile(res.payload);
-        } catch (err) {
-            console.error("Error: ", err);
-        }
+        setUserProfile(getUserInfoByToken())
     }
-    useEffect(() => {
-            getInfo();
-    }, []);
 
+    // getInfo() 함수 호출
+    useEffect(() => {
+        getInfo();
+    }, [loginUser]);
+
+    // 아직 userProfile을 못 가져온 상태처리
     if (userProfile === null) {
         return <div>Loading...</div>;
     } 
 
-    /* 유저 프로필을 가져온 뒤 자동 화면 새로고침 ㅠㅠ 조건문이랑 use에펙 같이 사용 x 조건문안에 넣으면 무한 새로고침 아 어쩌란말이냐
-    useEffect(() => {
-        window.location.reload();
-        }, [userProfile]);
-    */
-
+    // 카카오 신유저는 <InfoUpdate /> 컴포넌트 출력, 로컬 로그인 유저와 카카오 구유저는 <TodoList /> 페이지 출력
     return userProfile.birthday === null || userProfile.gender === null ? (
         <InfoUpdate />
     ) : (
