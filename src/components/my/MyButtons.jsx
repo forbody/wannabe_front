@@ -4,7 +4,7 @@ import { ForegroundBox } from '../styled_comp/StyledDiv';
 import { TfiWrite } from "react-icons/tfi";
 import { FaUserEdit } from "react-icons/fa";
 import { FaUserMinus } from "react-icons/fa";
-import { Divider } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
 import Swal from 'sweetalert2';
 import { userApi } from '../../api/services/user';
 
@@ -50,11 +50,21 @@ const MyButtons = ({ loginUser, logout }) => {
             display='flex'
             style={{
                 width:'100%',
-                height:'200px',
                 flexDirection: 'column',
                 justifyContent: 'space-between'
             }}
             >
+            <Typography
+            display='flex'
+            variant='h6'
+            fontWeight='600'
+            style={{
+                marginBottom:'8px',
+                justifyContent:'center'
+            }}
+            >
+                나의 정보 관리
+            </Typography>
             <Button variant="text" size="large" color="secondary" startIcon={<TfiWrite/>} fullWidth>내가 작성한 글 보기</Button>
             <Divider/>
             <Button variant="text" size="large" color="primary" startIcon={<FaUserEdit/>} onClick={ () => navigate('/my/modify') } fullWidth>나의 정보 수정</Button>

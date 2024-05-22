@@ -99,7 +99,7 @@ const Food = () => {
                             padding:'0 24px'
                         }}
                     >
-                        {modelProfile.user_name}가 추천하는
+                        {modelProfile.user_name}님이 추천하는
                     </Typography>
                     <Typography
                         variant='h6'
@@ -109,14 +109,16 @@ const Food = () => {
                         }}
                         color='secondary'
                     >
-                        {meal}식단
+                        {meal} 식단
                     </Typography>
                     {modelImg && <img src={ `http://localhost:8000/${modelImg}`} width='100' alt={"img"} style={{borderRadius:"100px"}} />}
                     <Typography
                     style={{
                         padding:'24px 0 0'
                     }}
-                    >"오늘도 화이팅이에요!"</Typography>
+                    >
+                        "오늘도 화이팅이에요!"
+                    </Typography>
                 </ForegroundBox>
                 <FoodRecommend/>
             </BackgroundBox>

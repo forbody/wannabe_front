@@ -3,6 +3,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { ForegroundBox } from "../styled_comp/StyledDiv";
 import { foodApi } from "../../api/services/food";
 import { Button, Typography } from '@mui/material';
+import { MdOutlineBookmarkAdd } from "react-icons/md";
 
 const FoodRecommend = () => {
     const { loginUser } = useAuth()
@@ -29,8 +30,6 @@ const FoodRecommend = () => {
             setTotalCalory(total);
         }
     }, [dishes]);
-
-    console.log(dishes);
     
     // 아직 dishes를 못 가져온 상태처리
     if (!dishes) {
@@ -70,6 +69,7 @@ const FoodRecommend = () => {
                 variant="contained"
                 color="secondary"
                 fullWidth
+                startIcon={<MdOutlineBookmarkAdd/>}
                 style={{
                     marginTop:'8px'
                 }}

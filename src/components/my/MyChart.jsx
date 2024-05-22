@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { ForegroundBox } from "../styled_comp/StyledDiv";
 import { LineChart } from '@mui/x-charts/LineChart';
 import { FaUserPlus } from "react-icons/fa";
@@ -16,6 +16,17 @@ const MyChart = ({ userProfile, userBmiArray, bmiDateArray }) => {
             width:'100%'
         }}
         >
+        <Typography
+        display='flex'
+        variant='h6'
+        fontWeight='600'
+        style={{
+            marginBottom:'8px',
+            justifyContent:'center'
+        }}
+        >
+            나의 BMI 변화
+        </Typography>
             <LineChart
             xAxis={[{ data: bmiDateArray }]}
             series={[
