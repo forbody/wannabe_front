@@ -20,7 +20,7 @@ const MenuProps = {
 
 
 
-const DropDownForm = ({ ele, item, setItem }) => {
+const DropDownForm = ({ ele,item,setItem }) => {
     const theme = useTheme();
     const [elements, setElements] = useState();
     const handleChange = (event) => {
@@ -30,8 +30,14 @@ const DropDownForm = ({ ele, item, setItem }) => {
     useEffect(() => {
         setElements(ele);
     }, [ele]);
+
     return (
-        <Select value={item} onChange={handleChange} fullWidth>
+        <Select
+            onChange={handleChange}
+            fullWidth
+            value={item}
+        >
+            <MenuItem disabled>==선택==</MenuItem>
             {elements?.map((e) =>
                 typeof e === "object" ? (
                     <MenuItem key={e.id} value={e.id}>

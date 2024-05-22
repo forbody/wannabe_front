@@ -13,6 +13,7 @@ import InfoUpdate from "../components/signup/InfoUpdate";
 import { userApi } from "../api/services/user";
 import { todoApi } from "../api/services/TodoList";
 import { Cookies } from "react-cookie";
+import Swal from "sweetalert2";
 
 
 
@@ -20,11 +21,13 @@ const TodoList = () => {
     const { loginUser, kakaoLogin, getUserInfoByToken }= useAuth();
     // 오늘 날짜 받아오기
     const offset = new Date().getTimezoneOffset() * 60000;
-    const today = new Date(Date.now() - offset).toISOString().slice(0, 10);
+    const currentDate = new Date(Date.now() - offset).toISOString().slice(0, 10);
+    const currentDay =  new Date().getDay()
     // achieve 실시간 적용(test용)
     const [isAchieve, setIsAchieve] = useState(false);
     // 달력에서 클릭한 날짜 받아오기(첫 접속시 자동으로 오늘날짜 받아옴)
-    const [date, setDate] = useState(today);
+    const [date, setDate] = useState(currentDate);
+    const [day, setDay] = useState(currentDay);
 
     // 카테고리별 스테이트관리
     const [food, setFood] = useState([]);
@@ -33,6 +36,7 @@ const TodoList = () => {
     // getTodo()함수 호출 
     useEffect(() => {
         localStorage.setItem('date' , date)
+        localStorage.setItem('day', day)
         setExercise([]);
         setFood([]);
         getTodo();
@@ -55,9 +59,27 @@ const TodoList = () => {
     }
 
     const navigate = useNavigate()
-
-    const goTodoShareForm = () => {
-        navigate('/todolist/share')
+    const goTodoShareForm = async () => {
+        try {
+            const res = await todoApi.getList(date);
+            if(!res.payload) {
+                Swal.fire({
+                    title: "일과를 등록해주세요.",
+                    // text: "That thing is still around?",
+                    icon: "error",
+                });
+            } else if (res.payload.share){
+                Swal.fire({
+                    title: "이미 공유되었습니다.",
+                    // text: "That thing is still around?",
+                    icon:'info',
+                });
+            } else  {
+                navigate('/todolist/share')
+            }
+        } catch (err) {
+            console.error("Error: ", err);
+        }
     }
     const goTodoForm =() => {
         navigate('/todolist/form')
@@ -93,7 +115,7 @@ const TodoList = () => {
             flexDirection="column"
             alignItems="center"
         >
-            <Weekly setDate={setDate} />
+            <Weekly setDate={setDate} setDay={setDay} />
             <BackgroundBox
                 style={{
                     width: "90%",
@@ -123,8 +145,12 @@ const TodoList = () => {
                         <AddBoxRoundedIcon color="secondary" fontSize="large" />
                     </IconButton>
                 </Box>
-                <TodoBox element={exercise} setIsAchieve={setIsAchieve}>운동</TodoBox>
-                <TodoBox element={food} setIsAchieve={setIsAchieve}>식단</TodoBox>
+                <TodoBox element={exercise} setIsAchieve={setIsAchieve}>
+                    운동
+                </TodoBox>
+                <TodoBox element={food} setIsAchieve={setIsAchieve}>
+                    식단
+                </TodoBox>
             </BackgroundBox>
         </Box>
     );
