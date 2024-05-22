@@ -120,14 +120,14 @@ const Food = () => {
                         "오늘도 화이팅이에요!"
                     </Typography>
                 </ForegroundBox>
-                <FoodRecommend/>
+                <FoodRecommend meal={meal}/>
             </BackgroundBox>
             <BackgroundBox
             style={{
                 marginTop:'24px'
             }}
             >
-                <Water/>
+                <Water userProfile={userProfile}/>
             </BackgroundBox>
         </Box>
     );
