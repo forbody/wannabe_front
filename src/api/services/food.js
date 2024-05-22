@@ -11,4 +11,9 @@ export const foodApi = {
             "Authorization": loginUser,
         }
     }),
+    getRandomDishes: (loginUser) => api.get(`food/random-dish`, {
+        headers: {
+            "Authorization": loginUser,
+        }
+    })
 }

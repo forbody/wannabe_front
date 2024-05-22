@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { userApi } from "../api/services/user";
 import FoodRecommend from "../components/food/FoodRecommend";
 import { PieChart } from "@mui/x-charts";
+import Water from "../components/food/water";
 
 const Food = () => {
     const { loginUser, getUserInfoByToken } = useAuth()
@@ -124,40 +125,7 @@ const Food = () => {
                 marginTop:'24px'
             }}
             >
-                <ForegroundBox
-                    display='flex'
-                    style={{
-                        width:'100%',
-                        alignItems:'center'
-                    }}
-                    >
-                    <PieChart
-                    series={[
-                        {
-                        data: [
-                            { id: 0, value: 10 },
-                            { id: 1, value: 90, color:'#00000010'},
-                        ],
-                        innerRadius: 30,
-                        outerRadius: 100,
-                        paddingAngle: 5,
-                        cornerRadius: 5,
-                        cx: 140,
-                        },
-                    ]}
-                    width={300}
-                    height={200}
-                    />
-                    <Typography
-                        variant='h6'
-                        fontWeight='600'
-                        style={{
-                            padding:'0 24px'
-                        }}
-                    >
-                        오늘 마신 물의 양
-                    </Typography>
-                </ForegroundBox>
+                <Water/>
             </BackgroundBox>
         </Box>
     );
