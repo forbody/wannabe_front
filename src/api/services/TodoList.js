@@ -35,5 +35,10 @@ export const todoApi = {
         headers: {
             "Authorization": localStorage.getItem("token"),
         }
+    }),
+    getShareList : () => api.get(`/todo_list/`, {
+        headers: {
+            "Authorization": localStorage.getItem("token"),
+        }
     })
 }

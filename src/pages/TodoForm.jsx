@@ -87,6 +87,9 @@ const TodoForm = () => {
                     todo_list_id: res.payload.id,
                 });
                 console.log(res2);
+                localStorage.removeItem('date')
+                localStorage.removeItem('day')
+                navigate('/todolist')
         } catch (err) {
             console.error("Error: ", err);
         }
