@@ -3,16 +3,32 @@ import { useAuth } from "../../hooks/useAuth";
 import { ForegroundBox } from "../styled_comp/StyledDiv";
 import { foodApi } from "../../api/services/food";
 import { Button, Typography } from '@mui/material';
+import { todoApi } from "../../api/services/TodoList";
 
 const FoodRecommend = () => {
     const { loginUser } = useAuth()
     const [dishes, setDishes] = useState(null);
     const [totalCalory, setTotalCalory] = useState(0);
+    const [arr, setArr] = useState();
     const getDishes = async () => {
         try {
             const res = await foodApi.getRandomDishes(loginUser);
             const [main, side1, side2, side3, dessert] = res.result;
             setDishes({main, side1, side2, side3, dessert});
+        } catch (err) {
+            console.error("Error: ", err);
+        }
+    }
+    const onSetRecommendFood = async() => {
+        try {
+            const date = localStorage.getItem('date')
+            const res = await todoApi.getList(date, loginUser);
+            const todo_list_id = res.payload.id;
+            const res2 = await todoApi.shareTodoEle({
+                date,
+                todo_list_id,
+                arr,
+            });
         } catch (err) {
             console.error("Error: ", err);
         }
@@ -26,11 +42,18 @@ const FoodRecommend = () => {
         if (dishes) {
             const { main, side1, side2, side3, dessert } = dishes;
             const total = [main, side1, side2, side3, dessert].reduce((sum, dish) => sum + (dish?.calory || 0), 0);
+            const arr = [
+                { category_id: main.category_id, todo_id: main.id },
+                { category_id: side1.category_id, todo_id: side1.id },
+                { category_id: side2.category_id, todo_id: side2.id },
+                { category_id: side3.category_id, todo_id: side3.id },
+                { category_id: dessert.category_id, todo_id: dessert.id },
+            ];
             setTotalCalory(total);
+            setArr(arr)
         }
     }, [dishes]);
 
-    console.log(dishes);
     
     // 아직 dishes를 못 가져온 상태처리
     if (!dishes) {
@@ -73,6 +96,7 @@ const FoodRecommend = () => {
                 style={{
                     marginTop:'8px'
                 }}
+                onClick={() => onSetRecommendFood()}
             >내 식단에 추가하기</Button>
         </ForegroundBox>
         

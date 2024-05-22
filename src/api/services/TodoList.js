@@ -48,5 +48,10 @@ export const todoApi = {
         headers: {
             "Authorization": localStorage.getItem("token"),
         }
+    }),
+    shareTodoEle: (data) => api.post(`/todo_element/share`,data,{
+        headers: {
+            "Authorization": localStorage.getItem("token"),
+        }
     })
 }

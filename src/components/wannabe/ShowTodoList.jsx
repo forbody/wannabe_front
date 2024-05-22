@@ -9,30 +9,37 @@ import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { useAuth } from "../../hooks/useAuth";
 
 const ShowTodoList = ({e}) => {
-    const { loginUser, login, logout } = useAuth();
-    const  userId = loginUser.id;
-    const uploadUserId = e.Users[0]?.id;
-    console.log(e);
+    const { loginUser, logout, getUserInfoByToken } = useAuth();
+    
+    
     const [userProfile, setUserProfile] = useState(null);
-    const getInfo = async () => {
-        try {
-            const res = await userApi.getUser(`${uploadUserId}`);
-            console.log(res);
-            setUserProfile(res.payload);
-        } catch (err) {
-            console.error("Error: ", err);
-        }
+    const [userImg, setUserImg] = useState("");
+
+    const userId = userProfile?.id;
+    const uploadUserId = e.Users[0]?.id;
+    const getUserInfo = async () => {
+        const up = await getUserInfoByToken();
+        setUserProfile(up);
     };
+    
+
     useEffect(() => {
-        getInfo();
-    }, []);
+        getUserInfo();
+    }, [loginUser]);
+
+    useEffect(() => {
+        if (userProfile) {
+            const ud = userProfile.UserDetail;
+            const lastProfile = ud.length;
+            setUserImg(ud[lastProfile - 1]?.img);
+        }
+    }, [userProfile]);
+    
+
 
     if (userProfile === null) {
         return <div>Loading...</div>;
     }
-
-    const userImg = userProfile.UserDetail[0]?.img;
-
     return (
         <ForegroundBox
             style={{
@@ -46,14 +53,14 @@ const ShowTodoList = ({e}) => {
                 {userImg && (
                     <img
                         src={`http://localhost:8000/${userImg}`}
-                        width="60"
+                        width="40"
                         alt={"img"}
                         style={{ borderRadius: "240px" }}
                     />
                 )}
                 {userProfile?.user_name}
 
-                {userId ==uploadUserId ?
+                {userId ===uploadUserId ?
                 <>
                 <IconButton sx={{ margin: "0", padding: "0" }}>
                     <EditIcon fontSize="small" sx={{ color: orange[400] }} />
