@@ -44,8 +44,6 @@ const My = () => {
             }
         }
     }, [userProfile])
-    
-    
 
     if (userProfile === null) {
         return <div>Loading...</div>;
@@ -72,31 +70,13 @@ const My = () => {
             >
             {userProfile.user_name}님의 페이지
             </Typography>
-            <BackgroundBox style={{ justifyContent: 'center' }}>
+            <BackgroundBox style={{ justifyContent: 'center'}}>
                 <MyCalendar />
             </BackgroundBox>
-            <Typography
-                variant='h6'
-                fontWeight='600'
-                style={{
-                    padding:'24px'
-                }}
-                >
-                BMI 변화 추이
-            </Typography>
-            <BackgroundBox style={{ justifyContent: 'center' }}>
+            <BackgroundBox style={{ justifyContent: 'center', marginTop:'24px' }}>
                 <MyChart userBmiArray={userBmiArray} bmiDateArray={bmiDateArray}/>
             </BackgroundBox>
-            <Typography
-                variant='h6'
-                fontWeight='600'
-                style={{
-                    padding:'24px'
-                }}
-                >
-                    나의 정보 관리
-                </Typography>
-            <BackgroundBox>
+            <BackgroundBox style={{ justifyContent: 'center', marginTop:'24px' }}>
                 <MyButtons loginUser={loginUser} logout={logout}/>
             </BackgroundBox>
         </Box>
