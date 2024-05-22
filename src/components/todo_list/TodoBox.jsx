@@ -5,14 +5,17 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { useEffect, useState } from "react";
 import TodoEle from "./TodoEle";
 
-const TodoBox = ({food}) => {
+const TodoBox = ({ element, setIsAchieve ,children}) => {
     const [isTrue, setIsTrue] = useState(false);
-    
+
     const onIsTrue = () => {
-        setIsTrue(!isTrue)
-    }
-    const total = food?.length;
-    const achieve = food?.filter((e) => e.achieve === true).length;
+        setIsTrue(!isTrue);
+    };
+    
+    /// 이부분 실시간 연동
+    let total = element?.length;
+    let achieve = element?.filter((e) => e.achieve === true).length;
+
     return (
         <ForegroundBox
             style={{
@@ -29,7 +32,7 @@ const TodoBox = ({food}) => {
                 style={{ fontSize: "20px", fontWeight: "bold" }}
             >
                 <Grid item xs={8}>
-                    식단
+                    {children}
                 </Grid>
                 <Grid item xs={2} sx={{ textAlign: "center" }}>
                     {achieve} / {total}
@@ -49,10 +52,13 @@ const TodoBox = ({food}) => {
                     </IconButton>
                 </Grid>
             </Grid>
-            {/* 여기서 엘리먼트 반복추가하면될듯 */}
-            {isTrue ? <TodoEle food={food} /> : false}
+            {isTrue && element
+                ? element.map((e) => (
+                    <TodoEle e={e} key={e.id} setIsAchieve={setIsAchieve} />
+                ))
+                : false}
         </ForegroundBox>
     );
-}
+};
 
 export default TodoBox;

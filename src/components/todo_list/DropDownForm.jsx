@@ -1,10 +1,10 @@
-import * as React from "react";
 import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import { Grid, OutlinedInput } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { useEffect } from "react";
 
 
 const ITEM_HEIGHT = 48;
@@ -18,42 +18,38 @@ const MenuProps = {
     },
 };
 
-const dummy_data = [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder',
-];
 
-const DropDownForm = () => {
+
+const DropDownForm = ({ ele,item,setItem }) => {
     const theme = useTheme();
-    const [elements, setElements] = useState(dummy_data);
-
-    const [name, setName] = useState("");
+    const [elements, setElements] = useState();
     const handleChange = (event) => {
-        setName(event.target.value);
+        console.log(event.target.value);
+        setItem(event.target.value);
     };
+    useEffect(() => {
+        setElements(ele);
+    }, [ele]);
+
     return (
-        <FormControl fullWidth>
-            <Select
-                labelId="demo-select-small-label"
-                id="demo-select-small"
-                value={name}
-                onChange={handleChange}
-            >
-                {elements.map(e =>(
-                    <MenuItem value={e}>
+        <Select
+            onChange={handleChange}
+            fullWidth
+            value={item}
+        >
+            <MenuItem disabled>==선택==</MenuItem>
+            {elements?.map((e) =>
+                typeof e === "object" ? (
+                    <MenuItem key={e.id} value={e.id}>
+                        {e.name}
+                    </MenuItem>
+                ) : (
+                    <MenuItem key={e} value={e}>
                         {e}
                     </MenuItem>
-                ))}
-            </Select>
-        </FormControl>
+                )
+            )}
+        </Select>
     );
 };
 

@@ -13,80 +13,99 @@ import InfoUpdate from "../components/signup/InfoUpdate";
 import { userApi } from "../api/services/user";
 import { todoApi } from "../api/services/TodoList";
 import { Cookies } from "react-cookie";
-// let year = new Date().getFullYear(); // 년도
-// let month = new Date().getMonth(); // 월
-// let date = new Date().getDate(); // 날짜
-// let today = `${year}-${month}-${date}`;
+import Swal from "sweetalert2";
+
 
 
 const TodoList = () => {
+    const { loginUser, kakaoLogin, getUserInfoByToken }= useAuth();
+    // 오늘 날짜 받아오기
     const offset = new Date().getTimezoneOffset() * 60000;
-    const today = new Date(Date.now() - offset).toISOString().slice(0, 10);
-    const [date, setDate] = useState(today);
+    const currentDate = new Date(Date.now() - offset).toISOString().slice(0, 10);
+    const currentDay =  new Date().getDay()
+    // achieve 실시간 적용(test용)
+    const [isAchieve, setIsAchieve] = useState(false);
+    // 달력에서 클릭한 날짜 받아오기(첫 접속시 자동으로 오늘날짜 받아옴)
+    const [date, setDate] = useState(currentDate);
+    const [day, setDay] = useState(currentDay);
+
+    // 카테고리별 스테이트관리
     const [food, setFood] = useState([]);
     const [exercise, setExercise] = useState([]);
 
-    const cookies = new Cookies();
-    if (cookies.get('accessToken') && cookies.get("userId")) {
-        localStorage.setItem('token', cookies.get('accessToken'));
-        localStorage.setItem('userId', cookies.get('userId'));
-        cookies.remove('accessToken');
-        cookies.remove('userId');
+    // getTodo()함수 호출 
+    useEffect(() => {
+        localStorage.setItem('date' , date)
+        localStorage.setItem('day', day)
+        setExercise([]);
+        setFood([]);
+        getTodo();
+    },[date, isAchieve]) 
+
+
+    const getTodo = async () => {
+        try {
+            const res1 = await todoApi.getList(date, loginUser);
+            const listId = res1.payload?.id;
+            const res2 = await todoApi.getEle(listId, loginUser);
+            res2.payload.map((e) =>
+                e.category_id == 1
+                    ? setExercise((prev) => [...prev, { ...e }])
+                    : setFood((prev) => [...prev, { ...e }])
+            );
+        } catch (err) {
+            console.error("Error: ", err);
+        }
     }
 
     const navigate = useNavigate()
-
-    const goTodoShareForm = () => {
-        navigate('/todolist/share')
+    const goTodoShareForm = async () => {
+        try {
+            const res = await todoApi.getList(date);
+            if(!res.payload) {
+                Swal.fire({
+                    title: "일과를 등록해주세요.",
+                    // text: "That thing is still around?",
+                    icon: "error",
+                });
+            } else if (res.payload.share){
+                Swal.fire({
+                    title: "이미 공유되었습니다.",
+                    // text: "That thing is still around?",
+                    icon:'info',
+                });
+            } else  {
+                navigate('/todolist/share')
+            }
+        } catch (err) {
+            console.error("Error: ", err);
+        }
     }
     const goTodoForm =() => {
         navigate('/todolist/form')
     }
-    useEffect(() => {
-        getTodo()
-    },[date])
-
-    const getTodo = async () => {
-        try {
-            const res1 = await todoApi.getList(date);
-            const listId = res1.payload?.id;
-            const res2 = await todoApi.getEle(listId);
-            if (res2.payload.length === 0) {
-                setExercise([]);
-                setFood([]);
-            } else {
-                res2.payload.map((e) =>
-                    e.category_id == 1
-                        ? setExercise((prev) => [...prev, { ...e }])
-                        : setFood((prev) => [...prev, { ...e }])
-                );
-            }
-            
-            
-        } catch (err) {
-            console.error("Error: ", err);
-        }
+    
+    if (loginUser === null) {
+        kakaoLogin();
     }
 
-    const { loginUser }= useAuth();
+    // 카카오 로그인 유저 가운데 구유저/신유저 구분
     const [userProfile, setUserProfile] = useState(null);
     const getInfo = async () => {
-        try {
-            const userId = loginUser.id;
-            const res = await userApi.getUser(`${userId}`);
-            setUserProfile(res.payload);
-        } catch (err) {
-            console.error("Error: ", err);
-        }
+        setUserProfile(getUserInfoByToken())
     }
-    useEffect(() => {
-            getInfo();
-    }, []);
 
+    // getInfo() 함수 호출
+    useEffect(() => {
+        getInfo();
+    }, [loginUser]);
+
+    // 아직 userProfile을 못 가져온 상태처리
     if (userProfile === null) {
         return <div>Loading...</div>;
-    }
+    } 
 
+    // 카카오 신유저는 <InfoUpdate /> 컴포넌트 출력, 로컬 로그인 유저와 카카오 구유저는 <TodoList /> 페이지 출력
     return userProfile.birthday === null || userProfile.gender === null ? (
         <InfoUpdate />
     ) : (
@@ -96,7 +115,7 @@ const TodoList = () => {
             flexDirection="column"
             alignItems="center"
         >
-            <Weekly setDate={setDate} />
+            <Weekly setDate={setDate} setDay={setDay} />
             <BackgroundBox
                 style={{
                     width: "90%",
@@ -110,7 +129,6 @@ const TodoList = () => {
                         justifyContent: "flex-end",
                     }}
                 >
-
                     <IconButton
                         sx={{ margin: "0", padding: "0" }}
                         onClick={() => goTodoShareForm()}
@@ -124,16 +142,17 @@ const TodoList = () => {
                         sx={{ margin: "0", padding: "0" }}
                         onClick={() => goTodoForm()}
                     >
-                        <AddBoxRoundedIcon
-                            color="secondary"
-                            fontSize="large"
-                        />
+                        <AddBoxRoundedIcon color="secondary" fontSize="large" />
                     </IconButton>
                 </Box>
-                        <TodoBox exercise={exercise} />
-                        <TodoBox food={food} />
-                    </BackgroundBox>
-                </Box>
+                <TodoBox element={exercise} setIsAchieve={setIsAchieve}>
+                    운동
+                </TodoBox>
+                <TodoBox element={food} setIsAchieve={setIsAchieve}>
+                    식단
+                </TodoBox>
+            </BackgroundBox>
+        </Box>
     );
 }
 
