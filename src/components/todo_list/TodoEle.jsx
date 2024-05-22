@@ -6,11 +6,9 @@ import { useState } from "react";
 import { todoApi } from "../../api/services/TodoList";
 
 const TodoEle = ({ e, setIsAchieve }) => {
-    const [istrue, setIstrue] = useState(e.achieve);
     const onAchieveELe = () => {
         setAchieve();
         setIsAchieve(prev => !prev)
-        setIstrue(!istrue);
     };
 
     const setAchieve = async () => {
@@ -23,8 +21,14 @@ const TodoEle = ({ e, setIsAchieve }) => {
     const onModifyELe = () => {
         console.log(1);
     };
-    const onDeleteELe = () => {
-        console.log(1);
+    const onDeleteELe = async () => {
+        try {
+            await todoApi.deleteTodoEle(e.id)
+            setIsAchieve((prev) => !prev);
+        } catch (err) {
+            console.error("Error: ", err);
+        }
+        
     };
 
     return (
@@ -33,12 +37,14 @@ const TodoEle = ({ e, setIsAchieve }) => {
                 <Grid item xs={2}>
                     <Checkbox
                         color="success"
-                        checked={istrue}
+                        checked={e.achieve}
                         onClick={() => onAchieveELe()}
                     />
                 </Grid>
                 <Grid item xs={8}>
-                    {e.Food[0].name}
+                    {e.category_id == 1
+                        ? e.Exercises[0]?.name
+                        : e.Food[0]?.name}
                 </Grid>
                 <Grid
                     item

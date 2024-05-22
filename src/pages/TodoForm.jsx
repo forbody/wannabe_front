@@ -12,7 +12,7 @@ const TodoForm = () => {
     // 뒤로가기 버튼
     const navigate = useNavigate();
     // 카테고리 토글버튼
-    const [category, setCategory] = useState("1");
+    const [category, setCategory] = useState(1);
     // 요일 토글버튼
     const [recur, setRecur] = useState([]);
     // 카테고리별 전체항목 [Exercise/Food]
@@ -26,8 +26,8 @@ const TodoForm = () => {
     // DropDown 2 에서 선택한 데이터를 자식에서 받아오는것
     const [selectItem, setSelectItem] = useState();
 
-    const onSelectCategory = (event, newAlignment) => {
-        setCategory((prev) => (prev == "1" ? "2" : "1"));
+    const onSelectCategory = (event, newAlignment) => {;
+        setCategory((prev) => (prev == 1? 2 : 1));
     };
 
     const onSelectRecur = (event, newFormats) => {
@@ -39,8 +39,10 @@ const TodoForm = () => {
             const res = await todoApi.getCategory(category);
             if (res.payload.id == 1) {
                 setElements(res.payload.Exercises);
+                setSortedItems(res.payload.Exercises);
             } else {
                 setElements(res.payload.Food);
+                setSortedItems(res.payload.Food);
             }
         } catch (err) {
             console.error("Error: ", err);
@@ -50,11 +52,13 @@ const TodoForm = () => {
     useEffect(() => {
         getCategory();
     }, [category]);
+
     useEffect(() => {
         onSetSort();
-        setSortValue('');
+        setSortValue('1');
         setSelectItem('');
     }, [elements]);
+
     useEffect(() => {
         onSetItem();
     }, [sortValue]);
@@ -83,6 +87,9 @@ const TodoForm = () => {
                     todo_list_id: res.payload.id,
                 });
                 console.log(res2);
+                localStorage.removeItem('date')
+                localStorage.removeItem('day')
+                navigate('/todolist')
         } catch (err) {
             console.error("Error: ", err);
         }
@@ -114,8 +121,8 @@ const TodoForm = () => {
                             aria-label="Category"
                             fullWidth
                         >
-                            <ToggleButton value="1">운동</ToggleButton>
-                            <ToggleButton value="2">식단</ToggleButton>
+                            <ToggleButton value={1}>운동</ToggleButton>
+                            <ToggleButton value={2}>식단</ToggleButton>
                         </ToggleButtonGroup>
                     </Box>
                     <Box sx={{ marginTop: "10px" }}>

@@ -7,12 +7,13 @@ import { Button } from '@mui/material'
 
 
 
-const Weekly = ({ setDate }) => {
+const Weekly = ({ setDate, setDay }) => {
     const onselectDate = (date) => {
         const offset = new Date().getTimezoneOffset() * 60000;
         const temp = new Date(date - offset);
         const selectDate = temp.toISOString().slice(0, 10);
         setDate(selectDate);
+        setDay(temp.getDay())
     };
     return (
         <>
