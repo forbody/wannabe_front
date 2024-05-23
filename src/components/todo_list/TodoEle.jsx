@@ -4,8 +4,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { orange, red } from "@mui/material/colors";
 import { useState } from "react";
 import { todoApi } from "../../api/services/TodoList";
+import { useAuth } from "../../hooks/useAuth";
 
 const TodoEle = ({ e, setIsAchieve }) => {
+    const { loginUser } = useAuth();
     const onAchieveELe = () => {
         setAchieve();
         setIsAchieve(prev => !prev)
@@ -13,7 +15,7 @@ const TodoEle = ({ e, setIsAchieve }) => {
 
     const setAchieve = async () => {
         try {
-            await todoApi.updateEleAchieve(e.id);
+            await todoApi.updateEleAchieve(e.id, loginUser);
         } catch (err) {
             console.error("Error: ", err);
         }
@@ -23,7 +25,7 @@ const TodoEle = ({ e, setIsAchieve }) => {
     };
     const onDeleteELe = async () => {
         try {
-            await todoApi.deleteTodoEle(e.id)
+            await todoApi.deleteTodoEle(e.id, loginUser);
             setIsAchieve((prev) => !prev);
         } catch (err) {
             console.error("Error: ", err);

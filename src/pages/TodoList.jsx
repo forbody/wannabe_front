@@ -61,21 +61,21 @@ const TodoList = () => {
     const navigate = useNavigate()
     const goTodoShareForm = async () => {
         try {
-            const res = await todoApi.getList(date);
-            if(!res.payload) {
+            const res = await todoApi.getList(date, loginUser);
+            if (!Boolean(res.payload?.Todo_elements)) {
                 Swal.fire({
                     title: "일과를 등록해주세요.",
                     // text: "That thing is still around?",
                     icon: "error",
                 });
-            } else if (res.payload.share){
+            } else if (res.payload.share) {
                 Swal.fire({
                     title: "이미 공유되었습니다.",
                     // text: "That thing is still around?",
-                    icon:'info',
+                    icon: "info",
                 });
-            } else  {
-                navigate('/todolist/share')
+            } else {
+                navigate("/todolist/share");
             }
         } catch (err) {
             console.error("Error: ", err);

@@ -3,8 +3,10 @@ import { BackgroundBox, ForegroundBox } from "../components/styled_comp/StyledDi
 import { useNavigate } from "react-router-dom";
 import { todoApi } from "../api/services/TodoList";
 import { useState } from "react";
+import { useAuth } from "../hooks/useAuth";
 
 const TodoShare = () => {
+    const { loginUser } = useAuth();
     const navigate = useNavigate();
     const [comment, setComment] = useState();
 
@@ -13,25 +15,24 @@ const TodoShare = () => {
     }
 
     const onShareList = async() => {
-        // 백 수정해야할듯? findorcreate로하고 //없으면 만들고// 있으면 수정하는식으로..?
         try {
-            const res1 = await todoApi.getList(localStorage.getItem('date'));
+            const res1 = await todoApi.getList(localStorage.getItem('date'), loginUser);
             const listId = res1.payload?.id;
+            console.log(res1.payload.share);
             if (res1.payload.share) { // 수정 버튼 누를때 comment id를 전달해줘야할듯?
                 const ShareCommentId = res1.payload?.Share_comments[0].id
-                const modify = await todoApi.modifyShareComment(ShareCommentId,{ comment });
-                console.log(modify);
+                const modify = await todoApi.modifyShareComment(ShareCommentId,{ comment } ,loginUser);
             } else {
                 const res2 = await todoApi.uploadShareComment({
                     comment,
                     listId,
-                });
+                }, loginUser);
                 console.log(res2);
                 if(res2.code==200) {
-                    const res3 = await todoApi.modifyListShare(listId);
+                    const res3 = await todoApi.modifyListShare(listId, loginUser);
                 }
             }
-            navigate("/todolist");
+            navigate(-1);
         } catch (err) {
             console.error("Error: ", err);
         }
@@ -81,7 +82,7 @@ const TodoShare = () => {
                                 color="warning"
                                 fullWidth
                                 onClick={() => {
-                                    navigate("/todolist");
+                                    navigate(-1);
                                 }}
                             >
                                 돌아가기

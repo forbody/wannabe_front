@@ -5,10 +5,12 @@ import { useEffect, useState } from 'react';
 import { blue, red } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 import { todoApi } from '../api/services/TodoList';
+import { useAuth } from '../hooks/useAuth';
 
 const day = ['일', '월', '화', '수']
 
 const TodoForm = () => {
+    const { loginUser } = useAuth();
     // 뒤로가기 버튼
     const navigate = useNavigate();
     // 카테고리 토글버튼
@@ -79,13 +81,13 @@ const TodoForm = () => {
         try {
                 const res = await todoApi.createTodoList({
                     date : localStorage.getItem('date')
-                })
+                }, loginUser)
                 const res2 = await todoApi.createTodoEle({
                     category_id: category,
                     todo_id: selectItem,
                     date: localStorage.getItem("date"),
                     todo_list_id: res.payload.id,
-                });
+                }, loginUser);
                 console.log(res2);
                 localStorage.removeItem('date')
                 localStorage.removeItem('day')
