@@ -3,33 +3,75 @@ import { ForegroundBox } from "../styled_comp/StyledDiv";
 import { Button, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { waterApi } from "../../api/services/water";
 import watercompleteimg from '../../assets/watercomplete.png'
 import { IoIosWater } from "react-icons/io";
+import { useAuth } from "../../hooks/useAuth";
 
-const Water = () => {
-    const [water, setWater] = useState(localStorage.getItem('water') || 0);
+const Water = ({userProfile}) => {
+    const { loginUser } = useAuth()
     const [waterComplete, setWaterComplete] = useState(false);
-    localStorage.setItem('water', water)
 
-    const handelWater = () => {
-        setWater(parseInt(water) + 10)
+    const [water, setWater] = useState(0);
+
+    const handleWater = () => {
+        setWater(water => (water) + 10);
+        updateWater(water);
     }
 
-    useEffect(()=>{
-        if (localStorage.water == 100) {
+    console.log(water);
+    const createWater = async () => {
+        try{
+            const res = await waterApi.createWater(loginUser)
+            if (res.code === 200) {
+                setWater(parseInt(res.payload.water));
+            } else {
+                throw new Error(res.message);
+            }
+        }catch(err) {
             Swal.fire({
-                title: "훌륭해요!",
-                text: "오늘 물을 2L 마셨어요!",
-                imageUrl: watercompleteimg,
-                imageWidth: 300,
-                imageHeight: 300,
-                imageAlt: "watercompleteimg"
+                title: "에러 발생",
+                text: err.message,
+                icon: "error"
             });
-            handelWater()
-        } else if (parseInt(localStorage.getItem('water')) > 100) {
+        }
+    }
+    const updateWater = async (water) => {
+        try{
+            const drink = water + 10
+            const res = await waterApi.updateWater(drink, loginUser)
+            if (res.code === 200) {
+                console.log('수분섭취 성공');
+                if (drink == 100) {
+                    Swal.fire({
+                        title: "훌륭해요!",
+                        text: "오늘 물을 2L 마셨어요!",
+                        imageUrl: watercompleteimg,
+                        imageWidth: 300,
+                        imageHeight: 300,
+                        imageAlt: "watercompleteimg"
+                    });
+                }
+            } else {
+                throw new Error(res.message);
+            }
+        }catch(err) {
+            Swal.fire({
+                title: "에러 발생",
+                text: err.message,
+                icon: "error"
+            });
+        }
+    }
+
+    useEffect(() => {
+        if (water >= 100) {
             setWaterComplete(true)
         }
-    }, [water])
+    }, [water]);
+    useEffect(()=>{
+        createWater()
+    }, [])
 
     return (
         <>
@@ -40,7 +82,7 @@ const Water = () => {
                 alignContents:'center'
             }}
             >
-            {waterComplete ? 
+            {waterComplete ?
             <>
             <Typography
             display='flex'
@@ -68,12 +110,13 @@ const Water = () => {
             >
                 오늘 마신 물의 양
             </Typography>
+            <h1>{water}</h1>
             <PieChart
             series={[
                 {
                 data: [
-                    { id: 0, value: localStorage.water, color:'#b3e3ff'},
-                    { id: 1, value: 100-localStorage.water, color:'#00000010'},
+                    { id: 0, value: water, color:'#b3e3ff'},
+                    { id: 1, value: 100-water, color:'#00000010'},
                 ],
                 innerRadius: 30,
                 outerRadius: 100,
@@ -100,7 +143,7 @@ const Water = () => {
             color="secondary"
             fullWidth
             startIcon={<IoIosWater/>}
-            onClick={handelWater}
+            onClick={handleWater}
             disabled={waterComplete}
         >물 마시기</Button>
         </ForegroundBox>

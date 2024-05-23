@@ -6,7 +6,7 @@ import { Button, Typography } from '@mui/material';
 import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { todoApi } from "../../api/services/TodoList";
 
-const FoodRecommend = () => {
+const FoodRecommend = ({meal}) => {
     const { loginUser } = useAuth()
     const [dishes, setDishes] = useState(null);
     const [totalCalory, setTotalCalory] = useState(0);
@@ -20,11 +20,12 @@ const FoodRecommend = () => {
             console.error("Error: ", err);
         }
     }
+
     const onSetRecommendFood = async() => {
         try {
             const date = localStorage.getItem('date')
             const res = await todoApi.getList(date, loginUser);
-            const todo_list_id = res.payload.id;
+            const todo_list_id = res.payload?.id;
             const res2 = await todoApi.shareTodoEle({
                 date,
                 todo_list_id,
@@ -54,7 +55,8 @@ const FoodRecommend = () => {
             setArr(arr)
         }
     }, [dishes]);
-    
+
+    console.log(dishes);
     // 아직 dishes를 못 가져온 상태처리
     if (!dishes) {
         return <div>Loading...</div>;
