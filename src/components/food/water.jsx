@@ -8,18 +8,19 @@ import watercompleteimg from '../../assets/watercomplete.png'
 import { IoIosWater } from "react-icons/io";
 import { useAuth } from "../../hooks/useAuth";
 
-const Water = ({userProfile}) => {
+const Water = () => {
     const { loginUser } = useAuth()
     const [waterComplete, setWaterComplete] = useState(false);
 
     const [water, setWater] = useState(0);
 
+    // 물 마시기 버튼
     const handleWater = () => {
         setWater(water => (water) + 10);
         updateWater(water);
     }
 
-    console.log(water);
+    // 최초 실행 시 물을 마실 컬럼 생성 or 가져오기
     const createWater = async () => {
         try{
             const res = await waterApi.createWater(loginUser)
@@ -36,6 +37,8 @@ const Water = ({userProfile}) => {
             });
         }
     }
+
+    // 물 마시기
     const updateWater = async (water) => {
         try{
             const drink = water + 10
@@ -110,7 +113,6 @@ const Water = ({userProfile}) => {
             >
                 오늘 마신 물의 양
             </Typography>
-            <h1>{water}</h1>
             <PieChart
             series={[
                 {

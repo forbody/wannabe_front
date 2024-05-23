@@ -6,19 +6,18 @@ import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
 import { useNavigate, useParams } from "react-router-dom";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { cyan } from "@mui/material/colors";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import InfoUpdate from "../components/signup/InfoUpdate";
-import { userApi } from "../api/services/user";
 import { todoApi } from "../api/services/TodoList";
-import { Cookies } from "react-cookie";
 import Swal from "sweetalert2";
-
-
+import GetUserandRoleModel from "../components/user/GetUserandRoleModel";
 
 const TodoList = () => {
-    const { loginUser, kakaoLogin, getUserInfoByToken }= useAuth();
+    const { loginUser, kakaoLogin }= useAuth();
+    // 카카오 로그인 유저 가운데 구유저/신유저 구분
+    const { userProfile } = GetUserandRoleModel();
+
     // 오늘 날짜 받아오기
     const offset = new Date().getTimezoneOffset() * 60000;
     const currentDate = new Date(Date.now() - offset).toISOString().slice(0, 10);
@@ -33,6 +32,8 @@ const TodoList = () => {
     const [food, setFood] = useState([]);
     const [exercise, setExercise] = useState([]);
 
+    const navigate = useNavigate()
+
     // getTodo()함수 호출 
     useEffect(() => {
         localStorage.setItem('date' , date)
@@ -41,7 +42,6 @@ const TodoList = () => {
         setFood([]);
         getTodo();
     },[date, isAchieve]) 
-
 
     const getTodo = async () => {
         try {
@@ -58,7 +58,6 @@ const TodoList = () => {
         }
     }
 
-    const navigate = useNavigate()
     const goTodoShareForm = async () => {
         try {
             const res = await todoApi.getList(date);
@@ -88,17 +87,6 @@ const TodoList = () => {
     if (loginUser === null) {
         kakaoLogin();
     }
-
-    // 카카오 로그인 유저 가운데 구유저/신유저 구분
-    const [userProfile, setUserProfile] = useState(null);
-    const getInfo = async () => {
-        setUserProfile(getUserInfoByToken())
-    }
-
-    // getInfo() 함수 호출
-    useEffect(() => {
-        getInfo();
-    }, [loginUser]);
 
     // 아직 userProfile을 못 가져온 상태처리
     if (userProfile === null) {

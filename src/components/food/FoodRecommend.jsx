@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { ForegroundBox } from "../styled_comp/StyledDiv";
 import { foodApi } from "../../api/services/food";
@@ -11,33 +11,47 @@ const FoodRecommend = ({meal}) => {
     const [dishes, setDishes] = useState(null);
     const [totalCalory, setTotalCalory] = useState(0);
     const [arr, setArr] = useState();
-    const getDishes = async () => {
-        try {
-            const res = await foodApi.getRandomDishes(loginUser);
-            const [main, side1, side2, side3, dessert] = res.result;
-            setDishes({main, side1, side2, side3, dessert});
-        } catch (err) {
-            console.error("Error: ", err);
-        }
+    const [recFoodDone, setRecFoodDone] = useState(false);
+    const prevMealRef = useRef(meal);
+
+    // meal에 해당하는 리스트가 디비에 존재하는지 찾고
+    // 없으면 랜덤 meal 가져오기
+    // 있으면 해당 meal 가져오기
+    const getTodayDishes = async() => {
+        const res = await foodApi.getTodayDishes({
+            meal
+        }, loginUser);
+        setRecFoodDone(res.isAdded)
+        const [main, side1, side2, side3, dessert] = res.result;
+        setDishes({main, side1, side2, side3, dessert});
     }
 
+    // meal 추가하기
     const onSetRecommendFood = async() => {
         try {
             const date = localStorage.getItem('date')
-            const res = await todoApi.getList(date, loginUser);
+            const res = await todoApi.createTodoList({date}, loginUser);
             const todo_list_id = res.payload?.id;
             const res2 = await todoApi.shareTodoEle({
                 date,
                 todo_list_id,
                 arr,
+                meal
             });
+            if (res.code === 200 && res2.code === 200) {
+                console.log('식단추가 성공');
+                setRecFoodDone(true)
+                prevMealRef.current = meal;
+            } else {
+                throw new Error(res.message);
+            }
         } catch (err) {
             console.error("Error: ", err);
         }
     }
 
     useEffect(() => {
-        getDishes();
+        getTodayDishes();
     }, [loginUser]);
 
     useEffect(() => {
@@ -56,7 +70,6 @@ const FoodRecommend = ({meal}) => {
         }
     }, [dishes]);
 
-    console.log(dishes);
     // 아직 dishes를 못 가져온 상태처리
     if (!dishes) {
         return <div>Loading...</div>;
@@ -100,9 +113,9 @@ const FoodRecommend = ({meal}) => {
                     marginTop:'8px'
                 }}
                 onClick={() => onSetRecommendFood()}
-            >내 식단에 추가하기</Button>
+                disabled={recFoodDone}
+            >나의 {meal} 식단에 추가하기</Button>
         </ForegroundBox>
-        
         </>
     );
 }

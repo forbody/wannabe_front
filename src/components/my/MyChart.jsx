@@ -1,13 +1,43 @@
+import { useEffect, useState } from 'react';
 import { Button, Typography } from "@mui/material";
 import { ForegroundBox } from "../styled_comp/StyledDiv";
 import { LineChart } from '@mui/x-charts/LineChart';
 import { FaUserPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import GetUserandRoleModel from "../user/GetUserandRoleModel";
 
-
-
-const MyChart = ({ userProfile, userBmiArray, bmiDateArray }) => {
+const MyChart = () => {
     const navigate = useNavigate();
+    const { userProfile } = GetUserandRoleModel();
+    const [userBmiArray, setUserBmiArray] = useState([]);
+    const [bmiDateArray, setBmiDateArray] = useState([]);
+    
+    // bmi와 bmi 생성 날짜 가져오기
+    useEffect(()=>{
+        if (userProfile) {
+            const ud = userProfile.UserDetail;
+            const lastProfile = ud.length
+            const updateBmiArr = []
+            const updateDateArr = []
+            for (let i=0; i<lastProfile; i++){
+                if (ud[i]?.bmi) {
+                    updateBmiArr.push(ud[i].bmi)
+                }
+                if (ud[i]?.createdAt) {
+                    let fullDate = new Date(ud[i].createdAt);
+                    let onlyDate = fullDate.getDate();
+                    updateDateArr.push(onlyDate);
+                }
+            }
+            setUserBmiArray(updateBmiArr);
+            setBmiDateArray(updateDateArr);
+        }
+    }, [userProfile])
+
+    if (userProfile === null) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <>
         <ForegroundBox
@@ -47,7 +77,6 @@ const MyChart = ({ userProfile, userBmiArray, bmiDateArray }) => {
         >
         <Button variant="text" size="large" color="secondary" startIcon={<FaUserPlus/>} onClick={ () => navigate('/my/update') } fullWidth>신체 지수 변화 추가</Button>
         </ForegroundBox>
-        
         </>
     );
 }
