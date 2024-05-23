@@ -86,6 +86,7 @@ const Food = () => {
                     </Typography>
                 </ForegroundBox>
                 <FoodRecommend meal={meal} />
+
             </BackgroundBox>
             <BackgroundBox
             style={{
@@ -93,6 +94,7 @@ const Food = () => {
             }}
             >
                 <Water />
+
             </BackgroundBox>
         </Box>
     );
