@@ -50,6 +50,11 @@ export const userApi = {
             "Authorization": loginUser,
         }
     }),
+    getRandomRoleModels: (loginUser) => api.get(`users/random-rolemodel`, {   // 랜덤 셀러브리티 3명 가져오기
+        headers: {
+            "Authorization": loginUser,
+        }
+    }),
 }
 
 

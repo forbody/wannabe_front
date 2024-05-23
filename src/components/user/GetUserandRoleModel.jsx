@@ -29,7 +29,7 @@ const GetUserandRoleModel = () => {
                 setUserImg(ud[lastProfile-1]?.img)
             }
         } catch (err) {
-            console.error("Error fetching model info: ", err);
+            console.error("Error fetching user info: ", err);
         }
     };
 

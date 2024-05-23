@@ -26,13 +26,11 @@ const FoodRecommend = ({meal}) => {
         setDishes({main, side1, side2, side3, dessert});
     }
 
-
     // meal 추가하기
     const onSetRecommendFood = async() => {
         try {
             const date = localStorage.getItem('date')
             const res = await todoApi.createTodoList({date}, loginUser);
-
             const todo_list_id = res.payload?.id;
             const res2 = await todoApi.shareTodoEle({
                 date,
