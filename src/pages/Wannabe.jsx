@@ -27,7 +27,7 @@ const Wannabe = () => {
 
             <BackgroundBox>
                 {shareList?.map((e) => (
-                    <ShowTodoList e={e} setIsChange={setIsChange} />
+                    <ShowTodoList e={e} key={e.id} setIsChange={setIsChange} />
                 ))}
             </BackgroundBox>
         </>

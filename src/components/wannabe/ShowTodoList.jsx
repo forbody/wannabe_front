@@ -5,18 +5,15 @@ import { userApi } from "../../api/services/user";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { orange, red, cyan } from "@mui/material/colors";
-import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { useAuth } from "../../hooks/useAuth";
 import { todoApi } from "../../api/services/TodoList";
-import TodoBox from "../todo_list/TodoBox"
 import { useNavigate } from "react-router-dom";
+import ShareEleBox from "./ShareEleBox";
 
 const ShowTodoList = ({ e, setIsChange }) => {
     const navigate = useNavigate();
     const offset = new Date().getTimezoneOffset() * 60000;
-    const currentDate = new Date(Date.now() - offset)
-        .toISOString()
-        .slice(0, 10);
+    const currentDate = new Date(Date.now() - offset).toISOString().slice(0, 10);
     localStorage.setItem("date", currentDate);
 
     const { loginUser, logout, getUserInfoByToken } = useAuth();
@@ -24,48 +21,40 @@ const ShowTodoList = ({ e, setIsChange }) => {
     const [userProfile, setUserProfile] = useState(null);
     const [userImg, setUserImg] = useState("");
 
-    const [food, setFood] = useState([]);
-    const [exercise, setExercise] = useState([]);
-    const [arr, setArr] = useState();
+    const [order, setOrder] = useState();
+    const [exercise, setExercise] = useState();
+    const [breakfast, setBreakfast] = useState();
+    const [lunch, setLunch] = useState();
+    const [dinner, setDinner] = useState();
+    const [loginUserId, setLoginUserId] = useState();
 
-    const userId = userProfile?.id;
-    const uploadUserId = e.Users[0]?.id;
+    const getUploadUser = async () => {
+        const userId = e.Users[0].id 
+        const res = await userApi.getUser(userId, loginUser)
+        setUserProfile(res.payload);
+    }
+
+    const uploadUserId = userProfile?.id;
     const getUserInfo = async () => {
         const up = await getUserInfoByToken();
-        setUserProfile(up);
+        setLoginUserId(up.id);
     };
     const getTodoEle = async () => {
         try {
             const res = await todoApi.getEle(e.id, loginUser);
-            res.payload.map((e) =>
-                e.category_id == 1
-                    ? setExercise((prev) => [...prev, { ...e.Exercises[0] }])
-                    : setFood((prev) => [...prev, { ...e.Food[0] }])
-            );
+            const exercise = res.payload.filter((e) => e.order == 0);
+            const breakfast = res.payload.filter((e) => e.order == 1);
+            const lunch = res.payload.filter((e) => e.order == 2);
+            const dinner = res.payload.filter((e) => e.order == 3);
+            setExercise(exercise)
+            setBreakfast(breakfast)
+            setLunch(lunch)
+            setDinner(dinner)
         } catch (err) {
             console.error("Error: ", err);
         }
     };
 
-    const onSetRecommendFood = async () => {
-        try {
-            let arr = [...food, ...exercise];
-            const date = localStorage.getItem("date");
-            const res = await todoApi.createTodoList({ date }, loginUser);
-            const todo_list_id = res.payload?.id;
-            const res2 = await todoApi.shareTodoEle(
-                {
-                    date,
-                    todo_list_id,
-                    arr,
-                },
-                loginUser
-            );
-            arr = [];
-        } catch (err) {
-            console.error("Error: ", err);
-        }
-    };
     const onModifyComments = () => {
         localStorage.setItem("date", e.date);
         navigate("/todolist/share");
@@ -81,7 +70,8 @@ const ShowTodoList = ({ e, setIsChange }) => {
     };
 
     useEffect(() => {
-        getUserInfo();
+        getUserInfo()
+        getUploadUser()
     }, [loginUser]);
 
     useEffect(() => {
@@ -119,7 +109,7 @@ const ShowTodoList = ({ e, setIsChange }) => {
                 )}
                 {userProfile?.user_name}
 
-                {userId === uploadUserId ? (
+                {loginUserId === uploadUserId ? (
                     <>
                         <IconButton
                             sx={{ margin: "0", padding: "0" }}
@@ -141,31 +131,34 @@ const ShowTodoList = ({ e, setIsChange }) => {
                         </IconButton>
                     </>
                 ) : (
-                    <IconButton
-                        sx={{ margin: "0", padding: "0" }}
-                        onClick={() => onSetRecommendFood()}
-                    >
-                        <FileUploadIcon
-                            sx={{ color: cyan[400] }}
-                            fontSize="small"
-                        />
-                    </IconButton>
+                    false
                 )}
             </Box>
+            {exercise?.length ? (
+                <ShareEleBox elements={exercise}>운동</ShareEleBox>
+            ) : (
+                false
+            )}
+            {breakfast?.length ? (
+                <ShareEleBox elements={breakfast}>아침</ShareEleBox>
+            ) : (
+                false
+            )}
+            {lunch?.length ? (
+                <ShareEleBox elements={lunch}>점심</ShareEleBox>
+            ) : (
+                false
+            )}
+            {dinner?.length ? (
+                <ShareEleBox elements={dinner}>저녁</ShareEleBox>
+            ) : (
+                false
+            )}
             <Box
                 sx={{
                     marginTop: "10px",
                     backgroundColor: "#fff",
-                    boxShadow: "0px 0px 1px #888888dd",
-                }}
-            >
-                elements들
-            </Box>
-            <Box
-                sx={{
-                    marginTop: "10px",
-                    backgroundColor: "#fff",
-                    boxShadow: "0px 0px 1px #888888dd",
+                    padding: "10px",
                 }}
             >
                 {e.Share_comments[0]?.comment}
