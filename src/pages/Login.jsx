@@ -35,23 +35,20 @@ const Login = () => {
 
     const onSubmit = (data) => {
         // 로그인 시켜주기
-        login((res) => {
-        if (res.data.code !== 200) {
-            Toast.fire({
-            icon: "error",
-            title: "로그인에 실패했습니다.",
-            text: '아이디 또는 비밀번호를 다시 확인해주세요'
-            });
-        } else {
-            navigate('/todolist')
-            Toast.fire({
-                icon: "success",
-                title: "환영합니다~!"
-            });
-        }
-        }, data)
+        login(
+            (response)=>
+                Toast.fire({icon: "error", title: "로그인에 실패했습니다.", text: '아이디 또는 비밀번호를 다시 확인해주세요'})
+            ,
+            () => {
+                Toast.fire({icon: "success", title: "환영합니다~!"})
+                navigate('/todolist')
+            }
+            ,
+            data
+        );
         reset();
     };
+    
     return ( 
         <Box
             width='80%'
@@ -63,6 +60,7 @@ const Login = () => {
         >
             <Typography
                 variant='h6'
+                fontWeight='600'
             >
             로그인
             </Typography>
@@ -123,19 +121,15 @@ const Login = () => {
                             margin:'16px 0 32px',
                             backgroundColor:'#FAE100'
                         }}
-                        to={`${process.env.REACT_APP_API_URL}/auth/kakao`}
+                        href={`${process.env.REACT_APP_API_URL}/auth/kakao`}
+                        startIcon=<RiKakaoTalkFill/>
                     >
-                    <RiKakaoTalkFill 
-                        style={{
-                            position: 'relative',
-                            right: '50px'
-                        }}
-                    />
                     카카오 로그인
                     </Button>
                     </form>
                 </ForegroundBox>
             </BackgroundBox>
+            <Button variant="text" href="/signup" color="white" style={{textDecoration:"underline"}}>회원가입이 필요하신가요?</Button>
         </Box>
     );
 }

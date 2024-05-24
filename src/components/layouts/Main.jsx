@@ -14,7 +14,7 @@ const Main = ({ children }) => {
                 alignItems="center"
                 alignContent="center"
                 wrap="nowrap"
-                min-height="100vh"
+                height="100vh"
                 style={{
                     background: 'linear-gradient(135deg, #fdf00e, #33cc33)'
                 }}
