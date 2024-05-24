@@ -26,7 +26,6 @@ const FoodRecommend = ({meal}) => {
         setDishes({main, side1, side2, side3, dessert});
     }
 
-
     // meal 추가하기
     const onSetRecommendFood = async() => {
         try {
