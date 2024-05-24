@@ -40,11 +40,57 @@ const WannabeCard = () => {
     
     return (
         <ForegroundBox
+                display="flex"
+                flexDirection="row"
                 style={{
                     width:'100%'
                 }}
                 >
                 <Card>
+                    <CardActionArea>
+                        <CardMedia
+                        component="img"
+                        height="300"
+                        image={`http://localhost:8000/${modelImg}`}
+                        />
+                        <CardContent>
+                        <span
+                            style={{
+                                fontSize:'x-large',
+                                fontWeight:'bold',
+                                color: '#33cc33'
+                            }}
+                        >
+                            {modelProfile.user_name}
+                        </span>
+                        <span
+                        style={{
+                            fontSize:'large',
+                            fontWeight:'bold',
+                            marginLeft:'4px'
+                        }}
+                        >
+                            의 추천루틴
+                        </span>
+                        <Button 
+                            fullWidth 
+                            color="secondary" 
+                            variant="contained"
+                            style={{
+                            marginTop:'16px'
+                        }}>자세히 보기</Button>
+                        </CardContent>
+                    </CardActionArea>
+                    <CardActions>
+                        <Button fullWidth color="error" variant="text" startIcon={<IoHeart/> }>
+                        좋아요
+                        </Button>
+                        <Button fullWidth color="secondary" variant="text" startIcon={<MdOutlineBookmarkAdd/> }>
+                        내 루틴에 추가
+                        </Button>
+                    </CardActions>
+                    </Card>
+                    <Card>
                     <CardActionArea>
                         <CardMedia
                         component="img"

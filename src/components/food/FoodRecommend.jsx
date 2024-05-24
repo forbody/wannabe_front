@@ -10,7 +10,7 @@ const FoodRecommend = ({meal}) => {
     const { loginUser } = useAuth()
     const [dishes, setDishes] = useState(null);
     const [totalCalory, setTotalCalory] = useState(0);
-    const [arr, setArr] = useState();
+    const [arr, setArr] = useState([]);
     const [recFoodDone, setRecFoodDone] = useState(false);
     const prevMealRef = useRef(meal);
 
@@ -22,12 +22,12 @@ const FoodRecommend = ({meal}) => {
             meal
         }, loginUser);
         setRecFoodDone(res.isAdded)
-        const [main, side1, side2, side3, dessert] = res.result;
-        setDishes({main, side1, side2, side3, dessert});
+        setDishes(res.result);
     }
 
     // meal 추가하기
     const onSetRecommendFood = async() => {
+        console.log(arr);
         try {
             const date = localStorage.getItem('date')
             const res = await todoApi.createTodoList({date}, loginUser);
@@ -37,7 +37,7 @@ const FoodRecommend = ({meal}) => {
                 todo_list_id,
                 arr,
                 meal
-            });
+            }, loginUser);
             if (res.code === 200 && res2.code === 200) {
                 console.log('식단추가 성공');
                 setRecFoodDone(true)
@@ -56,17 +56,14 @@ const FoodRecommend = ({meal}) => {
 
     useEffect(() => {
         if (dishes) {
-            const { main, side1, side2, side3, dessert } = dishes;
-            const total = [main, side1, side2, side3, dessert].reduce((sum, dish) => sum + (dish?.calory || 0), 0);
-            const arr = [
-                { category_id: main.category_id, todo_id: main.id },
-                { category_id: side1.category_id, todo_id: side1.id },
-                { category_id: side2.category_id, todo_id: side2.id },
-                { category_id: side3.category_id, todo_id: side3.id },
-                { category_id: dessert.category_id, todo_id: dessert.id },
-            ];
+            const total = dishes.reduce((sum, d)=> sum + d.calory, 0);
+            let temp = []
+            dishes.forEach(k => {
+                const obj = { category_id: k.category_id, todo_id: k.id }
+                temp.push(obj)
+            })
+            setArr(temp);
             setTotalCalory(total);
-            setArr(arr)
         }
     }, [dishes]);
 
@@ -74,7 +71,6 @@ const FoodRecommend = ({meal}) => {
     if (!dishes) {
         return <div>Loading...</div>;
     } 
-
     return (
         <>
         <ForegroundBox
@@ -84,11 +80,11 @@ const FoodRecommend = ({meal}) => {
                 alignItems:'center'
             }}
             >
-            <Typography>{dishes.main?.name}   {dishes.main?.calory}kcal</Typography>
-            <Typography>{dishes.side1?.name}   {dishes.side1?.calory}kcal</Typography>
-            <Typography>{dishes.side2?.name}   {dishes.side2?.calory}kcal</Typography>
-            <Typography>{dishes.side3?.name}   {dishes.side3?.calory}kcal</Typography>
-            <Typography>{dishes.dessert?.name}   {dishes.dessert?.calory}kcal</Typography>
+            {
+                dishes && dishes.map(d=> (
+                    <Typography>{d.name}   {d.calory}kcal</Typography>
+                ))
+            }
             <Typography 
                 color='secondary'
                 style={{
