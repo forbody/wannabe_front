@@ -12,10 +12,13 @@ const ShareEleBox = ({children, elements}) => {
     const [isTrue, setIsTrue] = useState(false);
     const {loginUser} = useAuth()
     const [totalCal, setTotalCal] = useState();
+    const [order, setOrder] = useState();
+
+    const uniqueOrder = [...new Set(elements?.map((item) => item.order))];
     useEffect(() => {
         setTotalCal(elements.reduce((acc, e) => acc + e.Food[0]?.calory, 0));    
+        setOrder(...uniqueOrder);
     },[])
-    
     
 
     const onIsTrue = () => {
@@ -27,16 +30,15 @@ const ShareEleBox = ({children, elements}) => {
             const date = localStorage.getItem("date");
             const res = await todoApi.createTodoList({ date }, loginUser);
             const todo_list_id = res.payload?.id;
-            // const res2 = await todoApi.shareTodoEle(
-            //     {
-            //         date,
-            //         todo_list_id,
-            //         elements,
-            //         order,
-            //     },
-            //     loginUser
-            // );
-            // arr = [];
+            const res2 = await todoApi.shareTodoEle(
+                {
+                    date: date,
+                    todo_list_id: todo_list_id,
+                    arr: elements,
+                    order : order,
+                },
+                loginUser
+            );
         } catch (err) {
             console.error("Error: ", err);
         }
