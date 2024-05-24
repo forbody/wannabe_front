@@ -4,13 +4,15 @@ import { BackgroundBox} from "../components/styled_comp/StyledDiv";
 import { Box } from "@mui/material";
 import ShowTodoList from "../components/wannabe/ShowTodoList";
 import WannabeCard from "../components/wannabe/WannabeCard";
+import { useAuth } from "../hooks/useAuth";
 
 const Wannabe = () => {
+    const { loginUser } = useAuth();
     const [shareList, setShareList] = useState();
-
+    const [isChange, setIsChange] = useState(false);
     const getShareList = async() => {
         try {
-            const res = await todoApi.getShareList()
+            const res = await todoApi.getShareList(loginUser);
             setShareList(res.payload)
         } catch (err) {
             console.error("Error: ", err);
@@ -19,7 +21,7 @@ const Wannabe = () => {
 
     useEffect(() =>{
         getShareList()
-    },[])
+    }, [isChange]);
 
     return ( 
         <Box
@@ -38,7 +40,7 @@ const Wannabe = () => {
             </BackgroundBox>
             <BackgroundBox>
                 {shareList?.map((e) => (
-                    <ShowTodoList e={e}/>
+                    <ShowTodoList e={e} key={e.id} setIsChange={setIsChange} />
                 ))}
             </BackgroundBox>
         </Box>

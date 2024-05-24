@@ -1,7 +1,8 @@
 import { Box , IconButton } from "@mui/material";
 import Weekly from "../components/todo_list/Weekly";
 import { BackgroundBox } from "../components/styled_comp/StyledDiv";
-import TodoBox from "../components/todo_list/TodoBox";
+import TodoBoxExercise from "../components/todo_list/TodoBoxExercise";
+import TodoBoxFood from "../components/todo_list/TodoBoxFood"
 import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
 import { useNavigate, useParams } from "react-router-dom";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
@@ -38,8 +39,6 @@ const TodoList = () => {
     useEffect(() => {
         localStorage.setItem('date' , date)
         localStorage.setItem('day', day)
-        setExercise([]);
-        setFood([]);
         getTodo();
     },[date, isAchieve]) 
 
@@ -48,11 +47,14 @@ const TodoList = () => {
             const res1 = await todoApi.getList(date, loginUser);
             const listId = res1.payload?.id;
             const res2 = await todoApi.getEle(listId, loginUser);
-            res2.payload.map((e) =>
-                e.category_id == 1
-                    ? setExercise((prev) => [...prev, { ...e }])
-                    : setFood((prev) => [...prev, { ...e }])
-            );
+            let fo = [];
+            let ex = [];
+            res2.payload.map((e) => {
+                e.category_id == 1 ? ex.push({...e}) : fo.push({...e});
+            });
+            setExercise(ex);
+            setFood(fo);
+            
         } catch (err) {
             console.error("Error: ", err);
         }
@@ -60,21 +62,21 @@ const TodoList = () => {
 
     const goTodoShareForm = async () => {
         try {
-            const res = await todoApi.getList(date);
-            if(!res.payload) {
+            const res = await todoApi.getList(date, loginUser);
+            if (!Boolean(res.payload?.Todo_elements)) {
                 Swal.fire({
                     title: "일과를 등록해주세요.",
                     // text: "That thing is still around?",
                     icon: "error",
                 });
-            } else if (res.payload.share){
+            } else if (res.payload.share) {
                 Swal.fire({
                     title: "이미 공유되었습니다.",
                     // text: "That thing is still around?",
-                    icon:'info',
+                    icon: "info",
                 });
-            } else  {
-                navigate('/todolist/share')
+            } else {
+                navigate("/todolist/share");
             }
         } catch (err) {
             console.error("Error: ", err);
@@ -133,12 +135,12 @@ const TodoList = () => {
                         <AddBoxRoundedIcon color="secondary" fontSize="large" />
                     </IconButton>
                 </Box>
-                <TodoBox element={exercise} setIsAchieve={setIsAchieve}>
+                <TodoBoxExercise element={exercise} setIsAchieve={setIsAchieve}>
                     운동
-                </TodoBox>
-                <TodoBox element={food} setIsAchieve={setIsAchieve}>
+                </TodoBoxExercise>
+                <TodoBoxFood element={food} setIsAchieve={setIsAchieve}>
                     식단
-                </TodoBox>
+                </TodoBoxFood>
             </BackgroundBox>
         </Box>
     );
