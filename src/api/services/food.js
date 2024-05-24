@@ -15,5 +15,10 @@ export const foodApi = {
         headers: {
             "Authorization": loginUser,
         }
+    }),
+    getTodayDishes: (data, loginUser) => api.post(`food/today-dish`, data, {
+        headers: {
+            "Authorization": loginUser,
+        }
     })
 }
