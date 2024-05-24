@@ -35,9 +35,9 @@ const TodoForm = () => {
     const onSelectRecur = (event, newFormats) => {
         setRecur(newFormats); // [array]형식으로 나옴 없을땐 빈배열
     };
-    const onSelectOrder = (e) => {
-        setOrder(e.target.value)
-    }
+    const onSelectOrder = (event, newOrder) => {
+        setOrder(newOrder);
+    };
 
     const getCategory = async () => {
         try {
@@ -137,7 +137,7 @@ const TodoForm = () => {
                                 value={order}
                                 exclusive
                                 onChange={onSelectOrder}
-                                // aria-label="order"
+                                aria-label="order"
                                 fullWidth
                             >
                                 <ToggleButton value={1}>아침</ToggleButton>
