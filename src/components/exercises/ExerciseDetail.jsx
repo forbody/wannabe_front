@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../hooks/useAuth";
 
+
 const ExerciseDetail = ({exercise, favExercises, refreshFav, setRefreshFav }) => {
     const [match, setMatch] = useState();
     const { loginUser } = useAuth();

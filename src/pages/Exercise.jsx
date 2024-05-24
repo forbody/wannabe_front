@@ -6,6 +6,8 @@ import ExerciseDetail from "../components/exercises/ExerciseDetail";
 import ExerciseSelect from "../components/exercises/ExerciseSelect";
 import ExerciseFollow from "../components/exercises/ExerciseFollow";
 import { useAuth } from './../hooks/useAuth';
+import Carousel from "react-material-ui-carousel";
+import ExerciseModal from "../components/exercises/ExerciseModal";
 
 const Exercise = () => {
     const { loginUser } = useAuth();
@@ -30,17 +32,16 @@ const Exercise = () => {
             headers: {
                 Authorization: loginUser
             }
-        }); // 1111
+        }); 
         setFavExercises(res.data.payload);
     }
 
-    // 한번만 반복할 수 있게 만드는 함수
     useEffect(() => {
         getExercises();
         getRandomTip();
     }, []);
     useEffect(() => {
-        getFavExercises(); // 2222  -> 주석 해제시 오류발생
+        getFavExercises(); //
     }, [refreshFav]);
     // 해당 유저가 즐겨찾기한 운동 목록 조회
 
@@ -65,15 +66,24 @@ const Exercise = () => {
                 </BackgroundBox>
                 <BackgroundBox half>
                     헬스 팁 - {randTip?.health_tip}
+                    <ExerciseModal />
                 </BackgroundBox>
                 <BackgroundBox>
-                    내가 즐겨찾기 한 운동
-                    
-                    {
-                        favExercises && favExercises.map(f => (
-                            <ExerciseFollow favExercise={f} />
-                        ))
-                    }
+                    <h3>내가 즐겨찾기 한 운동</h3>
+                    <br />
+                    <Carousel 
+                        showArrows={false}
+                        autoPlay={false}
+                        infiniteLoop={true}
+                        showThumbs={false}
+                        swipe={true}
+                    >
+                                {
+                                    favExercises && favExercises.map(f => (
+                                        <ExerciseFollow favExercise={f} />
+                                    ))
+                                }
+                    </Carousel>
                 </BackgroundBox>
                 <BackgroundBox>
                     운동 목록
