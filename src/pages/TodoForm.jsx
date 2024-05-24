@@ -5,10 +5,10 @@ import { useEffect, useState } from 'react';
 import { blue, red } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 import { todoApi } from '../api/services/TodoList';
-
-const day = ['일', '월', '화', '수']
+import { useAuth } from '../hooks/useAuth';
 
 const TodoForm = () => {
+    const { loginUser } = useAuth();
     // 뒤로가기 버튼
     const navigate = useNavigate();
     // 카테고리 토글버튼
@@ -17,6 +17,8 @@ const TodoForm = () => {
     const [recur, setRecur] = useState([]);
     // 카테고리별 전체항목 [Exercise/Food]
     const [elements, setElements] = useState();
+    // 카테고리가 [Food] 일때 order값 변경
+    const [order, setOrder] = useState(0);
     // DropDown 1 으로 목록의 데이터로 줄 sort값만 가져온 배열
     const [sort, setSort] = useState();
     // DropDown 1 에서 선택한 데이터를 자식에서 받아오는것
@@ -26,13 +28,16 @@ const TodoForm = () => {
     // DropDown 2 에서 선택한 데이터를 자식에서 받아오는것
     const [selectItem, setSelectItem] = useState();
 
-    const onSelectCategory = (event, newAlignment) => {;
+    const onSelectCategory = () => {;
         setCategory((prev) => (prev == 1? 2 : 1));
     };
 
     const onSelectRecur = (event, newFormats) => {
         setRecur(newFormats); // [array]형식으로 나옴 없을땐 빈배열
     };
+    const onSelectOrder = (e) => {
+        setOrder(e.target.value)
+    }
 
     const getCategory = async () => {
         try {
@@ -51,12 +56,13 @@ const TodoForm = () => {
     
     useEffect(() => {
         getCategory();
+        setOrder(category==1? 0:1);
     }, [category]);
 
     useEffect(() => {
         onSetSort();
-        setSortValue('1');
-        setSelectItem('');
+        setSortValue();
+        setSelectItem();
     }, [elements]);
 
     useEffect(() => {
@@ -74,18 +80,17 @@ const TodoForm = () => {
     };
 
     const onUploadTodoEle = async () => {
-        // console.log("todo_id", selectItem);
-        // console.log('category_id', category);
         try {
                 const res = await todoApi.createTodoList({
                     date : localStorage.getItem('date')
-                })
+                }, loginUser)
                 const res2 = await todoApi.createTodoEle({
                     category_id: category,
                     todo_id: selectItem,
+                    order : order,
                     date: localStorage.getItem("date"),
                     todo_list_id: res.payload.id,
-                });
+                }, loginUser);
                 console.log(res2);
                 localStorage.removeItem('date')
                 localStorage.removeItem('day')
@@ -118,13 +123,29 @@ const TodoForm = () => {
                             value={category}
                             exclusive
                             onChange={onSelectCategory}
-                            aria-label="Category"
+                            // aria-label="Category"
                             fullWidth
                         >
                             <ToggleButton value={1}>운동</ToggleButton>
                             <ToggleButton value={2}>식단</ToggleButton>
                         </ToggleButtonGroup>
                     </Box>
+                    {category == 2 && (
+                        <Box sx={{ marginTop: "10px" }}>
+                            <ToggleButtonGroup
+                                color="standard"
+                                value={order}
+                                exclusive
+                                onChange={onSelectOrder}
+                                // aria-label="order"
+                                fullWidth
+                            >
+                                <ToggleButton value={1}>아침</ToggleButton>
+                                <ToggleButton value={2}>점심</ToggleButton>
+                                <ToggleButton value={3}>저녁</ToggleButton>
+                            </ToggleButtonGroup>
+                        </Box>
+                    )}
                     <Box sx={{ marginTop: "10px" }}>
                         <DropDownForm
                             ele={sort}

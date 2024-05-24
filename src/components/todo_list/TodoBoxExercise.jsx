@@ -5,13 +5,12 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { useEffect, useState } from "react";
 import TodoEle from "./TodoEle";
 
-const TodoBox = ({ element, setIsAchieve ,children}) => {
+const TodoBoxExercise = ({ element, setIsAchieve, children }) => {
     const [isTrue, setIsTrue] = useState(false);
-
     const onIsTrue = () => {
         setIsTrue(!isTrue);
     };
-    
+
     /// 이부분 실시간 연동
     let total = element?.length;
     let achieve = element?.filter((e) => e.achieve === true).length;
@@ -19,7 +18,6 @@ const TodoBox = ({ element, setIsAchieve ,children}) => {
     return (
         <ForegroundBox
             style={{
-                backgroundColor: "#ffffff99",
                 width: "300px",
                 flexDirection: "column",
                 marginTop: "10px",
@@ -54,11 +52,11 @@ const TodoBox = ({ element, setIsAchieve ,children}) => {
             </Grid>
             {isTrue && element
                 ? element.map((e) => (
-                    <TodoEle e={e} key={e.id} setIsAchieve={setIsAchieve} />
-                ))
+                      <TodoEle e={e} key={e.id} setIsAchieve={setIsAchieve} />
+                  ))
                 : false}
         </ForegroundBox>
     );
 };
 
-export default TodoBox;
+export default TodoBoxExercise;

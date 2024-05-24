@@ -31,12 +31,12 @@ export const userApi = {
             "Content-Type": "multipart/form-data",
         }
     }),
-    like: (id, loginUser) => api.post('users/like', {id}, {            // 유저 좋아요
+    like: (id, loginUser) => api.post('users/like', { id }, {            // 유저 좋아요
         headers: {
             "Authorization": loginUser,
         }
     }),
-    unlike: (id, loginUser) => api.delete('users/like',{               // 유저 좋아요 취소
+    unlike: (id, loginUser) => api.delete('users/like', {               // 유저 좋아요 취소
         headers: {
             "Authorization": loginUser,
         }, data: {id}}),
@@ -46,6 +46,11 @@ export const userApi = {
         }
     }),
     getLikings: (id, loginUser) => api.get(`users/${id}/likings`, {    // 내가 좋아요 한 유저 조회
+        headers: {
+            "Authorization": loginUser,
+        }
+    }),
+    getRandomRoleModels: (loginUser) => api.get(`users/random-rolemodel`, {   // 랜덤 셀러브리티 3명 가져오기
         headers: {
             "Authorization": loginUser,
         }

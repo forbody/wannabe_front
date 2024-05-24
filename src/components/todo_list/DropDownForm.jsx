@@ -24,7 +24,6 @@ const DropDownForm = ({ ele,item,setItem }) => {
     const theme = useTheme();
     const [elements, setElements] = useState();
     const handleChange = (event) => {
-        console.log(event.target.value);
         setItem(event.target.value);
     };
     useEffect(() => {
@@ -37,7 +36,7 @@ const DropDownForm = ({ ele,item,setItem }) => {
             fullWidth
             value={item}
         >
-            <MenuItem disabled>==선택==</MenuItem>
+            <MenuItem value={1}>==선택==</MenuItem>
             {elements?.map((e) =>
                 typeof e === "object" ? (
                     <MenuItem key={e.id} value={e.id}>

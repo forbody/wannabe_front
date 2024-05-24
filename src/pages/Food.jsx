@@ -1,55 +1,20 @@
 import { Box, Typography } from "@mui/material";
 import { BackgroundBox, ForegroundBox } from "../components/styled_comp/StyledDiv";
-import { useAuth } from "../hooks/useAuth";
 import { useEffect, useState } from "react";
-import { userApi } from "../api/services/user";
 import FoodRecommend from "../components/food/FoodRecommend";
-import { PieChart } from "@mui/x-charts";
 import Water from "../components/food/water";
+import GetUserandRoleModel from "../components/user/GetUserandRoleModel";
 
 const Food = () => {
-    const { loginUser, getUserInfoByToken } = useAuth()
-
-    // 유저 정보 가져오기
-    const [userProfile, setUserProfile] = useState(null);
-    const getUserInfo = async() => {
-        const up = await getUserInfoByToken();
-        setUserProfile(up);
-    }
-    useEffect(() => {
-        getUserInfo();
-    }, [loginUser]);
-
-    // 롤모델 정보 가져오기
-    const [modelProfile, setModelProfile] = useState(null);
-    const [modelImg, setModelImg] = useState("");
-    const getModelInfo = async () => {
-        try {
-            const role_model = userProfile.role_model_id;
-            const res = await userApi.getUser(`${role_model}`, loginUser);
-            setModelProfile(res.payload);
-        } catch (err) {
-            console.error("Error: ", err);
-        }
-    }
-    useEffect(() => {
-        getModelInfo();
-    }, [userProfile]);
-
-    useEffect(()=>{
-        if (modelProfile) {
-            const md = modelProfile.UserDetail;
-            const lastProfile = md.length
-            setModelImg(md[lastProfile-1]?.img)
-        }
-    }, [modelProfile])
+    const { userProfile, modelProfile, modelImg } = GetUserandRoleModel();
 
     const [meal, setMeal] = useState('');
     const [timeColor, setTimeColor] = useState('linear-gradient(135deg, #fdf00e, #33cc33)')
+    
+    // 아침, 점심, 저녁 결정
     useEffect(() => {
         const today = new Date();
         const today_time = today.getHours();
-    
         if (today_time >= 0 && today_time <= 10) {
             setMeal('아침');
             setTimeColor('linear-gradient(135deg, #ff9b00, #fdf00e)');
@@ -120,14 +85,16 @@ const Food = () => {
                         "오늘도 화이팅이에요!"
                     </Typography>
                 </ForegroundBox>
-                <FoodRecommend/>
+                <FoodRecommend meal={meal} />
+
             </BackgroundBox>
             <BackgroundBox
             style={{
                 marginTop:'24px'
             }}
             >
-                <Water/>
+                <Water />
+
             </BackgroundBox>
         </Box>
     );
