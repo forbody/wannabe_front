@@ -163,15 +163,9 @@ const ShowTodoList = ({ e, setIsChange }) => {
             ) : (
                 false
             )}
-            <Box
-                sx={{
-                    marginTop: "10px",
-                    backgroundColor: "#fff",
-                    padding: "10px",
-                }}
-            >
+            <ForegroundBox>
                 {e.Share_comments[0]?.comment}
-            </Box>
+            </ForegroundBox>
         </ForegroundBox>
     );
 };

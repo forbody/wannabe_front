@@ -46,7 +46,7 @@ const ShareEleBox = ({children, elements}) => {
     return (
         <ForegroundBox>
             <Grid container sx={{ alignItems: "center" }}>
-                <Grid item xs={9}>
+                <Grid item xs={9} fontSize={20}>
                     {children}
                 </Grid>
                 <Grid item xs={1.5}>
@@ -55,8 +55,7 @@ const ShareEleBox = ({children, elements}) => {
                         onClick={() => onSetRecommendFood()}
                     >
                         <FileUploadIcon
-                            sx={{ color: cyan[400] }}
-                            fontSize="medium"
+                            sx={{ color: cyan[400] , fontSize: '30px'}}
                         />
                     </IconButton>
                 </Grid>
@@ -65,9 +64,9 @@ const ShareEleBox = ({children, elements}) => {
                         sx={{ margin: "0", padding: "0", textAlign: "center" }}
                     >
                         {isTrue ? (
-                            <ExpandLessIcon fontSize="medium" />
+                            <ExpandLessIcon fontSize="large" />
                         ) : (
-                            <ExpandMoreIcon fontSize="medium" />
+                            <ExpandMoreIcon fontSize="large" />
                         )}
                     </IconButton>
                 </Grid>
@@ -85,7 +84,7 @@ const ShareEleBox = ({children, elements}) => {
                                 {e.Exercises[0].name}
                             </Box>
                         ) : (
-                            <Box
+                            <Grid container
                                 sx={{
                                     width: "90%",
                                     padding: "0px 10px",
@@ -93,8 +92,13 @@ const ShareEleBox = ({children, elements}) => {
                                 }}
                                 key={e.id}
                             >
-                                {e.Food[0].name}
-                            </Box>
+                                <Grid item xs={10}>
+                                    {e.Food[0].name}
+                                </Grid>
+                                <Grid item xs={2}>
+                                    {e.Food[0].calory}kcal
+                                </Grid>
+                            </Grid>
                         )
                     )}
             </Grid>

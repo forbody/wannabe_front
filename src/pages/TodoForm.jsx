@@ -160,7 +160,7 @@ const TodoForm = () => {
                             item={selectItem}
                         />
                     </Box>
-                    <Box sx={{ marginTop: "10px" }}>
+                    {/* <Box sx={{ marginTop: "10px" }}>
                         <ToggleButtonGroup
                             value={recur}
                             onChange={onSelectRecur}
@@ -179,7 +179,7 @@ const TodoForm = () => {
                                 토
                             </ToggleButton>
                         </ToggleButtonGroup>
-                    </Box>
+                    </Box> */}
                     <Grid container spacing={1} sx={{ marginTop: "10px" }}>
                         <Grid item xs={6}>
                             <Button
