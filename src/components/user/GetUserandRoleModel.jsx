@@ -66,11 +66,6 @@ const GetUserandRoleModel = () => {
     useEffect(() => {
         if (userProfile) {
             getUserImg();
-        }
-    }, [userProfile]);
-
-    useEffect(() => {
-        if (userProfile) {
             getModelInfo();
         }
     }, [userProfile]);

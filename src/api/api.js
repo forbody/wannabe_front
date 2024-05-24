@@ -1,4 +1,5 @@
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const api = axios.create({
     baseURL: `${process.env.REACT_APP_API_URL}`
@@ -31,12 +32,10 @@ const useRefreshHandler = async (error) => {
         return Promise.reject(error);
     } else {
         // accessToken으로 검증 요청 API
-        console.log(localStorage.getItem('token'))
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/refresh`,
-            {
+        console.log(jwtDecode(localStorage.getItem('token')))
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/refresh`,{
                 accessToken: localStorage.getItem('token')
-            }
-        );
+        });
         if (res.status === 200) {
             console.log(res);
             localStorage.setItem('token', res.data.accessResult);
