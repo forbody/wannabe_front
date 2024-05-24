@@ -113,7 +113,6 @@ const Water = () => {
             >
                 오늘 마신 물의 양
             </Typography>
-            <h1>{water}</h1>
             <PieChart
             series={[
                 {
