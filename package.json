@@ -7,7 +7,9 @@
     "@emotion/styled": "^11.11.5",
     "@mobiscroll/react": "npm:@mobiscroll/react-trial@5.29.2",
     "@mui/icons-material": "^5.15.15",
-    "@mui/material": "^5.15.15",
+    "@mui/material": "^5.15.18",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.18",
+    "@mui/system": "^5.15.15",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -22,6 +24,7 @@
     "react-native-slideable-calendar-strip": "^0.4.0",
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
+    "styled-components": "^6.1.11",
     "sweetalert2": "^11.10.8",
     "web-vitals": "^2.1.0"
   },
