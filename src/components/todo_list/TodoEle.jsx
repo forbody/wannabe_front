@@ -4,8 +4,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { orange, red } from "@mui/material/colors";
 import { useState } from "react";
 import { todoApi } from "../../api/services/TodoList";
+import { useAuth } from "../../hooks/useAuth";
 
 const TodoEle = ({ e, setIsAchieve }) => {
+    const { loginUser } = useAuth();
     const onAchieveELe = () => {
         setAchieve();
         setIsAchieve(prev => !prev)
@@ -13,17 +15,17 @@ const TodoEle = ({ e, setIsAchieve }) => {
 
     const setAchieve = async () => {
         try {
-            await todoApi.updateEleAchieve(e.id);
+            await todoApi.updateEleAchieve(e.id,loginUser);
         } catch (err) {
             console.error("Error: ", err);
         }
     }
     const onModifyELe = () => {
-        console.log(1);
+        console.log(1); // 하...이부분 어떻게만들어야하나~~~
     };
     const onDeleteELe = async () => {
         try {
-            await todoApi.deleteTodoEle(e.id)
+            await todoApi.deleteTodoEle(e.id, loginUser);
             setIsAchieve((prev) => !prev);
         } catch (err) {
             console.error("Error: ", err);
@@ -34,18 +36,19 @@ const TodoEle = ({ e, setIsAchieve }) => {
     return (
         <>
             <Grid container spacing={0} alignItems={"center"}>
-                <Grid item xs={2}>
+                    <Grid item xs={2}>
                     <Checkbox
                         color="success"
                         checked={e.achieve}
                         onClick={() => onAchieveELe()}
                     />
-                </Grid>
-                <Grid item xs={8}>
-                    {e.category_id == 1
-                        ? e.Exercises[0]?.name
-                        : e.Food[0]?.name}
-                </Grid>
+                    </Grid>
+                    <Grid item xs={8}>
+                        {e.category_id == 1
+                            ? e.Exercises[0]?.name
+                            : e.Food[0]?.name}
+                    </Grid>
+        
                 <Grid
                     item
                     xs={1}

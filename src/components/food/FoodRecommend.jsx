@@ -32,7 +32,6 @@ const FoodRecommend = ({meal}) => {
         try {
             const date = localStorage.getItem('date')
             const res = await todoApi.createTodoList({date}, loginUser);
-
             const todo_list_id = res.payload?.id;
             const res2 = await todoApi.shareTodoEle({
                 date,
