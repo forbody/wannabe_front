@@ -36,19 +36,19 @@ const TodoEle = ({ e, setIsAchieve }) => {
     return (
         <>
             <Grid container spacing={0} alignItems={"center"}>
-                    <Grid item xs={2}>
+                <Grid item xs={2}>
                     <Checkbox
                         color="success"
                         checked={e.achieve}
                         onClick={() => onAchieveELe()}
+                        size="small"
                     />
-                    </Grid>
-                    <Grid item xs={8}>
-                        {e.category_id == 1
-                            ? e.Exercises[0]?.name
-                            : e.Food[0]?.name}
-                    </Grid>
-        
+                </Grid>
+                <Grid item xs={8}>
+                    {e.category_id == 1
+                        ? e.Exercises[0]?.name
+                        : e.Food[0]?.name}
+                </Grid>
                 <Grid
                     item
                     xs={1}
@@ -72,6 +72,15 @@ const TodoEle = ({ e, setIsAchieve }) => {
                         <DeleteIcon fontSize="small" sx={{ color: red[400] }} />
                     </IconButton>
                 </Grid>
+                {e.category_id == 1 ? (
+                    <Grid item xs={12} textAlign="right">
+                        {e.reps}회 {e.sets}세트
+                    </Grid>
+                ) : (
+                    <Grid item xs={12} textAlign="right">
+                        {e.Food[0]?.calory}kacl
+                    </Grid>
+                )}
             </Grid>
         </>
     );

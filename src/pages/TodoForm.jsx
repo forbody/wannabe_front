@@ -119,6 +119,11 @@ const TodoForm = () => {
             display="flex"
             flexDirection="column"
             alignItems="center"
+            style={{
+                padding: "36px 0 80px",
+                overflowY: "scroll",
+                scrollbarWidth: "none",
+            }}
         >
             <h1>Todo Form</h1>
             <BackgroundBox style={{ width: "90%" }}>
@@ -146,10 +151,14 @@ const TodoForm = () => {
                     {category == 1 ? (
                         <Grid container spacing={0.5}>
                             <Grid item xs={6}>
-                                <NumberInput count={reps} setCount={setReps}>횟수</NumberInput>
+                                <NumberInput count={reps} setCount={setReps}>
+                                    횟수
+                                </NumberInput>
                             </Grid>
                             <Grid item xs={6}>
-                                <NumberInput count={sets} setCount={setSets}>세트</NumberInput>
+                                <NumberInput count={sets} setCount={setSets}>
+                                    세트
+                                </NumberInput>
                             </Grid>
                         </Grid>
                     ) : (

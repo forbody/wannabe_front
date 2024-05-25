@@ -9,7 +9,7 @@ const Main = ({ children }) => {
                 margin= "0 auto"
                 direction="column"
                 justify="center"
-                justifyContent="center"
+                justifyContent='flex-start'
                 alignItems="center"
                 alignContent="center"
                 wrap="nowrap"
