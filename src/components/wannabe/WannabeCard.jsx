@@ -134,7 +134,7 @@ const WannabeCard = () => {
                         marginLeft: '4px'
                     }}
                     >
-                    의 추천루틴
+                    님의 추천루틴
                     </span>
                     <Button
                     fullWidth

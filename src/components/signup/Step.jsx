@@ -29,7 +29,7 @@ const Step = ({title, inputData, step, setStep, joinData, setJoinData, goJoin, l
         if (name === 'email') {
             const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
             if (!emailRegex.test(value) || !value ) {
-                setError('올바른 이메일 형식이 아닙니다.');
+                setError('이메일 형식에 맞게 입력해 주세요.');
                 setPass(false)
             } else {
                 setError();
@@ -39,7 +39,7 @@ const Step = ({title, inputData, step, setStep, joinData, setJoinData, goJoin, l
         if (name === 'password') {
             const passwordRegex = /^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{5,})\S$/;
             if (!passwordRegex.test(value)) {
-                setError('올바른 비밀번호 형식이 아닙니다.')
+                setError('비밀번호 형식에 맞게 입력해 주세요.')
                 setPass(false)
             } else {
                 setError();
@@ -48,7 +48,7 @@ const Step = ({title, inputData, step, setStep, joinData, setJoinData, goJoin, l
         }
         if (name === 'pwdchk') {
             if (joinData.password != value) {
-                setError('비밀번호가 같지 않습니다.')
+                setError('비밀번호를 동일하게 입력해 주세요.')
                 setPass(false)
             } else {
                 setError();
@@ -65,7 +65,7 @@ const Step = ({title, inputData, step, setStep, joinData, setJoinData, goJoin, l
                     setPass(true);
                 }
             } else {
-                setError('값을 전부 입력해 주세요');
+                setError('값을 전부 입력해 주세요.');
                 setPass(false)
             }
         }
@@ -74,7 +74,7 @@ const Step = ({title, inputData, step, setStep, joinData, setJoinData, goJoin, l
                 setError();
                 setPass(true);
             } else {
-                setError('체형을 선택해 주세요');
+                setError('체형을 선택해 주세요.');
                 setPass(false)
             }
         }
@@ -83,7 +83,7 @@ const Step = ({title, inputData, step, setStep, joinData, setJoinData, goJoin, l
                 setError();
                 setPass(true);
             } else {
-                setError('값을 전부 입력해 주세요');
+                setError('값을 전부 입력해 주세요.');
                 setPass(false)
             }
         }

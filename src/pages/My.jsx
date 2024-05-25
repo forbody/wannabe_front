@@ -16,6 +16,7 @@ const My = () => {
         return <div>Loading...</div>;
     }
     return ( 
+        <>
         <Box
             height='100vh'
             display='flex'
@@ -35,7 +36,7 @@ const My = () => {
                 padding:'24px'
             }}
             >
-            {userProfile?.user_name}님의 페이지
+            {userProfile?.user_name} 님의 페이지
             </Typography>
             <BackgroundBox style={{ justifyContent: 'center'}}>
                 <MyLike />
@@ -50,6 +51,7 @@ const My = () => {
                 <MyButtons loginUser={loginUser} logout={logout}/>
             </BackgroundBox>
         </Box>
+        </>
     );
 }
 
