@@ -11,7 +11,6 @@ import ExerciseModal from "../components/exercises/ExerciseModal";
 import GetUserandRoleModel from "../components/user/GetUserandRoleModel";
 import { exerciseApi } from "../api/services/exercise";
 
-
 const Exercise = () => {
     const { loginUser } = useAuth();
     const [refreshFav, setRefreshFav] = useState(false);
@@ -21,23 +20,21 @@ const Exercise = () => {
     const { modelImg } = GetUserandRoleModel();
 
     const getExercises = async () => {
-        const res = await exerciseApi.getExercises(loginUser);
-        setExercises(res);
-        console.log(res);
+        const res = await exerciseApi.getExercise(loginUser);
+        console.log(res.payload);
+        setExercises(res.payload);
     }
 
     const getRandomTip = async () => {
-        const res = await axios.get('http://localhost:8000/v1/health_tip');
-        setRandTip(res.data);
+        const res = await exerciseApi.getRandomTip(loginUser);
+        console.log(res.payload);
+        setRandTip(res.payload);
     }
 
     const getFavExercises = async() => {
-        const res = await axios.get('http://localhost:8000/v1/exercise/favorite',{
-            headers: {
-                Authorization: loginUser
-            }
-        }); 
-        setFavExercises(res.data.payload);
+        const res = await exerciseApi.getFavExercises(loginUser);
+        setFavExercises(res.payload);
+        console.log(res.payload);
     }
 
     useEffect(() => {
