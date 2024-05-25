@@ -56,7 +56,7 @@ const ExerciseDetail = ({exercise, favExercises, refreshFav, setRefreshFav }) =>
             <h3>{exercise.name}</h3>
             { 
                 match ?
-                (<button onClick={()=>delFavExercise(exercise.id)}>즐겨찾기 cancel</button>) 
+                (<button onClick={()=>delFavExercise(exercise.id)}>즐겨찾기 취소</button>) 
                 :
                 (<button onClick={()=>addFavExercise(exercise.id)}>즐겨찾기</button>) 
             }

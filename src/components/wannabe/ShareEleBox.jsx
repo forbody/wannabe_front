@@ -7,23 +7,35 @@ import { ForegroundBox } from "../styled_comp/StyledDiv";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { useEffect, useState } from "react";
+import { userApi } from "../../api/services/user";
 
-const ShareEleBox = ({children, elements}) => {
+const ShareEleBox = ({ children, elements  }) => {
     const [isTrue, setIsTrue] = useState(false);
-    const {loginUser} = useAuth()
+    const { loginUser, getUserInfoByToken } = useAuth();
     const [totalCal, setTotalCal] = useState();
     const [order, setOrder] = useState();
 
+    const [loginUserId, setLoginUserId] = useState();
+    const [userProfile, setUserProfile] = useState(null);
+
+    const getUserInfo = async () => {
+        const up = await getUserInfoByToken();
+        setLoginUserId(up.id);
+    };
+
     const uniqueOrder = [...new Set(elements?.map((item) => item.order))];
     useEffect(() => {
-        setTotalCal(elements.reduce((acc, e) => acc + e.Food[0]?.calory, 0));    
+        setTotalCal(elements.reduce((acc, e) => acc + e.Food[0]?.calory, 0));
         setOrder(...uniqueOrder);
-    },[])
-    
+    }, []);
 
     const onIsTrue = () => {
         setIsTrue(!isTrue);
     };
+    useEffect(() => {
+        getUserInfo();
+    }, [loginUser]);
+
 
     const onSetRecommendFood = async () => {
         try {
@@ -35,7 +47,7 @@ const ShareEleBox = ({children, elements}) => {
                     date: date,
                     todo_list_id: todo_list_id,
                     arr: elements,
-                    order : order,
+                    order: order,
                 },
                 loginUser
             );
@@ -49,16 +61,22 @@ const ShareEleBox = ({children, elements}) => {
                 <Grid item xs={9} fontSize={20}>
                     {children}
                 </Grid>
-                <Grid item xs={1.5}>
-                    <IconButton
-                        sx={{ margin: "0", padding: "0" }}
-                        onClick={() => onSetRecommendFood()}
-                    >
-                        <FileUploadIcon
-                            sx={{ color: cyan[400] , fontSize: '30px'}}
-                        />
-                    </IconButton>
-                </Grid>
+                {loginUserId === elements[0]?.UserId ?
+                    <Grid item xs={1.5}>
+                    </Grid>
+                    :
+
+                    <Grid item xs={1.5}>
+                        <IconButton
+                            sx={{ margin: "0", padding: "0" }}
+                            onClick={() => onSetRecommendFood()}
+                        >
+                            <FileUploadIcon
+                                sx={{ color: cyan[400], fontSize: "30px" }}
+                            />
+                        </IconButton>
+                    </Grid>
+                }
                 <Grid item xs={1.5} onClick={() => onIsTrue()}>
                     <IconButton
                         sx={{ margin: "0", padding: "0", textAlign: "center" }}
@@ -84,7 +102,8 @@ const ShareEleBox = ({children, elements}) => {
                                 {e.Exercises[0].name}
                             </Box>
                         ) : (
-                            <Grid container
+                            <Grid
+                                container
                                 sx={{
                                     width: "90%",
                                     padding: "0px 10px",
@@ -104,6 +123,6 @@ const ShareEleBox = ({children, elements}) => {
             </Grid>
         </ForegroundBox>
     );
-}
+};
 
 export default ShareEleBox;

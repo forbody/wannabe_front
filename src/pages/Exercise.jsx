@@ -11,7 +11,6 @@ import ExerciseModal from "../components/exercises/ExerciseModal";
 import GetUserandRoleModel from "../components/user/GetUserandRoleModel";
 import { exerciseApi } from "../api/services/exercise";
 
-
 const Exercise = () => {
     const { loginUser } = useAuth();
     const [refreshFav, setRefreshFav] = useState(false);
@@ -21,23 +20,21 @@ const Exercise = () => {
     const { modelImg } = GetUserandRoleModel();
 
     const getExercises = async () => {
-        const res = await exerciseApi.getExercises(loginUser);
-        setExercises(res);
-        console.log(res);
+        const res = await exerciseApi.getExercise(loginUser);
+        console.log(res.payload);
+        setExercises(res.payload);
     }
 
     const getRandomTip = async () => {
-        const res = await axios.get('http://localhost:8000/v1/health_tip');
-        setRandTip(res.data);
+        const res = await exerciseApi.getRandomTip(loginUser);
+        console.log(res.payload);
+        setRandTip(res.payload);
     }
 
     const getFavExercises = async() => {
-        const res = await axios.get('http://localhost:8000/v1/exercise/favorite',{
-            headers: {
-                Authorization: loginUser
-            }
-        }); 
-        setFavExercises(res.data.payload);
+        const res = await exerciseApi.getFavExercises(loginUser);
+        setFavExercises(res.payload);
+        console.log(res.payload);
     }
 
     useEffect(() => {
@@ -74,10 +71,13 @@ const Exercise = () => {
                     )}
                 </BackgroundBox>
                 <BackgroundBox half>
-                    헬스 팁 - {randTip?.health_tip}
+                    <h3>헬스 팁</h3> - {randTip?.health_tip}
                     <ExerciseModal />
                 </BackgroundBox>
-                <BackgroundBox>
+                <BackgroundBox
+                    display="flex"
+                    style={{flexDirection:"column", alignItems:"stretch"}}
+                >
                     <h3>내가 즐겨찾기 한 운동</h3>
                     <br />
                     <Carousel
@@ -93,8 +93,11 @@ const Exercise = () => {
                             ))}
                     </Carousel>
                 </BackgroundBox>
-                <BackgroundBox>
-                    운동 목록
+                <BackgroundBox
+                    display="flex"
+                    style={{justifyContent:'center'}}
+                >
+                    <h3>운동 목록</h3>
                     <ExerciseSelect />
                 </BackgroundBox>
                 <BackgroundBox>

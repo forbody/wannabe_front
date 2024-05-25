@@ -43,8 +43,9 @@ function ExerciseModal () {
             <button onClick={openModal}>모달 열기</button>
 
             <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
-                <h1>Modal</h1>
+                <h1>운동이름</h1>
                 <p>내용</p>
+                <p>영상</p>
                 {/* <p>(exercise.url)</p> */}
                 {/* <p>(exercise.detail)</p> */}
                 <button onClick={closeModal}>닫기</button>

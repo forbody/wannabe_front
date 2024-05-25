@@ -54,7 +54,6 @@ const TodoList = () => {
             });
             setExercise(ex);
             setFood(fo);
-            
         } catch (err) {
             console.error("Error: ", err);
         }
@@ -104,6 +103,11 @@ const TodoList = () => {
             display="flex"
             flexDirection="column"
             alignItems="center"
+            style={{
+                padding: "36px 0 80px",
+                overflowY: "scroll",
+                scrollbarWidth: "none",
+            }}
         >
             <Weekly setDate={setDate} setDay={setDay} />
             <BackgroundBox
