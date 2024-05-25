@@ -127,13 +127,13 @@ const WannabeCard = () => {
             { activeStep === 0 ?
             <CardActions>
                 <Button fullWidth color="error" variant="text" startIcon={<IoHeart />}>
-                    좋아요
+                    워너비
                 </Button>
             </CardActions>
             :   
             <CardActions>
                 <Button fullWidth color="error" variant="text" startIcon={<IoHeart />}>
-                    좋아요
+                    워너비
                 </Button>
                 <Button fullWidth color="secondary" variant="text" startIcon={<PiSparkleFill />}>
                     팔로우

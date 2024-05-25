@@ -6,6 +6,7 @@ import MyButtons from '../components/my/MyButtons';
 import MyCalendar from '../components/my/MyCalendar';
 import MyChart from '../components/my/MyChart';
 import GetUserandRoleModel from '../components/user/GetUserandRoleModel';
+import MyLike from '../components/my/MyLike';
 
 const My = () => {
     const { loginUser, logout } = useAuth()
@@ -37,10 +38,13 @@ const My = () => {
             {userProfile.user_name}님의 페이지
             </Typography>
             <BackgroundBox style={{ justifyContent: 'center'}}>
+                <MyLike />
+            </BackgroundBox>
+            <BackgroundBox style={{ justifyContent: 'center', marginTop:'24px'}}>
                 <MyCalendar />
             </BackgroundBox>
             <BackgroundBox style={{ justifyContent: 'center', marginTop:'24px' }}>
-                <MyChart/>
+                <MyChart />
             </BackgroundBox>
             <BackgroundBox style={{ justifyContent: 'center', marginTop:'24px' }}>
                 <MyButtons loginUser={loginUser} logout={logout}/>
