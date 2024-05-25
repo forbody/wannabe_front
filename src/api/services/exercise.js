@@ -11,4 +11,9 @@ export const exerciseApi = {
             "Authorization": loginUser,
         }
     }),
+    getFavExercises: (loginUser) => api.get('exercise/favorite/', {
+        headers: {
+            "Authorization": loginUser,
+        } 
+    })
 }

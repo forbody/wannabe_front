@@ -21,23 +21,20 @@ const Exercise = () => {
 
     const getExercises = async () => {
         const res = await exerciseApi.getExercise(loginUser);
-        setExercises(res);
-        console.log(res);
+        console.log(res.payload);
+        setExercises(res.payload);
     }
 
     const getRandomTip = async () => {
         const res = await exerciseApi.getRandomTip(loginUser);
-        setRandTip(res);
-        console.log(res);
+        console.log(res.payload);
+        setRandTip(res.payload);
     }
 
     const getFavExercises = async() => {
-        const res = await axios.get('http://localhost:8000/v1/exercise/favorite',{
-            headers: {
-                Authorization: loginUser
-            }
-        }); 
-        setFavExercises(res.data.payload);
+        const res = await exerciseApi.getFavExercises(loginUser);
+        setFavExercises(res.payload);
+        console.log(res.payload);
     }
 
     useEffect(() => {
