@@ -95,7 +95,7 @@ const TodoList = () => {
     } 
 
     // 카카오 신유저는 <InfoUpdate /> 컴포넌트 출력, 로컬 로그인 유저와 카카오 구유저는 <TodoList /> 페이지 출력
-    return userProfile.birthday === null || userProfile.gender === null ? (
+    return userProfile?.birthday === null || userProfile?.gender === null ? (
         <InfoUpdate />
     ) : (
         <Box

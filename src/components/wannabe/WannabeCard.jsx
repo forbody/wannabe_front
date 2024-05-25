@@ -12,6 +12,7 @@ import { FaQuestion } from "react-icons/fa";
 import MobileStepper from '@mui/material/MobileStepper';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import Swal from 'sweetalert2';
 
 const WannabeCard = () => {
     const { loginUser } = useAuth()
@@ -38,6 +39,29 @@ const WannabeCard = () => {
             setRoleModels(arr);
         } catch (err) {
             console.error("Error: ", err);
+        }
+    }
+
+    const handleLike = () => {
+        like()
+    }
+
+    // 좋아요 기능
+    const like = async () => {
+        try{
+            const res = await userApi.like(`${roleModels[activeStep]?.id}`, loginUser)
+            if (res.code === 200) {
+                console.log('좋아요 성공');
+                console.log(res);
+            } else {
+                throw new Error(res.message);
+            }
+        }catch(err) {
+            Swal.fire({
+                title: "에러 발생",
+                text: err.message,
+                icon: "error"
+            });
         }
     }
 
@@ -126,13 +150,13 @@ const WannabeCard = () => {
             </CardActionArea>
             { activeStep === 0 ?
             <CardActions>
-                <Button fullWidth color="error" variant="text" startIcon={<IoHeart />}>
+                <Button fullWidth color="error" variant="text" startIcon={<IoHeart />} onClick={handleLike}>
                     워너비
                 </Button>
             </CardActions>
             :   
             <CardActions>
-                <Button fullWidth color="error" variant="text" startIcon={<IoHeart />}>
+                <Button fullWidth color="error" variant="text" startIcon={<IoHeart />} onClick={handleLike}>
                     워너비
                 </Button>
                 <Button fullWidth color="secondary" variant="text" startIcon={<PiSparkleFill />}>

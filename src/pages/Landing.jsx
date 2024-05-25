@@ -5,76 +5,67 @@ import { useNavigate } from 'react-router-dom';
 import { BackgroundBox } from '../components/styled_comp/StyledDiv';
 import { useAuth } from '../hooks/useAuth';
 import { useForm } from 'react-hook-form';
-import Swal from 'sweetalert2';
+import { useEffect, useState } from 'react';
+import bg1 from '../assets/BGImage/bg1.jpeg'
+import bg2 from '../assets/BGImage/bg2.jpeg'
+import bg3 from '../assets/BGImage/bg3.jpeg'
+import bg4 from '../assets/BGImage/bg4.jpeg'
+import bg5 from '../assets/BGImage/bg5.jpeg'
+import bg6 from '../assets/BGImage/bg6.jpeg'
+import bg7 from '../assets/BGImage/bg7.jpeg'
+import bg8 from '../assets/BGImage/bg8.jpeg'
 
 const Landing = () => {
     const navigate = useNavigate()
-    const { loginUser, login, logout, kakaoLogin } = useAuth();
+    const { loginUser, kakaoLogin } = useAuth();
     kakaoLogin();
     const {
-        register,
-        handleSubmit,
-        watch,
         reset,
         formState: { errors },
     } = useForm();
 
-    const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-        toast.onmouseenter = Swal.stopTimer;
-        toast.onmouseleave = Swal.resumeTimer;
-        }
-    });
+    const bgImages = [bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8];
+    const [bgImg, setBgImg] = useState();
 
-    const onSubmit = (data) => {
-        // 로그인 시켜주기
-        login((res) => {
-        if (res.data.code !== 200) {
-            Toast.fire({
-            icon: "error",
-            title: "로그인에 실패했습니다.",
-            text: '아이디 또는 비밀번호를 다시 확인해주세요'
-            });
-        } else {
-            navigate('/todolist')
-            Toast.fire({
-                icon: "success",
-                title: "환영합니다~!"
-            });
-        }
-        }, data)
-        reset();
-    };
-
+    useEffect(() => {
+        const randomIndex = Math.floor(Math.random() * bgImages.length);
+        setBgImg(bgImages[randomIndex]);
+    },[])
+    
     return ( 
-        <>
+        <Box
+            height='100vh'
+            display='flex'
+            flexDirection='column'
+            justifyContent='space-around'
+            alignItems='center'
+            sx = {{
+                backgroundImage: `url(${bgImg})`,
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover'
+            }}
+        >
+            <Box>
+                <Typography variant='h2' fontWeight={800} color='primary'>Wannabe</Typography>
+                <Typography color='#fff'>당신이 꿈꾸는 그대로, 워너비</Typography>
+            </Box>
             <Box
-                height='100vh'
-                display='flex'
-                flexDirection='column'
-                justifyContent='space-around'
-                alignItems='center'
+            display='flex'
+            flexDirection='column'
+            alignItems='center'
             >
-                <Box>
-                    <Typography variant='h2' fontWeight={800}>Wannabe</Typography>
-                    <Typography>당신이 꿈꾸는 그대로, 워너비</Typography>
-                </Box>
                 <BackgroundBox
                 display='flex'
                 justifyContent='spaceAround'
                 style={{
                     width:'80%',
-                    padding:'32px'
+                    padding:'32px',
+                    backgroundColor:'#00000050'
                 }}
                 >
                     <Button
                     variant="contained"
-                    color='white'
+                    color='secondary'
                     fullWidth
                     onClick={
                         () => navigate('/signup')
@@ -85,25 +76,27 @@ const Landing = () => {
                     <Typography variant="caption" style={{ margin: '24px auto 0', color:'white'}}>간편 로그인</Typography>
                     <hr width='100%' color='white' style={{ margin: '0'}}/>
                     <form>
-                    <Button
-                        variant="contained"
-                        fullWidth
-                        style={{
-                            width:'240px',
-                            marginTop:'16px',
-                            backgroundColor:'#FAE100'
-                        }}
-                        href={`${process.env.REACT_APP_API_URL}/auth/kakao`}
-                        startIcon=<RiKakaoTalkFill/>
-                    >
-                    
-                    카카오로 시작하기
-                    </Button>
+                        <Button
+                            variant="contained"
+                            fullWidth
+                            style={{
+                                width:'240px',
+                                marginTop:'16px',
+                                backgroundColor:'#FAE100'
+                            }}
+                            href={`${process.env.REACT_APP_API_URL}/auth/kakao`}
+                            startIcon=<RiKakaoTalkFill/>
+                        >
+                        
+                        카카오로 시작하기
+                        </Button>
                     </form>
                 </BackgroundBox>
-                
+            {!loginUser &&
+            <Button variant="text" href="/login" color="white" style={{textDecoration:"underline"}}>이미 계정이 있으신가요?</Button>
+            }
             </Box>
-        </>
+        </Box>
     );
 }
 

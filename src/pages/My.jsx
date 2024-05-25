@@ -35,7 +35,7 @@ const My = () => {
                 padding:'24px'
             }}
             >
-            {userProfile.user_name}님의 페이지
+            {userProfile?.user_name}님의 페이지
             </Typography>
             <BackgroundBox style={{ justifyContent: 'center'}}>
                 <MyLike />
