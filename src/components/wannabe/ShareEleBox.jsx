@@ -12,10 +12,13 @@ const ShareEleBox = ({children, elements}) => {
     const [isTrue, setIsTrue] = useState(false);
     const {loginUser} = useAuth()
     const [totalCal, setTotalCal] = useState();
+    const [order, setOrder] = useState();
+
+    const uniqueOrder = [...new Set(elements?.map((item) => item.order))];
     useEffect(() => {
         setTotalCal(elements.reduce((acc, e) => acc + e.Food[0]?.calory, 0));    
+        setOrder(...uniqueOrder);
     },[])
-    
     
 
     const onIsTrue = () => {
@@ -27,16 +30,15 @@ const ShareEleBox = ({children, elements}) => {
             const date = localStorage.getItem("date");
             const res = await todoApi.createTodoList({ date }, loginUser);
             const todo_list_id = res.payload?.id;
-            // const res2 = await todoApi.shareTodoEle(
-            //     {
-            //         date,
-            //         todo_list_id,
-            //         elements,
-            //         order,
-            //     },
-            //     loginUser
-            // );
-            // arr = [];
+            const res2 = await todoApi.shareTodoEle(
+                {
+                    date: date,
+                    todo_list_id: todo_list_id,
+                    arr: elements,
+                    order : order,
+                },
+                loginUser
+            );
         } catch (err) {
             console.error("Error: ", err);
         }
@@ -44,7 +46,7 @@ const ShareEleBox = ({children, elements}) => {
     return (
         <ForegroundBox>
             <Grid container sx={{ alignItems: "center" }}>
-                <Grid item xs={9}>
+                <Grid item xs={9} fontSize={20}>
                     {children}
                 </Grid>
                 <Grid item xs={1.5}>
@@ -53,8 +55,7 @@ const ShareEleBox = ({children, elements}) => {
                         onClick={() => onSetRecommendFood()}
                     >
                         <FileUploadIcon
-                            sx={{ color: cyan[400] }}
-                            fontSize="medium"
+                            sx={{ color: cyan[400] , fontSize: '30px'}}
                         />
                     </IconButton>
                 </Grid>
@@ -63,9 +64,9 @@ const ShareEleBox = ({children, elements}) => {
                         sx={{ margin: "0", padding: "0", textAlign: "center" }}
                     >
                         {isTrue ? (
-                            <ExpandLessIcon fontSize="medium" />
+                            <ExpandLessIcon fontSize="large" />
                         ) : (
-                            <ExpandMoreIcon fontSize="medium" />
+                            <ExpandMoreIcon fontSize="large" />
                         )}
                     </IconButton>
                 </Grid>
@@ -83,7 +84,7 @@ const ShareEleBox = ({children, elements}) => {
                                 {e.Exercises[0].name}
                             </Box>
                         ) : (
-                            <Box
+                            <Grid container
                                 sx={{
                                     width: "90%",
                                     padding: "0px 10px",
@@ -91,8 +92,13 @@ const ShareEleBox = ({children, elements}) => {
                                 }}
                                 key={e.id}
                             >
-                                {e.Food[0].name}
-                            </Box>
+                                <Grid item xs={10}>
+                                    {e.Food[0].name}
+                                </Grid>
+                                <Grid item xs={2}>
+                                    {e.Food[0].calory}kcal
+                                </Grid>
+                            </Grid>
                         )
                     )}
             </Grid>

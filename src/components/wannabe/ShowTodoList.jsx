@@ -1,4 +1,4 @@
-import { Box, IconButton } from "@mui/material";
+import { Box, Grid, IconButton } from "@mui/material";
 import { ForegroundBox } from "../styled_comp/StyledDiv";
 import { useEffect, useState } from "react";
 import { userApi } from "../../api/services/user";
@@ -21,7 +21,6 @@ const ShowTodoList = ({ e, setIsChange }) => {
     const [userProfile, setUserProfile] = useState(null);
     const [userImg, setUserImg] = useState("");
 
-    const [order, setOrder] = useState();
     const [exercise, setExercise] = useState();
     const [breakfast, setBreakfast] = useState();
     const [lunch, setLunch] = useState();
@@ -98,42 +97,52 @@ const ShowTodoList = ({ e, setIsChange }) => {
                 marginTop: "10px",
             }}
         >
-            <Box>
+            <Grid container spacing={0} alignItems='center'>
                 {userImg && (
-                    <img
-                        src={`http://localhost:8000/${userImg}`}
-                        width="40"
-                        alt={"img"}
-                        style={{ borderRadius: "240px" }}
-                    />
+                    <Grid item xs={2}>
+                        <img
+                            src={`http://localhost:8000/${userImg}`}
+                            width="40"
+                            alt={"img"}
+                            style={{ borderRadius: "240px" }}
+                        />
+                    </Grid>
                 )}
-                {userProfile?.user_name}
+                <Grid item xs={7}>
+                    {userProfile?.user_name}
+                </Grid>
 
                 {loginUserId === uploadUserId ? (
                     <>
-                        <IconButton
-                            sx={{ margin: "0", padding: "0" }}
-                            onClick={() => onModifyComments()}
-                        >
-                            <EditIcon
-                                fontSize="small"
-                                sx={{ color: orange[400] }}
-                            />
-                        </IconButton>
-                        <IconButton
-                            sx={{ margin: "0", padding: "0" }}
-                            onClick={() => onDeleteShare()}
-                        >
-                            <DeleteIcon
-                                fontSize="small"
-                                sx={{ color: red[400] }}
-                            />
-                        </IconButton>
+                        <Grid item xs={1.5}>
+                            <IconButton
+                                sx={{ margin: "0", padding: "0" }}
+                                onClick={() => onModifyComments()}
+                            >
+                                <EditIcon
+                                    fontSize="small"
+                                    sx={{ color: orange[400] }}
+                                />
+                            </IconButton>
+                        </Grid>
+                        <Grid item xs={1.5}>
+                            <IconButton
+                                sx={{ margin: "0", padding: "0" }}
+                                onClick={() => onDeleteShare()}
+                            >
+                                <DeleteIcon
+                                    fontSize="small"
+                                    sx={{ color: red[400] }}
+                                />
+                            </IconButton>
+                        </Grid>
                     </>
                 ) : (
-                    false
+                    <Grid item xs={3}>
+
+                    </Grid>
                 )}
-            </Box>
+            </Grid>
             {exercise?.length ? (
                 <ShareEleBox elements={exercise}>운동</ShareEleBox>
             ) : (
@@ -154,15 +163,9 @@ const ShowTodoList = ({ e, setIsChange }) => {
             ) : (
                 false
             )}
-            <Box
-                sx={{
-                    marginTop: "10px",
-                    backgroundColor: "#fff",
-                    padding: "10px",
-                }}
-            >
+            <ForegroundBox>
                 {e.Share_comments[0]?.comment}
-            </Box>
+            </ForegroundBox>
         </ForegroundBox>
     );
 };
