@@ -9,6 +9,7 @@ import { useAuth } from './../hooks/useAuth';
 import Carousel from "react-material-ui-carousel";
 import ExerciseModal from "../components/exercises/ExerciseModal";
 import GetUserandRoleModel from "../components/user/GetUserandRoleModel";
+import { exerciseApi } from "../api/services/exercise";
 
 const Exercise = () => {
     const { loginUser } = useAuth();
@@ -19,14 +20,15 @@ const Exercise = () => {
     const { modelImg } = GetUserandRoleModel();
 
     const getExercises = async () => {
-        const res = await axios.get('http://localhost:8000/v1/exercise');
-        setExercises(res.data);
-        console.log(res.data);
+        const res = await exerciseApi.getExercise(loginUser);
+        setExercises(res);
+        console.log(res);
     }
 
     const getRandomTip = async () => {
-        const res = await axios.get('http://localhost:8000/v1/health_tip');
-        setRandTip(res.data);
+        const res = await exerciseApi.getRandomTip(loginUser);
+        setRandTip(res);
+        console.log(res);
     }
 
     const getFavExercises = async() => {
@@ -41,7 +43,7 @@ const Exercise = () => {
     useEffect(() => {
         getExercises();
         getRandomTip();
-    }, []);
+    }, [loginUser]);
     useEffect(() => {
         getFavExercises(); //
     }, [refreshFav]);
@@ -98,7 +100,7 @@ const Exercise = () => {
                 <BackgroundBox>
                     <>
                         {favExercises &&
-                            exercises.map((e) => (
+                            exercises && exercises.map((e) => (
                                 <ExerciseDetail
                                     key={e.id}
                                     exercise={e}
