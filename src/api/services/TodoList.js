@@ -56,7 +56,12 @@ export const todoApi = {
             "Authorization": loginUser,
         }
     }),
-    getShareList : (loginUser) => api.get(`/todo_list/`, {
+    getShareList : (loginUser) => api.get(`/todo_list/all`, {
+        headers: {
+            "Authorization": loginUser,
+        }
+    }),
+    getMyShareList : (loginUser) => api.get(`/todo_list/my`, {
         headers: {
             "Authorization": loginUser,
         }
