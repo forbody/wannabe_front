@@ -71,10 +71,13 @@ const Exercise = () => {
                     )}
                 </BackgroundBox>
                 <BackgroundBox half>
-                    헬스 팁 - {randTip?.health_tip}
+                    <h3>헬스 팁</h3> - {randTip?.health_tip}
                     <ExerciseModal />
                 </BackgroundBox>
-                <BackgroundBox>
+                <BackgroundBox
+                    display="flex"
+                    style={{flexDirection:"column", alignItems:"stretch"}}
+                >
                     <h3>내가 즐겨찾기 한 운동</h3>
                     <br />
                     <Carousel
@@ -90,8 +93,11 @@ const Exercise = () => {
                             ))}
                     </Carousel>
                 </BackgroundBox>
-                <BackgroundBox>
-                    운동 목록
+                <BackgroundBox
+                    display="flex"
+                    style={{justifyContent:'center'}}
+                >
+                    <h3>운동 목록</h3>
                     <ExerciseSelect />
                 </BackgroundBox>
                 <BackgroundBox>
