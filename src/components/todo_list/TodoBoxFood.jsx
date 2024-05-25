@@ -1,4 +1,4 @@
-import { Box, Button, Grid, IconButton } from "@mui/material";
+import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
 import { BackgroundBox, ForegroundBox, TitleBox } from "../styled_comp/StyledDiv";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
@@ -11,6 +11,10 @@ const TodoBoxFood = ({ element, setIsAchieve, children }) => {
     const [breakfast, setBreakfast] = useState();
     const [lunch, setLunch] = useState();
     const [dinner, setDinner] = useState();
+    const [breakfastCal, setBreakfastCal] = useState();
+    const [lunchCal, setLunchCal] = useState();
+    const [dinnerCal, setDinnerCal] = useState();
+
     const onIsTrue = () => {
         setIsTrue(!isTrue);
     };
@@ -24,6 +28,16 @@ const TodoBoxFood = ({ element, setIsAchieve, children }) => {
         setLunch(element.filter((e) => e.order == 2));
         setDinner(element.filter((e) => e.order == 3));
     },[element])
+
+    useEffect(() => {
+        setBreakfastCal(breakfast?.reduce((acc, e) => acc + e.Food[0]?.calory, 0));
+    },[breakfast])
+    useEffect(() => {
+        setLunchCal(lunch?.reduce((acc, e) => acc + e.Food[0]?.calory, 0));
+    },[lunch])
+    useEffect(() => {
+        setDinnerCal(dinner?.reduce((acc, e) => acc + e.Food[0]?.calory, 0));
+    },[dinner])
 
     return (
         <ForegroundBox
@@ -62,64 +76,123 @@ const TodoBoxFood = ({ element, setIsAchieve, children }) => {
             </Grid>
             {isTrue ? (
                 <>
-                    {breakfast.length?
-                    <>
-                        <Box
-                            sx={{
-                                borderBottom: "1px solid black",
-                                textAlign: "center",
-                                fontSize: "16px",
-                                fontWeight: "bold",
-                            }}
-                        >
-                            아침
-                        </Box>
-                        {breakfast?.map((e) => (
-                            <TodoEle e={e} key={e.id} setIsAchieve={setIsAchieve} />
-                        ))}
-                    </>
-                    :
-                    false
-                    }
-                    {lunch.length ?
-                    <>
-                        <Box
-                            sx={{
-                                borderBottom: "1px solid black",
-                                textAlign: "center",
-                                fontSize: "16px",
-                                fontWeight: "bold",
-                            }}
-                        >
-                            점심
-                        </Box>
-                        {lunch?.map((e) => (
-                            <TodoEle e={e} key={e.id} setIsAchieve={setIsAchieve} />
-                        ))}
-                        
-                    </>
-                    :
-                    false
-                    }
-                    {dinner.length?
-                    <>
-                        <Box
-                            sx={{
-                                borderBottom: "1px solid black",
-                                textAlign: "center",
-                                fontSize: "16px",
-                                fontWeight: "bold",
-                            }}
-                        >
-                            저녁
-                        </Box>
-                        {dinner?.map((e) => (
-                            <TodoEle e={e} key={e.id} setIsAchieve={setIsAchieve} />
-                        ))}
-                    </>
-                    :
-                    false
-                    }
+                    {breakfast.length ? (
+                        <>
+                            <Box
+                                sx={{
+                                    borderBottom: "1px solid black",
+                                    textAlign: "center",
+                                    fontSize: "16px",
+                                    fontWeight: "bold",
+                                }}
+                            >
+                                아침
+                            </Box>
+                            {breakfast?.map((e) => (
+                                <TodoEle
+                                    e={e}
+                                    key={e.id}
+                                    setIsAchieve={setIsAchieve}
+                                />
+                            ))}
+                            <Box
+                                sx={{
+                                    borderTop: "1px solid black",
+                                    textAlign: "right",
+                                    fontSize: "16px",
+                                }}
+                            >
+                                <Typography
+                                    color="secondary"
+                                    style={{
+                                        marginTop: "8px",
+                                    }}
+                                >
+                                    {breakfastCal} kcal
+                                </Typography>
+                            </Box>
+                        </>
+                    ) : (
+                        false
+                    )}
+                    {lunch.length ? (
+                        <>
+                            <Box
+                                sx={{
+                                    borderBottom: "1px solid black",
+                                    textAlign: "center",
+                                    fontSize: "16px",
+                                    fontWeight: "bold",
+                                }}
+                            >
+                                점심
+                            </Box>
+                            {lunch?.map((e) => (
+                                <TodoEle
+                                    e={e}
+                                    key={e.id}
+                                    setIsAchieve={setIsAchieve}
+                                />
+                            ))}
+                            <Box
+                                sx={{
+                                    borderTop: "1px solid black",
+                                    textAlign: "right",
+                                    fontSize: "16px",
+                                }}
+                            >
+                                <Typography
+                                    color="secondary"
+                                    style={{
+                                        marginTop: "8px",
+                                    }}
+                                >
+                                    {lunchCal} kcal
+                                </Typography>
+                            </Box>
+                        </>
+                    ) : (
+                        false
+                    )}
+                    {dinner.length ? (
+                        <>
+                            <Box
+                                sx={{
+                                    borderBottom: "1px solid black",
+                                    textAlign: "center",
+                                    fontSize: "16px",
+                                    fontWeight: "bold",
+                                }}
+                            >
+                                저녁
+                            </Box>
+                            {dinner?.map((e) => (
+                                <TodoEle
+                                    e={e}
+                                    key={e.id}
+                                    setIsAchieve={setIsAchieve}
+                                />
+                            ))}
+                            <Box
+                                sx={{
+                                    borderTop: "1px solid black",
+                                    textAlign: "right",
+                                    fontSize: "16px",
+                                }}
+                            >
+                                <Typography
+                                    color="secondary"
+                                    style={{
+                                        marginTop: "8px",
+                                    }}
+                                >
+                                    {dinnerCal} kcal
+                                </Typography>
+                            </Box>
+                        </>
+                    ) : (
+                        false
+                    )}
                 </>
             ) : (
                 false
