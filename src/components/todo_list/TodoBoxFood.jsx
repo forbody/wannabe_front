@@ -1,4 +1,4 @@
-import { Box, Button, Grid, IconButton } from "@mui/material";
+import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
 import { BackgroundBox, ForegroundBox, TitleBox } from "../styled_comp/StyledDiv";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
@@ -14,8 +14,7 @@ const TodoBoxFood = ({ element, setIsAchieve, children }) => {
     const [breakfastCal, setBreakfastCal] = useState();
     const [lunchCal, setLunchCal] = useState();
     const [dinnerCal, setDinnerCal] = useState();
-    
-    console.log(lunch && lunch);
+
     const onIsTrue = () => {
         setIsTrue(!isTrue);
     };
@@ -30,15 +29,15 @@ const TodoBoxFood = ({ element, setIsAchieve, children }) => {
         setDinner(element.filter((e) => e.order == 3));
     },[element])
 
-    // useEffect(() => {
-    //     setBreakfastCal(breakfast?.reduce((acc, e) => acc + e.Food[0]?.calory, 0));
-    // },[breakfast])
+    useEffect(() => {
+        setBreakfastCal(breakfast?.reduce((acc, e) => acc + e.Food[0]?.calory, 0));
+    },[breakfast])
     useEffect(() => {
         setLunchCal(lunch?.reduce((acc, e) => acc + e.Food[0]?.calory, 0));
     },[lunch])
-    // useEffect(() => {
-    //     setDinnerCal(dinner.reduce((acc, e) => acc + e.Food[0]?.calory, 0));
-    // },[dinner])
+    useEffect(() => {
+        setDinnerCal(dinner?.reduce((acc, e) => acc + e.Food[0]?.calory, 0));
+    },[dinner])
 
     return (
         <ForegroundBox
@@ -98,13 +97,19 @@ const TodoBoxFood = ({ element, setIsAchieve, children }) => {
                             ))}
                             <Box
                                 sx={{
-                                    borderBottom: "1px solid black",
-                                    textAlign: "center",
+                                    borderTop: "1px solid black",
+                                    textAlign: "right",
                                     fontSize: "16px",
-                                    fontWeight: "bold",
                                 }}
                             >
-                                아침
+                                <Typography
+                                    color="secondary"
+                                    style={{
+                                        marginTop: "8px",
+                                    }}
+                                >
+                                    {breakfastCal} kcal
+                                </Typography>
                             </Box>
                         </>
                     ) : (
@@ -131,13 +136,19 @@ const TodoBoxFood = ({ element, setIsAchieve, children }) => {
                             ))}
                             <Box
                                 sx={{
-                                    borderBottom: "1px solid black",
-                                    textAlign: "center",
+                                    borderTop: "1px solid black",
+                                    textAlign: "right",
                                     fontSize: "16px",
-                                    color: 'primary'
                                 }}
                             >
-                                {lunchCal} kcal
+                                <Typography
+                                    color="secondary"
+                                    style={{
+                                        marginTop: "8px",
+                                    }}
+                                >
+                                    {lunchCal} kcal
+                                </Typography>
                             </Box>
                         </>
                     ) : (
@@ -162,6 +173,22 @@ const TodoBoxFood = ({ element, setIsAchieve, children }) => {
                                     setIsAchieve={setIsAchieve}
                                 />
                             ))}
+                            <Box
+                                sx={{
+                                    borderTop: "1px solid black",
+                                    textAlign: "right",
+                                    fontSize: "16px",
+                                }}
+                            >
+                                <Typography
+                                    color="secondary"
+                                    style={{
+                                        marginTop: "8px",
+                                    }}
+                                >
+                                    {dinnerCal} kcal
+                                </Typography>
+                            </Box>
                         </>
                     ) : (
                         false
