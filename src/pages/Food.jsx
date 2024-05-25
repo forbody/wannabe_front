@@ -38,7 +38,7 @@ const Food = () => {
     return ( 
         <Box
             width='100%'
-            height='100vh'
+            height='100%'
             display='flex'
             flexDirection='column'
             alignItems='center'
@@ -64,7 +64,7 @@ const Food = () => {
                             padding:'0 24px'
                         }}
                     >
-                        {modelProfile.user_name}님이 추천하는
+                        {modelProfile.user_name} 님이 추천하는
                     </Typography>
                     <Typography
                         variant='h6'
