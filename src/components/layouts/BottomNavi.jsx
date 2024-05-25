@@ -1,5 +1,4 @@
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
-import { useAuth } from '../../hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { IoIosFitness } from "react-icons/io";

@@ -1,13 +1,14 @@
-import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, IconButton, Typography } from "@mui/material";
+import * as React from 'react';
+import { Avatar, Button, Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typography } from "@mui/material";
 import { useAuth } from "../../hooks/useAuth";
 import { userApi } from "../../api/services/user";
-import GetUserandRoleModel from "../../components/user/GetUserandRoleModel";
-import { IoHeart } from "react-icons/io5";
-import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { useEffect, useState } from "react";
-import { ForegroundBox } from "../styled_comp/StyledDiv";
-import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
+import GetUserandRoleModel from "../../components/user/GetUserandRoleModel";
+import { ForegroundBox } from "../styled_comp/StyledDiv";
+import { IoHeart } from "react-icons/io5";
+import { PiSparkleFill } from "react-icons/pi";
+import { FaQuestion } from "react-icons/fa";
 import MobileStepper from '@mui/material/MobileStepper';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
@@ -15,9 +16,8 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 const WannabeCard = () => {
     const { loginUser } = useAuth()
     const theme = useTheme();
-    const { modelProfile, modelImg } = GetUserandRoleModel();
+    const { modelProfile } = GetUserandRoleModel();
     const [roleModels, setRoleModels] = useState(null);
-    const [randomModelImg, setRandomModelImg] = useState("");
     const [activeStep, setActiveStep] = React.useState(0);
 
     // 다음 버튼
@@ -30,7 +30,7 @@ const WannabeCard = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
     
-     // 랜덤 롤모델 3명 가져오기
+    // 랜덤 롤모델 3명 가져오기
     const getRandomRoleModels = async () => {
         try {
             const res = await userApi.getRandomRoleModels(loginUser);
@@ -41,42 +41,10 @@ const WannabeCard = () => {
         }
     }
 
-    console.log(roleModels);
-    // 랜덤 롤모델 3명의 이미지 가져오기
-    const getRandomModelImg = async (randomModel) => {
-        try {
-            if (randomModel) {
-                const md = randomModel.UserDetail;
-                const lastProfile = md.length;
-                setRandomModelImg(md[lastProfile - 1]?.img);
-            }
-        } catch (err) {
-            console.error("Error fetching model info: ", err);
-        }
-    };
-
-    console.log(roleModels);
-    // 랜덤 롤모델 3명의 이미지 가져오기
-
-        // useEffect(() => {
-        //     roleModels.forEach(element => {
-
-        //     });
-        // })
-
     useEffect(() => {
         getRandomRoleModels();
-    }, [loginUser]);
+    }, [loginUser, modelProfile]);
 
-    /*
-    console.log(roleModels?.roleModel1);
-    console.log(roleModels?.roleModel2);
-    console.log(roleModels?.roleModel3);
-    console.log(roleModels?.roleModel1.user_name);
-    console.log(roleModels?.roleModel2.user_name);
-    console.log(roleModels?.roleModel3.user_name);
-    */
-    
     // 아직 modelProfile을 못 가져온 상태처리
     if (!modelProfile) {
         return <div>Loading...</div>;
@@ -87,235 +55,122 @@ const WannabeCard = () => {
         return <div>Loading...</div>;
     } 
     
-    let CardStep;
-
-    if (activeStep === 0) {
-        CardStep = (
-            <Card>
-                <CardActionArea>
-                    <CardMedia
-                    component="img"
-                    height="300"
-                    image={`http://localhost:8000/${modelImg}`}
-                    />
-                    <CardContent>
-                    <span
-                        style={{
-                            fontSize:'x-large',
-                            fontWeight:'bold',
-                            color: '#33cc33'
-                        }}
-                    >
-                        {modelProfile.user_name}
-                    </span>
-                    <span
-                    style={{
-                        fontSize:'large',
-                        fontWeight:'bold',
-                        marginLeft:'4px'
-                    }}
-                    >
-                        의 추천루틴
-                    </span>
-                    <Button 
-                        fullWidth 
-                        color="secondary" 
-                        variant="contained"
-                        style={{
-                        marginTop:'16px'
-                    }}>자세히 보기</Button>
-                    </CardContent>
-                </CardActionArea>
-                <CardActions>
-                    <Button fullWidth color="error" variant="text" startIcon={<IoHeart/> }>
-                    좋아요
-                    </Button>
-                    <Button fullWidth color="secondary" variant="text" startIcon={<MdOutlineBookmarkAdd/> }>
-                    내 루틴에 추가
-                    </Button>
-                </CardActions>
-            </Card>
-        )
-    } else if (activeStep === 1) {
-        CardStep = (
-        <Card>
-            <CardActionArea>
-                <CardMedia
-                component="img"
-                height="300"
-                image={`http://localhost:8000/${modelImg}`}
-                />
-                <CardContent>
-                <span
-                    style={{
-                        fontSize:'x-large',
-                        fontWeight:'bold',
-                        color: '#33cc33'
-                    }}
-                >
-                    {modelProfile.user_name}
-                </span>
-                <span
-                style={{
-                    fontSize:'large',
-                    fontWeight:'bold',
-                    marginLeft:'4px'
-                }}
-                >
-                    의 추천루틴
-                </span>
-                <Button 
-                    fullWidth 
-                    color="secondary" 
-                    variant="contained"
-                    style={{
-                    marginTop:'16px'
-                }}>자세히 보기</Button>
-                </CardContent>
-            </CardActionArea>
-            <CardActions>
-                <Button fullWidth color="error" variant="text" startIcon={<IoHeart/> }>
-                좋아요
-                </Button>
-                <Button fullWidth color="secondary" variant="text" startIcon={<MdOutlineBookmarkAdd/> }>
-                내 루틴에 추가
-                </Button>
-            </CardActions>
-        </Card>
-        )
-    } else if (activeStep === 2) {
-        CardStep = (
-        <Card>
-            <CardActionArea>
-                <CardMedia
-                component="img"
-                height="300"
-                image={`http://localhost:8000/${modelImg}`}
-                />
-                <CardContent>
-                <span
-                    style={{
-                        fontSize:'x-large',
-                        fontWeight:'bold',
-                        color: '#33cc33'
-                    }}
-                >
-                    {modelProfile.user_name}
-                </span>
-                <span
-                style={{
-                    fontSize:'large',
-                    fontWeight:'bold',
-                    marginLeft:'4px'
-                }}
-                >
-                    의 추천루틴
-                </span>
-                <Button 
-                    fullWidth 
-                    color="secondary" 
-                    variant="contained"
-                    style={{
-                    marginTop:'16px'
-                }}>자세히 보기</Button>
-                </CardContent>
-            </CardActionArea>
-            <CardActions>
-                <Button fullWidth color="error" variant="text" startIcon={<IoHeart/> }>
-                좋아요
-                </Button>
-                <Button fullWidth color="secondary" variant="text" startIcon={<MdOutlineBookmarkAdd/> }>
-                내 루틴에 추가
-                </Button>
-            </CardActions>
-        </Card>
-        )
-    } else if (activeStep === 3) {
-        CardStep = (
-        <Card>
-            <CardActionArea>
-                <CardMedia
-                component="img"
-                height="300"
-                image={`http://localhost:8000/${modelImg}`}
-                />
-                <CardContent>
-                <span
-                    style={{
-                        fontSize:'x-large',
-                        fontWeight:'bold',
-                        color: '#33cc33'
-                    }}
-                >
-                    {modelProfile.user_name}
-                </span>
-                <span
-                style={{
-                    fontSize:'large',
-                    fontWeight:'bold',
-                    marginLeft:'4px'
-                }}
-                >
-                    의 추천루틴
-                </span>
-                <Button 
-                    fullWidth 
-                    color="secondary" 
-                    variant="contained"
-                    style={{
-                    marginTop:'16px'
-                }}>자세히 보기</Button>
-                </CardContent>
-            </CardActionArea>
-            <CardActions>
-                <Button fullWidth color="error" variant="text" startIcon={<IoHeart/> }>
-                좋아요
-                </Button>
-                <Button fullWidth color="secondary" variant="text" startIcon={<MdOutlineBookmarkAdd/> }>
-                내 루틴에 추가
-                </Button>
-            </CardActions>
-        </Card>
-        )
-    }
+    const steps = [0, 1, 2, 3];
 
     return (
         <ForegroundBox
-                display="flex"
-                flexDirection="row"
-                style={{
-                    width:'100%'
-                }}
-                >
-                {CardStep}
-                    <MobileStepper
-                    variant="dots"
-                    steps={4}
-                    position="static"
-                    activeStep={activeStep}
-                    sx={{ maxWidth: 400, flexGrow: 1 }}
-                    nextButton={
-                        <Button size="small" onClick={handleNext} disabled={activeStep === 3}>
-                        Next
-                        {theme.direction === 'rtl' ? (
-                            <KeyboardArrowLeft />
-                        ) : (
-                            <KeyboardArrowRight />
-                        )}
-                        </Button>
-                    }
-                    backButton={
-                        <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-                        {theme.direction === 'rtl' ? (
-                            <KeyboardArrowRight />
-                        ) : (
-                            <KeyboardArrowLeft />
-                        )}
-                        Back
-                        </Button>
-                    }
-                    />
-                </ForegroundBox>
+            display="flex"
+            flexDirection="row"
+            style={{
+                width:'100%'
+            }}
+        >
+            
+        { activeStep === 0 ?
+            <CardHeader
+            avatar = {
+                <Avatar  sx={{ bgcolor: "#33cc33" }} >
+                    <PiSparkleFill />
+                </Avatar>
+            }
+            subheader="내가 팔로우 중인 롤모델"
+            />
+            :
+            <CardHeader
+            avatar = {
+                <Avatar  sx={{ bgcolor: "#b1e33d" }} >
+                    <FaQuestion />
+                </Avatar>
+            }
+            subheader="더 많은 롤모델이 궁금하다면?"
+            />
+        }
+        {steps.includes(activeStep) ? (
+        <Card>
+            <CardActionArea>
+                <CardMedia
+                    component="img"
+                    height="300"
+                    image={roleModels && `http://localhost:8000/${roleModels[activeStep]?.UserDetail[0]?.img}`}
+                />
+                <CardContent>
+                    <span
+                    style={{
+                        fontSize: 'x-large',
+                        fontWeight: 'bold',
+                        color: '#33cc33'
+                    }}
+                    >
+                    {roleModels && roleModels[activeStep]?.user_name}
+                    </span>
+                    <span
+                    style={{
+                        fontSize: 'large',
+                        fontWeight: 'bold',
+                        marginLeft: '4px'
+                    }}
+                    >
+                    의 추천루틴
+                    </span>
+                    <Button
+                    fullWidth
+                    color="secondary"
+                    variant="contained"
+                    style={{
+                        marginTop: '16px'
+                    }}
+                    >
+                    자세히 보기
+                    </Button>
+                </CardContent>
+            </CardActionArea>
+            { activeStep === 0 ?
+            <CardActions>
+                <Button fullWidth color="error" variant="text" startIcon={<IoHeart />}>
+                    좋아요
+                </Button>
+            </CardActions>
+            :   
+            <CardActions>
+                <Button fullWidth color="error" variant="text" startIcon={<IoHeart />}>
+                    좋아요
+                </Button>
+                <Button fullWidth color="secondary" variant="text" startIcon={<PiSparkleFill />}>
+                    팔로우
+                </Button>
+            </CardActions>
+            }
+        </Card>) 
+        : null
+        }
+        <MobileStepper
+        variant="dots"
+        steps={4}
+        position="static"
+        activeStep={activeStep}
+        sx={{ maxWidth: 400, flexGrow: 1 }}
+        nextButton={
+            <Button size="small" onClick={handleNext} disabled={activeStep === 3}>
+                Next
+                {theme.direction === 'rtl' ? (
+                    <KeyboardArrowLeft />
+                ) : (
+                    <KeyboardArrowRight />
+                )}
+            </Button>
+        }
+        backButton={
+            <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+                {theme.direction === 'rtl' ? (
+                    <KeyboardArrowRight />
+                ) : (
+                    <KeyboardArrowLeft />
+                )}
+                Back
+            </Button>
+        }
+        />
+    </ForegroundBox>
     );
 }
 
