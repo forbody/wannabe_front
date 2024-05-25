@@ -6,6 +6,7 @@ import { blue, red } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 import { todoApi } from '../api/services/TodoList';
 import { useAuth } from '../hooks/useAuth';
+import NumberInput from '../components/todo_list/NumberInput';
 
 const TodoForm = () => {
     const { loginUser } = useAuth();
@@ -17,19 +18,23 @@ const TodoForm = () => {
     const [recur, setRecur] = useState([]);
     // 카테고리별 전체항목 [Exercise/Food]
     const [elements, setElements] = useState();
+    // 카테고리가 [Exercise] 일때 세트당 횟수값 변경
+    const [reps, setReps] = useState(0);
+    // 카테고리가 [Exercise] 일때 세트수값 변경
+    const [sets, setSets] = useState(0);
     // 카테고리가 [Food] 일때 order값 변경
-    const [order, setOrder] = useState(0);
+    const [order, setOrder] = useState(4);
     // DropDown 1 으로 목록의 데이터로 줄 sort값만 가져온 배열
     const [sort, setSort] = useState();
     // DropDown 1 에서 선택한 데이터를 자식에서 받아오는것
-    const [sortValue, setSortValue] = useState();
+    const [sortValue, setSortValue] = useState(0);
     // DropDown 2 으로 1의 sort 값을 갖고있는 items 배열
     const [sortedItems, setSortedItems] = useState();
     // DropDown 2 에서 선택한 데이터를 자식에서 받아오는것
-    const [selectItem, setSelectItem] = useState();
+    const [selectItem, setSelectItem] = useState(0);
 
-    const onSelectCategory = () => {;
-        setCategory((prev) => (prev == 1? 2 : 1));
+    const onSelectCategory = () => {
+        setCategory((prev) => (prev == 1 ? 2 : 1));
     };
 
     const onSelectRecur = (event, newFormats) => {
@@ -53,16 +58,16 @@ const TodoForm = () => {
             console.error("Error: ", err);
         }
     };
-    
+
     useEffect(() => {
         getCategory();
-        setOrder(category==1? 0:1);
+        setOrder(category == 1 ? 4 : 1);
     }, [category]);
 
     useEffect(() => {
         onSetSort();
-        setSortValue();
-        setSelectItem();
+        setSortValue(0);
+        setSelectItem(0);
     }, [elements]);
 
     useEffect(() => {
@@ -81,24 +86,32 @@ const TodoForm = () => {
 
     const onUploadTodoEle = async () => {
         try {
-                const res = await todoApi.createTodoList({
-                    date : localStorage.getItem('date')
-                }, loginUser)
-                const res2 = await todoApi.createTodoEle({
+            const res = await todoApi.createTodoList(
+                {
+                    date: localStorage.getItem("date"),
+                },
+                loginUser
+            );
+            const res2 = await todoApi.createTodoEle(
+                {
                     category_id: category,
                     todo_id: selectItem,
-                    order : order,
+                    order: order,
                     date: localStorage.getItem("date"),
                     todo_list_id: res.payload.id,
-                }, loginUser);
-                console.log(res2);
-                localStorage.removeItem('date')
-                localStorage.removeItem('day')
-                navigate('/todolist')
+                    reps : reps,
+                    sets : sets,
+                },
+                loginUser
+            );
+            console.log(res2);
+            localStorage.removeItem("date");
+            localStorage.removeItem("day");
+            navigate("/todolist");
         } catch (err) {
             console.error("Error: ", err);
         }
-    }
+    };
 
     return (
         <Box
@@ -130,7 +143,16 @@ const TodoForm = () => {
                             <ToggleButton value={2}>식단</ToggleButton>
                         </ToggleButtonGroup>
                     </Box>
-                    {category == 2 && (
+                    {category == 1 ? (
+                        <Grid container spacing={0.5}>
+                            <Grid item xs={6}>
+                                <NumberInput count={reps} setCount={setReps}>횟수</NumberInput>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <NumberInput count={sets} setCount={setSets}>세트</NumberInput>
+                            </Grid>
+                        </Grid>
+                    ) : (
                         <Box sx={{ marginTop: "10px" }}>
                             <ToggleButtonGroup
                                 color="standard"

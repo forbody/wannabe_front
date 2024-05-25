@@ -18,15 +18,14 @@ const ShowTodoList = ({ e, setIsChange }) => {
 
     const { loginUser, logout, getUserInfoByToken } = useAuth();
 
-    const [userProfile, setUserProfile] = useState(null);
-    const [userImg, setUserImg] = useState("");
-
     const [exercise, setExercise] = useState();
     const [breakfast, setBreakfast] = useState();
     const [lunch, setLunch] = useState();
     const [dinner, setDinner] = useState();
+    const [userImg, setUserImg] = useState("");
     const [loginUserId, setLoginUserId] = useState();
-
+    const [userProfile, setUserProfile] = useState(null);
+    
     const getUploadUser = async () => {
         const userId = e.Users[0].id 
         const res = await userApi.getUser(userId, loginUser)
@@ -41,10 +40,10 @@ const ShowTodoList = ({ e, setIsChange }) => {
     const getTodoEle = async () => {
         try {
             const res = await todoApi.getEle(e.id, loginUser);
-            const exercise = res.payload.filter((e) => e.order == 0);
             const breakfast = res.payload.filter((e) => e.order == 1);
             const lunch = res.payload.filter((e) => e.order == 2);
             const dinner = res.payload.filter((e) => e.order == 3);
+            const exercise = res.payload.filter((e) => e.order == 4);
             setExercise(exercise)
             setBreakfast(breakfast)
             setLunch(lunch)
