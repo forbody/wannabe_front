@@ -8,6 +8,8 @@ import ExerciseFollow from "../components/exercises/ExerciseFollow";
 import { useAuth } from './../hooks/useAuth';
 import Carousel from "react-material-ui-carousel";
 import ExerciseModal from "../components/exercises/ExerciseModal";
+import GetUserandRoleModel from './../components/user/GetUserandRoleModel';
+
 
 const Exercise = () => {
     const { loginUser } = useAuth();
@@ -15,6 +17,7 @@ const Exercise = () => {
     const [exercises, setExercises] = useState([]);
     const [randTip, setRandTip] = useState();
     const [favExercises, setFavExercises] = useState([]);
+    const { modelImg } = GetUserandRoleModel();
 
     const getExercises = async () => {
         const res = await axios.get('http://localhost:8000/v1/exercise');
@@ -60,9 +63,7 @@ const Exercise = () => {
                 }}
             >
                 <BackgroundBox half>
-                    <h3 >
-                    셀럽 이미지
-                    </h3>
+                    {modelImg && <img src={ `http://localhost:8000/${modelImg}`} width='100' alt={"img"} style={{borderRadius:"100px"}} />}
                 </BackgroundBox>
                 <BackgroundBox half>
                     헬스 팁 - {randTip?.health_tip}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../hooks/useAuth";
-
+import ExerciseModal from "../components/exercises/ExerciseModal";
 
 const ExerciseDetail = ({exercise, favExercises, refreshFav, setRefreshFav }) => {
     const [match, setMatch] = useState();
