@@ -1,14 +1,14 @@
-import { Box, Button, OutlinedInput, TextField, Typography } from "@mui/material";
+import { Box, Button, OutlinedInput, Typography } from "@mui/material";
 import { BackgroundBox, ForegroundBox } from './../components/styled_comp/StyledDiv';
 import { useForm } from "react-hook-form";
 import Swal from 'sweetalert2';
 import { useAuth } from "../hooks/useAuth";
 import FormControl from '@mui/material/FormControl';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { RiKakaoTalkFill } from "react-icons/ri";
 
 const Login = () => {
-    const { loginUser, login, logout, kakaoLogin } = useAuth();
+    const { login, kakaoLogin } = useAuth();
     kakaoLogin();
     
     const navigate = useNavigate()
@@ -16,7 +16,6 @@ const Login = () => {
     const {
         register,
         handleSubmit,
-        watch,
         reset,
         formState: { errors },
     } = useForm();
@@ -98,7 +97,7 @@ const Login = () => {
                     placeholder="비밀번호를 입력해 주세요"
                     {...register("password", { required: true })}
                     style={{
-                        marginTop:'32px'
+                        marginTop:'24px'
                     }}
                     />{errors.password && <Typography color="error">비밀번호는 필수값입니다.</Typography>}
                     </FormControl>
@@ -108,7 +107,7 @@ const Login = () => {
                         type='submit'
                         style={{
                             width:'100%',
-                            margin:'72px auto 0'
+                            margin:'48px auto 0'
                         }}
                         
                     >
