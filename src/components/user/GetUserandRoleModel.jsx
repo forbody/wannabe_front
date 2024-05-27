@@ -4,7 +4,7 @@ import { userApi } from "../../api/services/user";
 
 const GetUserandRoleModel = () => {
     const { loginUser, getUserInfoByToken } = useAuth();
-
+    
     const [userProfile, setUserProfile] = useState(null);
     const [modelProfile, setModelProfile] = useState(null);
     const [userImg, setUserImg] = useState("");

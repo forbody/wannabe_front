@@ -55,6 +55,11 @@ export const userApi = {
             "Authorization": loginUser,
         }
     }),
+    modifyRoleModel: (data, loginUser) => api.patch('users/rolemodel', data, {        // 유저 롤모델 수정
+        headers: {
+            "Authorization": loginUser,
+        }
+    }),
 }
 
 

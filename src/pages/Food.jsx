@@ -94,7 +94,6 @@ const Food = () => {
             }}
             >
                 <Water />
-
             </BackgroundBox>
         </Box>
     );

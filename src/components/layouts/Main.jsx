@@ -1,6 +1,6 @@
-import { Button, Grid, styled } from "@mui/material";
+import { Grid } from "@mui/material";
 import BottomNavi from "./BottomNavi";
-import { PiSparkleFill } from "react-icons/pi";
+import Header from "./Header";
 
 const Main = ({ children }) => {
     return (
@@ -19,16 +19,7 @@ const Main = ({ children }) => {
                     background: 'linear-gradient(135deg, #fdf00e, #33cc33)'
                 }}
             >
-            <Button
-            startIcon={<PiSparkleFill/>}
-            style={{
-                position:'relative',
-                right:'120px',
-                top:'8px',
-                color:'#000',
-                fontWeight:'800'
-            }}
-        >Wannabe</Button>
+                <Header/>
                 {children}
             <BottomNavi />
         </Grid>
