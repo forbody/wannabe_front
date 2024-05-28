@@ -19,8 +19,8 @@ const Main = ({ children }) => {
                     background: 'linear-gradient(135deg, #fdf00e, #33cc33)'
                 }}
             >
-                <Header/>
-                {children}
+            <Header/>
+            {children}
             <BottomNavi />
         </Grid>
     );

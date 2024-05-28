@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { userApi } from "../../api/services/user";
 
 const ShareEleBox = ({ children, elements  }) => {
+    const token = localStorage.getItem("token");
     const [isTrue, setIsTrue] = useState(false);
     const { loginUser, getUserInfoByToken } = useAuth();
     const [totalCal, setTotalCal] = useState();
@@ -40,7 +41,7 @@ const ShareEleBox = ({ children, elements  }) => {
     const onSetRecommendFood = async () => {
         try {
             const date = localStorage.getItem("date");
-            const res = await todoApi.createTodoList({ date }, loginUser);
+            const res = await todoApi.createTodoList({ date }, token);
             const todo_list_id = res.payload?.id;
             const res2 = await todoApi.shareTodoEle(
                 {
@@ -49,7 +50,7 @@ const ShareEleBox = ({ children, elements  }) => {
                     arr: elements,
                     order: order,
                 },
-                loginUser
+                token
             );
         } catch (err) {
             console.error("Error: ", err);

@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
 import { ForegroundBox } from "../styled_comp/StyledDiv";
 import { foodApi } from "../../api/services/food";
 import { Button, Typography } from '@mui/material';
@@ -13,6 +12,7 @@ const FoodRecommend = ({meal}) => {
     localStorage.setItem("date", currentDate);
 
     const { loginUser } = useAuth();
+    const token = localStorage.getItem("token");
     const [dishes, setDishes] = useState(null);
     const [totalCalory, setTotalCalory] = useState(0);
     const [arr, setArr] = useState([]);
@@ -22,33 +22,26 @@ const FoodRecommend = ({meal}) => {
     // meal에 해당하는 리스트가 디비에 존재하는지 찾고
     // 없으면 랜덤 meal 가져오기
     // 있으면 해당 meal 가져오기
-    const getTodayDishes = async () => {
-        const res = await foodApi.getTodayDishes(
-            {
-                meal,
-            },
-            loginUser
-        );
-        setRecFoodDone(res.isAdded);
+    const getTodayDishes = async() => {
+        const res = await foodApi.getTodayDishes({
+            meal
+        }, token);
+        setRecFoodDone(res.isAdded)
         setDishes(res.result);
     };
 
     // meal 추가하기
-    const onSetRecommendFood = async () => {
-        console.log(arr);
+    const onSetRecommendFood = async() => {
         try {
-            const date = localStorage.getItem("date");
-            const res = await todoApi.createTodoList({ date }, loginUser);
+            const date = localStorage.getItem('date')
+            const res = await todoApi.createTodoList({date}, token);
             const todo_list_id = res.payload?.id;
-            const res2 = await todoApi.shareTodoEle(
-                {
-                    date,
-                    todo_list_id,
-                    arr,
-                    meal,
-                },
-                loginUser
-            );
+            const res2 = await todoApi.shareTodoEle({
+                date,
+                todo_list_id,
+                arr,
+                meal
+            }, token);
             if (res.code === 200 && res2.code === 200) {
                 console.log("식단추가 성공");
                 setRecFoodDone(true);
@@ -63,7 +56,7 @@ const FoodRecommend = ({meal}) => {
 
     useEffect(() => {
         getTodayDishes();
-    }, [loginUser]);
+    }, []);
 
     useEffect(() => {
         if (dishes) {

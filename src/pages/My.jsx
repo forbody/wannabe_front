@@ -9,12 +9,14 @@ import GetUserandRoleModel from '../components/user/GetUserandRoleModel';
 import MyLikeBtn from '../components/my/MyLikeBtn';
 
 const My = () => {
-    const { loginUser, logout } = useAuth()
+    const { logout } = useAuth()
     const { userProfile, userImg } = GetUserandRoleModel();
     
-    if (userProfile === null) {
+    // 아직 userProfile을 못 가져온 상태처리
+    if (!userProfile) {
         return <div>Loading...</div>;
     }
+    
     return ( 
         <Box
             height='100vh'
@@ -38,16 +40,16 @@ const My = () => {
             {userProfile?.user_name} 님의 페이지
             </Typography>
             <BackgroundBox style={{ justifyContent: 'center'}}>
-                <MyLikeBtn />
+                <MyLikeBtn userProfile={userProfile} />
             </BackgroundBox>
             <BackgroundBox style={{ justifyContent: 'center', marginTop:'24px'}}>
                 <MyCalendar />
             </BackgroundBox>
             <BackgroundBox style={{ justifyContent: 'center', marginTop:'24px' }}>
-                <MyChart />
+                <MyChart userProfile={userProfile} />
             </BackgroundBox>
             <BackgroundBox style={{ justifyContent: 'center', marginTop:'24px' }}>
-                <MyButtons loginUser={loginUser} logout={logout}/>
+                <MyButtons logout={logout} />
             </BackgroundBox>
         </Box>
     );

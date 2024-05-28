@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { userApi } from "../../api/services/user";
 
 const GetUserandRoleModel = () => {
+    const token = localStorage.getItem("token");
     const { loginUser, getUserInfoByToken } = useAuth();
     
     const [userProfile, setUserProfile] = useState(null);
@@ -38,7 +39,7 @@ const GetUserandRoleModel = () => {
         try {
             if (userProfile?.role_model_id) {
                 const role_model = userProfile.role_model_id;
-                const res = await userApi.getUser(`${role_model}`, loginUser);
+                const res = await userApi.getUser(`${role_model}`, token);
                 setModelProfile(res.payload);
             }
         } catch (err) {

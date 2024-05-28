@@ -6,10 +6,9 @@ import Swal from "sweetalert2";
 import { waterApi } from "../../api/services/water";
 import watercompleteimg from '../../assets/watercomplete.png'
 import { IoIosWater } from "react-icons/io";
-import { useAuth } from "../../hooks/useAuth";
 
 const Water = () => {
-    const { loginUser } = useAuth()
+    const token = localStorage.getItem("token");
     const [waterComplete, setWaterComplete] = useState(false);
     const [water, setWater] = useState(0);
 
@@ -22,7 +21,7 @@ const Water = () => {
     // 최초 실행 시 물을 마실 컬럼 생성 or 가져오기
     const createWater = async () => {
         try{
-            const res = await waterApi.createWater(loginUser)
+            const res = await waterApi.createWater(token)
             if (res.code === 200) {
                 setWater(parseInt(res.payload.water));
             } else {
@@ -42,7 +41,7 @@ const Water = () => {
     const updateWater = async (water) => {
         try{
             const drink = water + 10
-            const res = await waterApi.updateWater(drink, loginUser)
+            const res = await waterApi.updateWater(drink, token)
             if (res.code === 200) {
                 console.log('수분섭취 성공');
                 if (drink == 100) {

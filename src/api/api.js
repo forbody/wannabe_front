@@ -28,16 +28,14 @@ api.interceptors.response.use(
 
 const useRefreshHandler = async (error) => {
     const originalReq = error.config;
-    if (error.response.status !== 500 && error.response.status !== 403) {
+    if (error.response.status !== 403) {
         return Promise.reject(error);
     } else {
         // accessToken으로 검증 요청 API
-        console.log(jwtDecode(localStorage.getItem('token')))
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/refresh`,{
                 accessToken: localStorage.getItem('token')
         });
         if (res.status === 200) {
-            console.log(res);
             localStorage.setItem('token', res.data.accessResult);
             originalReq.headers.Authorization = res.data.accessResult;
             return api(originalReq);

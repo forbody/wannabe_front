@@ -4,11 +4,9 @@ import { ForegroundBox } from "../styled_comp/StyledDiv";
 import { LineChart } from '@mui/x-charts/LineChart';
 import { FaUserPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import GetUserandRoleModel from "../user/GetUserandRoleModel";
 
-const MyChart = () => {
+const MyChart = ({userProfile}) => {
     const navigate = useNavigate();
-    const { userProfile } = GetUserandRoleModel();
     const [userBmiArray, setUserBmiArray] = useState([]);
     const [bmiDateArray, setBmiDateArray] = useState([]);
     
@@ -34,7 +32,8 @@ const MyChart = () => {
         }
     }, [userProfile])
 
-    if (userProfile === null) {
+    // 아직 userProfile을 못 가져온 상태처리
+    if (!userProfile) {
         return <div>Loading...</div>;
     }
 

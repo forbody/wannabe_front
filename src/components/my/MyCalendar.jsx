@@ -8,10 +8,9 @@ import { ForegroundBox } from '../styled_comp/StyledDiv';
 import { Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { todoApi } from '../../api/services/TodoList';
-import { useAuth } from '../../hooks/useAuth';
 
 const MyCalendar = () => {
-    const { loginUser }= useAuth();
+    const token = localStorage.getItem("token");
     const today1 = new Date()
     const today_month = today1.getMonth()+1;
     const today_date = today1.getDate();
@@ -43,14 +42,16 @@ const MyCalendar = () => {
     
     const getTodo = async () => {
         try {
-            const res1 = await todoApi.getList(date, loginUser);
-            const listId = res1.payload?.id;
-            const res2 = await todoApi.getEle(listId, loginUser);
-            res2.payload.map((e) =>
-                e.category_id == 1
-                    ? setExercise((prev) => [...prev, { ...e }])
-                    : setFood((prev) => [...prev, { ...e }])
-            );
+            const res1 = await todoApi.getList(date, token);
+            if (res1.payload) {
+                const listId = res1.payload?.id;
+                const res2 = await todoApi.getEle(listId, token);
+                res2.payload.map((e) =>
+                    e.category_id == 1
+                        ? setExercise((prev) => [...prev, { ...e }])
+                        : setFood((prev) => [...prev, { ...e }])
+                );
+            }
         } catch (err) {
             console.error("Error: ", err);
         }
@@ -85,7 +86,7 @@ const MyCalendar = () => {
             fontWeight='600'
             color='secondary'
             >
-                {goal} %
+                { goal ? goal : 0} %
             </Typography>
         </ForegroundBox>
         <ForegroundBox
