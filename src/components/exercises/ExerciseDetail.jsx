@@ -6,8 +6,9 @@ import zIndex from "@mui/material/styles/zIndex";
 import StarsIcon from '@mui/icons-material/Stars';
 
 const ExerciseDetail = ({exercise, favExercises, refreshFav, setRefreshFav, onClick }) => {
+
+    const token = localStorage.getItem("token");
     const [match, setMatch] = useState();
-    const { loginUser } = useAuth();
     const [openDesc, setOpenDesc] = useState(false);
     
     useEffect(() => {
@@ -27,7 +28,7 @@ const ExerciseDetail = ({exercise, favExercises, refreshFav, setRefreshFav, onCl
         // axios post
         const res = await axios.post('http://localhost:8000/v1/exercise/favorite',
             { id }, {
-            headers: { Authorization: loginUser }
+            headers: { Authorization: token }
         });
         if(res.data.code === 200) {
             setRefreshFav(!refreshFav)
@@ -42,7 +43,7 @@ const ExerciseDetail = ({exercise, favExercises, refreshFav, setRefreshFav, onCl
         // )
         const res = await axios.delete(
             'http://localhost:8000/v1/exercise/favorite',
-            { headers: { Authorization: loginUser }, data: { id } }
+            { headers: { Authorization: token }, data: { id } }
         )
         if(res.data.code === 200) {
             setRefreshFav(!refreshFav)

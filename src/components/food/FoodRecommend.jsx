@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
 import { ForegroundBox } from "../styled_comp/StyledDiv";
 import { foodApi } from "../../api/services/food";
 import { Button, Typography } from '@mui/material';
@@ -7,7 +6,7 @@ import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { todoApi } from "../../api/services/TodoList";
 
 const FoodRecommend = ({meal}) => {
-    const { loginUser } = useAuth()
+    const token = localStorage.getItem("token");
     const [dishes, setDishes] = useState(null);
     const [totalCalory, setTotalCalory] = useState(0);
     const [arr, setArr] = useState([]);
@@ -20,24 +19,23 @@ const FoodRecommend = ({meal}) => {
     const getTodayDishes = async() => {
         const res = await foodApi.getTodayDishes({
             meal
-        }, loginUser);
+        }, token);
         setRecFoodDone(res.isAdded)
         setDishes(res.result);
     }
 
     // meal 추가하기
     const onSetRecommendFood = async() => {
-        console.log(arr);
         try {
             const date = localStorage.getItem('date')
-            const res = await todoApi.createTodoList({date}, loginUser);
+            const res = await todoApi.createTodoList({date}, token);
             const todo_list_id = res.payload?.id;
             const res2 = await todoApi.shareTodoEle({
                 date,
                 todo_list_id,
                 arr,
                 meal
-            }, loginUser);
+            }, token);
             if (res.code === 200 && res2.code === 200) {
                 console.log('식단추가 성공');
                 setRecFoodDone(true)
@@ -52,7 +50,7 @@ const FoodRecommend = ({meal}) => {
 
     useEffect(() => {
         getTodayDishes();
-    }, [loginUser]);
+    }, []);
 
     useEffect(() => {
         if (dishes) {
@@ -81,8 +79,8 @@ const FoodRecommend = ({meal}) => {
             }}
             >
             {
-                dishes && dishes.map(d=> (
-                    <Typography>{d.name}   {d.calory}kcal</Typography>
+                dishes && dishes.map((dish, idx) => (
+                    <Typography key={idx}>{dish?.name} {dish?.calory}kcal</Typography>
                 ))
             }
             <Typography 

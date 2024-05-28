@@ -8,7 +8,8 @@ import { Divider, Typography } from '@mui/material';
 import Swal from 'sweetalert2';
 import { userApi } from '../../api/services/user';
 
-const MyButtons = ({ loginUser, logout }) => {
+const MyButtons = ({ logout }) => {
+    const token = localStorage.getItem("token");
     const navigate = useNavigate();
     const deleteUser = () => {
         try{
@@ -23,7 +24,7 @@ const MyButtons = ({ loginUser, logout }) => {
                 cancelButtonText: "아니요"
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    const res = await userApi.deleteUser(loginUser)
+                    const res = await userApi.deleteUser(token)
                     if (res.code === 200) {
                     Swal.fire({
                     title: "회원탈퇴가 성공적으로 되었습니다!",

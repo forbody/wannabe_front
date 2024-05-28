@@ -27,11 +27,8 @@ const Food = () => {
         }
         }, []);
 
-    if (userProfile === null) {
-        return <div>Loading...</div>;
-    }
-
-    if (modelProfile === null) {
+    // 아직 userProfile, modelProfile을 못 가져온 상태처리
+    if (!userProfile || !modelProfile) {
         return <div>Loading...</div>;
     }
 

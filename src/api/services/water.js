@@ -1,19 +1,19 @@
 import api from "../api"
 
 export const waterApi = {
-    getWater: (loginUser) => api.get(`water/`, {      // 나의 수분 섭취량 조회
+    getWater: (token) => api.get(`water/`, {      // 나의 수분 섭취량 조회
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
-    createWater: (loginUser) => api.post(`water/`, null,  {        // 수분 섭취 시작
+    createWater: (token) => api.post(`water/`, null,  {        // 수분 섭취 시작
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
-    updateWater: (data, loginUser) => api.patch(`water/`, {water : data}, {        // 수분 섭취 업데이트
+    updateWater: (data, token) => api.patch(`water/`, {water : data}, {        // 수분 섭취 업데이트
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     })
 }

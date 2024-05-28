@@ -23,7 +23,6 @@ const SignUp = () => {
     });
     
     const goJoin = (async () => {
-        console.log(joinData);
         const { email,
             password,
             pwdchk,

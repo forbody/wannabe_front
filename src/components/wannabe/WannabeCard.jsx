@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Avatar, Button, Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typography } from "@mui/material";
-import { useAuth } from "../../hooks/useAuth";
+import { Avatar, Button, Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, Typography } from "@mui/material";
 import { userApi } from "../../api/services/user";
 import { useEffect, useState } from "react";
 import { useTheme } from '@mui/material/styles';
@@ -13,15 +12,16 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import Swal from 'sweetalert2';
 import WannabeLikeBtn from './WannabeLikeBtn';
+import { useAuth } from '../../hooks/useAuth';
 
-const WannabeCard = () => {
-    const { loginUser } = useAuth()
+const WannabeCard = ({liking, like, unlike}) => {
+    const token = localStorage.getItem("token");
+    const { loginUser } = useAuth();
     const theme = useTheme();
     const { userProfile, modelProfile } = GetUserandRoleModel();
     const [activeStep, setActiveStep] = useState(0);
     const [roleModels, setRoleModels] = useState(null);
-    const [liking, setLiking] = useState();
-
+    
     // 다음 버튼
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -40,7 +40,7 @@ const WannabeCard = () => {
     // 랜덤 롤모델 3명 가져오기
     const getRandomRoleModels = async () => {
         try {
-            const res = await userApi.getRandomRoleModels(loginUser);
+            const res = await userApi.getRandomRoleModels(token);
             const arr = [modelProfile, ...res.result]
             setRoleModels(arr);
         } catch (err) {
@@ -54,7 +54,7 @@ const WannabeCard = () => {
             if(roleModels){
                 const res = await userApi.modifyRoleModel(
                     {role_model_id: whoId}
-                    , loginUser)
+                    , token)
                 if (res.code === 200) {
                     Swal.fire({
                         title: "롤모델을 바꾸었습니다!",
@@ -74,90 +74,12 @@ const WannabeCard = () => {
         }
     }
 
-    // 내가 좋아하는 사람 가져오기 기능
-    const getLikings = async () => {
-        try{
-            if (userProfile) {
-                const res = await userApi.getLikers(`${userProfile?.id}`, loginUser)
-                if (res.code === 200) {
-                    console.log('내가 좋아하는 사람 가져오기 성공');
-                    setLiking(res.payload)
-                } else {
-                    throw new Error(res.message);
-                }
-            }
-        }catch(err) {
-            Swal.fire({
-                title: "에러 발생",
-                text: err.message,
-                icon: "error"
-            });
-        }
-    };
-
-    // 좋아요 기능
-    const like = async (whereId) => {
-        try{
-            const res = await userApi.like(`${whereId}`, loginUser)
-            if (res.code === 200) {
-                console.log('좋아요 성공');
-                getLikings();
-            } else {
-                throw new Error(res.message);
-            }
-        }catch(err) {
-            Swal.fire({
-                title: "에러 발생",
-                text: err.message,
-                icon: "error"
-            });
-        }
-    }
-
-    // 좋아요 취소 기능
-    const unlike = async (whereId) => {
-        try{
-            const res = await userApi.unlike(`${whereId}`, loginUser)
-            if (res.code === 200) {
-                console.log('좋아요 취소 성공');
-                getLikings();
-            } else {
-                throw new Error(res.message);
-            }
-        }catch(err) {
-            Swal.fire({
-                title: "에러 발생",
-                text: err.message,
-                icon: "error"
-            });
-        }
-    }
-
-    useEffect(() => {
-        getLikings();
-    }, [loginUser, userProfile]);
-
     useEffect(() => {
         getRandomRoleModels();
     }, [loginUser, userProfile, modelProfile]);
 
-    // 아직 loginUser을 못 가져온 상태처리
-    if (!loginUser) {
-        return <div>Loading...</div>;
-    } 
-
-    // 아직 userProfile을 못 가져온 상태처리
-    if (!userProfile) {
-        return <div>Loading...</div>;
-    } 
-
-    // 아직 modelProfile을 못 가져온 상태처리
-    if (!modelProfile) {
-        return <div>Loading...</div>;
-    } 
-
-    // 아직 roleModels를 못 가져온 상태처리
-    if (!roleModels) {
+    // 아직 loginUser, userProfile, modelProfile, roleModels을 못 가져온 상태처리
+    if (!loginUser || !userProfile || !modelProfile || !roleModels) {
         return <div>Loading...</div>;
     } 
     
@@ -258,7 +180,7 @@ const WannabeCard = () => {
                 </CardContent>
             </CardActionArea>
                 <CardActions>
-                    {liking && <WannabeLikeBtn liking={liking} wannabe_id={roleModels[activeStep]?.id} like={like} unlike={unlike} />}
+                    {liking && <WannabeLikeBtn alreadyliked={liking} like_id={roleModels[activeStep]?.id} like={like} unlike={unlike} />}
                     <Typography variant='button' color="error">워너비</Typography>
                 </CardActions>
         </Card>) 

@@ -15,6 +15,7 @@ import Swal from "sweetalert2";
 import GetUserandRoleModel from "../components/user/GetUserandRoleModel";
 
 const TodoList = () => {
+    const token = localStorage.getItem("token");
     const { loginUser, kakaoLogin }= useAuth();
     // 카카오 로그인 유저 가운데 구유저/신유저 구분
     const { userProfile } = GetUserandRoleModel();
@@ -44,16 +45,18 @@ const TodoList = () => {
 
     const getTodo = async () => {
         try {
-            const res1 = await todoApi.getList(date, loginUser);
-            const listId = res1.payload?.id;
-            const res2 = await todoApi.getEle(listId, loginUser);
-            let fo = [];
-            let ex = [];
-            res2.payload.map((e) => {
-                e.category_id == 1 ? ex.push({...e}) : fo.push({...e});
-            });
-            setExercise(ex);
-            setFood(fo);
+            const res1 = await todoApi.getList(date, token);
+            if (res1.payload) {
+                const listId = res1.payload?.id;
+                const res2 = await todoApi.getEle(listId, token);
+                let fo = [];
+                let ex = [];
+                res2.payload.map((e) => {
+                    e.category_id == 1 ? ex.push({...e}) : fo.push({...e});
+                });
+                setExercise(ex);
+                setFood(fo);
+            }
         } catch (err) {
             console.error("Error: ", err);
         }
@@ -61,7 +64,7 @@ const TodoList = () => {
 
     const goTodoShareForm = async () => {
         try {
-            const res = await todoApi.getList(date, loginUser);
+            const res = await todoApi.getList(date, token);
             if (!Boolean(res.payload?.Todo_elements)) {
                 Swal.fire({
                     title: "일과를 등록해주세요.",
@@ -90,7 +93,7 @@ const TodoList = () => {
     }
 
     // 아직 userProfile을 못 가져온 상태처리
-    if (userProfile === null) {
+    if (!userProfile) {
         return <div>Loading...</div>;
     } 
 

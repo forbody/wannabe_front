@@ -42,8 +42,7 @@ const Landing = () => {
             sx = {{
                 backgroundImage: `url(${bgImg})`,
                 backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover',
-                zIndex: 3
+                backgroundSize: 'cover'
             }}
         >
             <Box>

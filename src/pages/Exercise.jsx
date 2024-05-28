@@ -13,6 +13,7 @@ import { exerciseApi } from "../api/services/exercise";
 import StarsIcon from '@mui/icons-material/Stars';
 
 const Exercise = () => {
+    const token = localStorage.getItem("token");
     const sorts = [
         '#가슴',
         '#등',
@@ -20,7 +21,6 @@ const Exercise = () => {
         '#하체',
         '#전신',
     ];
-
     const { loginUser } = useAuth();
     const [refreshFav, setRefreshFav] = useState(false);
     const [exercises, setExercises] = useState([]);
@@ -37,17 +37,18 @@ const Exercise = () => {
         // 운동 리스트 조회 기능
         // 로그인했을때와  운동 목록 태그 리스트가  변경되면 다시 실행되도로록
         const data = exerciseSortName.map(e => e.slice(1))
-        const res = await exerciseApi.getSortExercise(loginUser, data);
+        const res = await exerciseApi.getSortExercise(token, data);
+        console.log(res.payload);
         setExercises(res.payload);
     }
 
     const getRandomTip = async () => {
-        const res = await exerciseApi.getRandomTip(loginUser);
+        const res = await exerciseApi.getRandomTip(token);
         setRandTip(res.payload);
     }
 
     const getFavExercises = async() => {
-        const res = await exerciseApi.getFavExercises(loginUser);
+        const res = await exerciseApi.getFavExercises(token);
         setFavExercises(res.payload);
     }
 
