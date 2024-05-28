@@ -21,6 +21,7 @@ import Wannabe from './pages/Wannabe';
 import My from './pages/My';
 import MyInfoModify from './components/my/MyInfoModify';
 import MyInfoUpdate from './components/my/MyInfoUpdate';
+import MyShareList from './components/my/MyShareList';
 
 import Error404 from './pages/Error/Error404';
 
@@ -44,6 +45,8 @@ function App() {
           <Route path='/my' element={auth.loginUser ? <My /> : <Landing />} />
           <Route path='/my/update' element={auth.loginUser ? <MyInfoUpdate /> : <Landing />} />
           <Route path='/my/modify' element={auth.loginUser ? <MyInfoModify /> : <Landing />} />
+          <Route path='/my/shareList' element={auth.loginUser ? <MyShareList />: <Landing />} />
+          {/*<Route path='*' element={<h1>Not Found</h1>} /> */}
           <Route path='*' element={<Error404/>} />
         </Routes>
       </Layout>
