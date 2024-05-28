@@ -10,42 +10,63 @@ import Carousel from "react-material-ui-carousel";
 import ExerciseModal from "../components/exercises/ExerciseModal";
 import GetUserandRoleModel from "../components/user/GetUserandRoleModel";
 import { exerciseApi } from "../api/services/exercise";
+import StarsIcon from '@mui/icons-material/Stars';
 
 const Exercise = () => {
     const token = localStorage.getItem("token");
+    const sorts = [
+        '#가슴',
+        '#등',
+        '#어깨',
+        '#하체',
+        '#전신',
+    ];
     const { loginUser } = useAuth();
     const [refreshFav, setRefreshFav] = useState(false);
     const [exercises, setExercises] = useState([]);
     const [randTip, setRandTip] = useState();
     const [favExercises, setFavExercises] = useState([]);
+    const [selectedExercise, setSelectedExercise] = useState({});
+    const [isExerciseModalOpen, setIsExerciseModalOpen] = useState(false);
+    const [exerciseSortName, setExerciseSortName] = useState(sorts);
+    // 태그 리스트  state
+
     const { modelImg } = GetUserandRoleModel();
 
     const getExercises = async () => {
-        const res = await exerciseApi.getExercise(token);
+        // 운동 리스트 조회 기능
+        // 로그인했을때와  운동 목록 태그 리스트가  변경되면 다시 실행되도로록
+        const data = exerciseSortName.map(e => e.slice(1))
+        const res = await exerciseApi.getSortExercise(token, data);
         console.log(res.payload);
         setExercises(res.payload);
     }
 
     const getRandomTip = async () => {
         const res = await exerciseApi.getRandomTip(token);
-        console.log(res.payload);
         setRandTip(res.payload);
     }
 
     const getFavExercises = async() => {
         const res = await exerciseApi.getFavExercises(token);
         setFavExercises(res.payload);
-        console.log(res.payload);
     }
 
     useEffect(() => {
-        getExercises();
         getRandomTip();
     }, [loginUser]);
+
+    useEffect(() => {
+        getExercises();    
+    }, [loginUser, exerciseSortName]);
+
     useEffect(() => {
         getFavExercises(); //
     }, [refreshFav]);
     // 해당 유저가 즐겨찾기한 운동 목록 조회
+    
+    // // 맨 위로 올리는
+
 
     return (
         <>
@@ -72,14 +93,17 @@ const Exercise = () => {
                     )}
                 </BackgroundBox>
                 <BackgroundBox half>
-                    <h3>헬스 팁</h3> - {randTip?.health_tip}
-                    <ExerciseModal />
+                    
+                    <h3>건강을 위한 팁!!</h3> - {randTip?.health_tip}
                 </BackgroundBox>
                 <BackgroundBox
                     display="flex"
                     style={{flexDirection:"column", alignItems:"stretch"}}
                 >
-                    <h3>내가 즐겨찾기 한 운동</h3>
+                    <h3 style={{ display: 'flex', alignItems: 'center', fontSize: '20px' }}>
+                    <StarsIcon style={{ color: 'green', fontSize: 'inherit', marginRight: '10px' }} />
+                    내가 즐겨찾기 한 운동
+                    </h3>
                     <br />
                     <Carousel
                         showArrows={false}
@@ -99,26 +123,42 @@ const Exercise = () => {
                     style={{justifyContent:'center'}}
                 >
                     <h3>운동 목록</h3>
-                    <ExerciseSelect />
+                    {/* // 프롭스로 태그 리스트 전달 */}
+                    <ExerciseSelect sorts={sorts} exerciseSortName={exerciseSortName} setExerciseSortName={setExerciseSortName} />
                 </BackgroundBox>
                 <BackgroundBox>
                     <>
                         {favExercises &&
-                            exercises && exercises.map((e) => (
+                            exercises && exercises.map((exercise) => (
                                 <ExerciseDetail
-                                    key={e.id}
-                                    exercise={e}
+                                    key={exercise.id}
+                                    exercise={exercise}
                                     favExercises={favExercises}
                                     refreshFav={refreshFav}
                                     setRefreshFav={setRefreshFav}
-                                /> //3
+                                    onClick={() => {
+                                        setIsExerciseModalOpen(true);
+                                        setSelectedExercise(exercise)
+                                    }}
+                                />
+                                
                             ))}
+                        <ExerciseModal 
+                            exercise={selectedExercise}
+                            isOpen={isExerciseModalOpen}
+                            onClose={() => {
+                                setIsExerciseModalOpen(false);
+                                setSelectedExercise({});
+                            }}
+                        />        
                     </>
                 </BackgroundBox>
             </Box>
         </>
     );
 }
+
+
 
 
 
