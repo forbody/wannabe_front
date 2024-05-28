@@ -12,8 +12,11 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import Swal from 'sweetalert2';
 import WannabeLikeBtn from './WannabeLikeBtn';
+import { useAuth } from '../../hooks/useAuth';
 
-const WannabeCard = ({loginUser, liking, like, unlike}) => {
+const WannabeCard = ({liking, like, unlike}) => {
+    const token = localStorage.getItem("token");
+    const { loginUser } = useAuth();
     const theme = useTheme();
     const { userProfile, modelProfile } = GetUserandRoleModel();
     const [activeStep, setActiveStep] = useState(0);
@@ -37,7 +40,7 @@ const WannabeCard = ({loginUser, liking, like, unlike}) => {
     // 랜덤 롤모델 3명 가져오기
     const getRandomRoleModels = async () => {
         try {
-            const res = await userApi.getRandomRoleModels(loginUser);
+            const res = await userApi.getRandomRoleModels(token);
             const arr = [modelProfile, ...res.result]
             setRoleModels(arr);
         } catch (err) {
@@ -51,7 +54,7 @@ const WannabeCard = ({loginUser, liking, like, unlike}) => {
             if(roleModels){
                 const res = await userApi.modifyRoleModel(
                     {role_model_id: whoId}
-                    , loginUser)
+                    , token)
                 if (res.code === 200) {
                     Swal.fire({
                         title: "롤모델을 바꾸었습니다!",

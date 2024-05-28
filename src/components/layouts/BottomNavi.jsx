@@ -6,8 +6,10 @@ import { PiBowlFoodFill } from "react-icons/pi";
 import { HiHome } from "react-icons/hi2";
 import { PiSparkleFill } from "react-icons/pi";
 import { IoPerson } from "react-icons/io5";
+import { useAuth } from "../../hooks/useAuth";
 
 const BottomNavi = () => {
+    const { loginUser } = useAuth();
     const navigate = useNavigate();
     const [menus, setMenus] = useState([
         { path: '/exercise', label : "운동", value : "운동", icon: <IoIosFitness /> },
@@ -24,7 +26,7 @@ const BottomNavi = () => {
     const location = useLocation();
     
     const noShowBottomNavi = ['/', '/login', '/signup'] // 여기에 페이지 주소를 넣으면 하단 바가 사라집니다.
-    if (noShowBottomNavi.includes(location.pathname)) {
+    if (!loginUser || noShowBottomNavi.includes(location.pathname)) {
         return null;
     }
     

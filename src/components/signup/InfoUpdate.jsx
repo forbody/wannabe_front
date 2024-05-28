@@ -7,6 +7,7 @@ import { userApi } from "../../api/services/user";
 import { useAuth } from "../../hooks/useAuth";
 
 const InfoUpdate = () => {
+    const token = localStorage.getItem("token");
     const [step, setStep] = useState(1);
     const [joinData, setJoinData] = useState({
         email: "",
@@ -21,14 +22,13 @@ const InfoUpdate = () => {
         user_name: "",
     });
     
-    const {loginUser} = useAuth();
     const goUpdate = async (joinData) =>{
         try{
-            const res1 = await userApi.addUserDetail(joinData, loginUser)
+            const res1 = await userApi.addUserDetail(joinData, token)
             if (res1.code !== 200) {
                 throw new Error(res1.message);
                 };
-            const res2 = await userApi.modifyUser(joinData, loginUser)
+            const res2 = await userApi.modifyUser(joinData, token)
             if (res2.code === 200) {
                 Swal.fire({
                     title: "이제 워너비를 이용하실 수 있습니다!",

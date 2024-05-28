@@ -9,7 +9,8 @@ import { Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { todoApi } from '../../api/services/TodoList';
 
-const MyCalendar = ({loginUser}) => {
+const MyCalendar = () => {
+    const token = localStorage.getItem("token");
     const today1 = new Date()
     const today_month = today1.getMonth()+1;
     const today_date = today1.getDate();
@@ -41,10 +42,10 @@ const MyCalendar = ({loginUser}) => {
     
     const getTodo = async () => {
         try {
-            const res1 = await todoApi.getList(date, loginUser);
+            const res1 = await todoApi.getList(date, token);
             if (res1.payload) {
                 const listId = res1.payload?.id;
-                const res2 = await todoApi.getEle(listId, loginUser);
+                const res2 = await todoApi.getEle(listId, token);
                 res2.payload.map((e) =>
                     e.category_id == 1
                         ? setExercise((prev) => [...prev, { ...e }])

@@ -1,24 +1,24 @@
 import api from "../api"
 
 export const foodApi = {
-    getDishes: (sort, loginUser) => api.get(`food/sort/${sort}`, {        // 종류별 음식 정보 조회
+    getDishes: (sort, token) => api.get(`food/sort/${sort}`, {        // 종류별 음식 정보 조회
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
-    getDish: (id, loginUser) => api.get(`food/${id}`, {        // 개별 음식 정보 조회
+    getDish: (id, token) => api.get(`food/${id}`, {        // 개별 음식 정보 조회
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
-    getRandomDishes: (loginUser) => api.get(`food/random-dish`, {
+    getRandomDishes: (token) => api.get(`food/random-dish`, {
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
-    getTodayDishes: (data, loginUser) => api.post(`food/today-dish`, data, {
+    getTodayDishes: (data, token) => api.post(`food/today-dish`, data, {
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     })
 }

@@ -5,15 +5,14 @@ import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useState, useEffect } from 'react';
 
 const WannabeLikeBtn = ({alreadyliked, like_id, like, unlike}) => {
-    const { loginUser } = useAuth()
     const [isLiked, setIsLiked] = useState(false);
 
     const handleLike = () => {
-        like(like_id, loginUser)
+        like(like_id)
         setIsLiked(true);
     }
     const handleUnlike = () => {
-        unlike(like_id, loginUser)
+        unlike(like_id)
         setIsLiked(false);
     }
 

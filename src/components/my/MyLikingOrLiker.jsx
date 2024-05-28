@@ -7,13 +7,14 @@ import { TiDelete } from "react-icons/ti";
 import Swal from "sweetalert2";
 
 const MyLikingOrLiker = ({open, handleClose, likingOrLiker, mylike=false}) => {
-    const { loginUser } = useAuth();
+    const token = localStorage.getItem("token");
     const [likingOrLikerProfiles, setlikingOrLikerProfiles] = useState([]);
-
+    
+    
     // 내가 좋아하는 유저 세부 정보  가져오기
     const getlikingOrLikerInfo = async (id) => {
         try {
-            const res = await userApi.getUser(`${id}`, loginUser);
+            const res = await userApi.getUser(`${id}`, token);
             return res.payload;
             } catch (err) {
             console.error("내가 좋아하는 유저 세부 정보 가져오기 실패", err);
@@ -28,7 +29,7 @@ const MyLikingOrLiker = ({open, handleClose, likingOrLiker, mylike=false}) => {
     // 좋아요 취소 기능
     const unlike = async (whereId, callback) => {
         try{
-            const res = await userApi.unlike(`${whereId}`, loginUser)
+            const res = await userApi.unlike(`${whereId}`, token)
             if (res.code === 200) {
                 console.log('좋아요 취소 성공');
                 callback(whereId);
@@ -52,7 +53,7 @@ const MyLikingOrLiker = ({open, handleClose, likingOrLiker, mylike=false}) => {
             }
         };
         fetchUsers();
-    }, [likingOrLiker, loginUser]);
+    }, [likingOrLiker]);
 
     // 아직 likingOrLiker을 못 가져온 상태처리
     if (!likingOrLiker) {

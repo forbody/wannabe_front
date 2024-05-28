@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
 
 const MyInfoModify = () => {
+    const token = localStorage.getItem("token");
     const navigate = useNavigate();
     const [step, setStep] = useState(1);
     const [joinData, setJoinData] = useState({
@@ -24,10 +25,9 @@ const MyInfoModify = () => {
         user_name: "",
     });
     
-    const {loginUser} = useAuth();
     const goUpdate = async (joinData) =>{
         try{
-            const res = await userApi.modifyUser(joinData, loginUser)
+            const res = await userApi.modifyUser(joinData, token)
             if (res.code === 200) {
                 Swal.fire({
                     title: "성공적으로 수정되었습니다!",

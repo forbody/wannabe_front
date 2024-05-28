@@ -7,7 +7,6 @@ import GetUserandRoleModel from "../components/user/GetUserandRoleModel";
 import { useAuth } from "../hooks/useAuth";
 
 const Food = () => {
-    const { loginUser } = useAuth()
     const { userProfile, modelProfile, modelImg } = GetUserandRoleModel();
 
     const [meal, setMeal] = useState('');
@@ -84,7 +83,7 @@ const Food = () => {
                         "오늘도 화이팅이에요!"
                     </Typography>
                 </ForegroundBox>
-                <FoodRecommend meal={meal} loginUser={loginUser}/>
+                <FoodRecommend meal={meal} />
 
             </BackgroundBox>
             <BackgroundBox
@@ -92,7 +91,7 @@ const Food = () => {
                 marginTop:'24px'
             }}
             >
-                <Water loginUser={loginUser}/>
+                <Water />
             </BackgroundBox>
         </Box>
     );

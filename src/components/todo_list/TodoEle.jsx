@@ -7,7 +7,7 @@ import { todoApi } from "../../api/services/TodoList";
 import { useAuth } from "../../hooks/useAuth";
 
 const TodoEle = ({ e, setIsAchieve }) => {
-    const { loginUser } = useAuth();
+    const token = localStorage.getItem("token");
     const onAchieveELe = () => {
         setAchieve();
         setIsAchieve(prev => !prev)
@@ -15,7 +15,7 @@ const TodoEle = ({ e, setIsAchieve }) => {
 
     const setAchieve = async () => {
         try {
-            await todoApi.updateEleAchieve(e.id,loginUser);
+            await todoApi.updateEleAchieve(e.id,token);
         } catch (err) {
             console.error("Error: ", err);
         }
@@ -25,7 +25,7 @@ const TodoEle = ({ e, setIsAchieve }) => {
     };
     const onDeleteELe = async () => {
         try {
-            await todoApi.deleteTodoEle(e.id, loginUser);
+            await todoApi.deleteTodoEle(e.id, token);
             setIsAchieve((prev) => !prev);
         } catch (err) {
             console.error("Error: ", err);

@@ -12,6 +12,7 @@ import GetUserandRoleModel from "../components/user/GetUserandRoleModel";
 import { exerciseApi } from "../api/services/exercise";
 
 const Exercise = () => {
+    const token = localStorage.getItem("token");
     const { loginUser } = useAuth();
     const [refreshFav, setRefreshFav] = useState(false);
     const [exercises, setExercises] = useState([]);
@@ -20,19 +21,19 @@ const Exercise = () => {
     const { modelImg } = GetUserandRoleModel();
 
     const getExercises = async () => {
-        const res = await exerciseApi.getExercise(loginUser);
+        const res = await exerciseApi.getExercise(token);
         console.log(res.payload);
         setExercises(res.payload);
     }
 
     const getRandomTip = async () => {
-        const res = await exerciseApi.getRandomTip(loginUser);
+        const res = await exerciseApi.getRandomTip(token);
         console.log(res.payload);
         setRandTip(res.payload);
     }
 
     const getFavExercises = async() => {
-        const res = await exerciseApi.getFavExercises(loginUser);
+        const res = await exerciseApi.getFavExercises(token);
         setFavExercises(res.payload);
         console.log(res.payload);
     }

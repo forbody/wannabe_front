@@ -9,7 +9,7 @@ import { useAuth } from '../hooks/useAuth';
 import NumberInput from '../components/todo_list/NumberInput';
 
 const TodoForm = () => {
-    const { loginUser } = useAuth();
+    const token = localStorage.getItem("token");
     // 뒤로가기 버튼
     const navigate = useNavigate();
     // 카테고리 토글버튼
@@ -90,7 +90,7 @@ const TodoForm = () => {
                 {
                     date: localStorage.getItem("date"),
                 },
-                loginUser
+                token
             );
             const res2 = await todoApi.createTodoEle(
                 {
@@ -102,7 +102,7 @@ const TodoForm = () => {
                     reps : reps,
                     sets : sets,
                 },
-                loginUser
+                token
             );
             console.log(res2);
             localStorage.removeItem("date");

@@ -5,7 +5,8 @@ import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import MyLikingOrLiker from "./MyLikingOrLiker";
 
-const MyLikeBtn = ({loginUser, userProfile}) => {
+const MyLikeBtn = ({userProfile}) => {
+    const token = localStorage.getItem("token");
     const [liking, setLiking] = useState();
     const [liker, setLiker] = useState();
     
@@ -22,7 +23,7 @@ const MyLikeBtn = ({loginUser, userProfile}) => {
     const getLikings = async () => {
         try{
             if (userProfile){
-                const res = await userApi.getLikings(`${userProfile?.id}`, loginUser)
+                const res = await userApi.getLikings(`${userProfile?.id}`, token)
                 if (res.code === 200) {
                     console.log('내가 좋아하는 사람 가져오기 성공');
                     setLiking(res.payload)
@@ -43,7 +44,7 @@ const MyLikeBtn = ({loginUser, userProfile}) => {
     const getLikers = async () => {
         try{
             if (userProfile){
-                const res = await userApi.getLikers(`${userProfile?.id}`, loginUser)
+                const res = await userApi.getLikers(`${userProfile?.id}`, token)
                 if (res.code === 200) {
                     console.log('나를 좋아하는 사람 가져오기 성공');
                     setLiker(res.payload)
@@ -62,15 +63,15 @@ const MyLikeBtn = ({loginUser, userProfile}) => {
 
     useEffect(() => {
         getLikings();
-    }, [loginUser, userProfile, likingOpen]);
+    }, [userProfile, likingOpen]);
     
     useEffect(() => {
         getLikers();
-    }, [loginUser, userProfile, likerOpen]);
+    }, [ userProfile, likerOpen]);
     
 
     // 아직 loginUser, userProfile을 못 가져온 상태처리
-    if (!loginUser || !userProfile ) {
+    if (!userProfile ) {
         return <div>Loading...</div>;
     } 
 

@@ -12,6 +12,7 @@ import ShareEleBox from "./ShareEleBox";
 import WannabeLikeBtn from "./WannabeLikeBtn";
 
 const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
+    const token = localStorage.getItem("token");
     const navigate = useNavigate();
     const offset = new Date().getTimezoneOffset() * 60000;
     const currentDate = new Date(Date.now() - offset).toISOString().slice(0, 10);
@@ -29,7 +30,7 @@ const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
 
     const getUploadUser = async () => {
         const userId = e.Users[0].id 
-        const res = await userApi.getUser(userId, loginUser)
+        const res = await userApi.getUser(userId, token)
         setUserProfile(res.payload);
     }
 
@@ -40,7 +41,7 @@ const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
     };
     const getTodoEle = async () => {
         try {
-            const res = await todoApi.getEle(e.id, loginUser);
+            const res = await todoApi.getEle(e.id, token);
             const breakfast = res.payload.filter((e) => e.order == 1);
             const lunch = res.payload.filter((e) => e.order == 2);
             const dinner = res.payload.filter((e) => e.order == 3);
@@ -60,8 +61,8 @@ const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
     };
     const onDeleteShare = async () => {
         try {
-            await todoApi.modifyListShare(e.id, loginUser);
-            await todoApi.deleteShareComment(e.Share_comments[0]?.id, loginUser);
+            await todoApi.modifyListShare(e.id, token);
+            await todoApi.deleteShareComment(e.Share_comments[0]?.id, token);
             setIsChange(prev => !prev)
         } catch (err) {
             console.error("Error: ", err);

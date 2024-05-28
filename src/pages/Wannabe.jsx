@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { userApi } from './../api/services/user';
 
 const Wannabe = () => {
+    const token = localStorage.getItem("token");
     const { loginUser, getUserInfoByToken } = useAuth();
     const [shareList, setShareList] = useState();
     const [isChange, setIsChange] = useState(false);
@@ -19,7 +20,7 @@ const Wannabe = () => {
         try{
             const loginUserInfo = await getUserInfoByToken();
             if (loginUser) {
-                const res = await userApi.getLikings(loginUserInfo.id, loginUser)
+                const res = await userApi.getLikings(loginUserInfo.id, token)
                 if (res.code === 200) {
                     console.log('내가 좋아하는 사람 가져오기 성공');
                     setLiking(res.payload)
@@ -39,7 +40,7 @@ const Wannabe = () => {
     // 좋아요 기능
     const like = async (whereId) => {
         try{
-            const res = await userApi.like(`${whereId}`, loginUser)
+            const res = await userApi.like(`${whereId}`, token)
             if (res.code === 200) {
                 console.log('좋아요 성공');
                 getLikings();
@@ -58,7 +59,7 @@ const Wannabe = () => {
     // 좋아요 취소 기능
     const unlike = async (whereId) => {
         try{
-            const res = await userApi.unlike(`${whereId}`, loginUser)
+            const res = await userApi.unlike(`${whereId}`, token)
             if (res.code === 200) {
                 console.log('좋아요 취소 성공');
                 getLikings();
@@ -76,7 +77,7 @@ const Wannabe = () => {
 
     const getShareList = async() => {
         try {
-            const res = await todoApi.getShareList(loginUser);
+            const res = await todoApi.getShareList(token);
             setShareList(res.payload)
         } catch (err) {
             console.error("Error: ", err);
@@ -104,7 +105,7 @@ const Wannabe = () => {
             }}
         >
             <BackgroundBox>
-                <WannabeCard loginUser={loginUser} liking={liking} like={like} unlike={unlike}/>
+                <WannabeCard liking={liking} like={like} unlike={unlike}/>
             </BackgroundBox>
             <BackgroundBox>
                 {shareList?.map((e) => (

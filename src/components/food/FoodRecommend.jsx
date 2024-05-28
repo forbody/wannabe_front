@@ -5,7 +5,8 @@ import { Button, Typography } from '@mui/material';
 import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { todoApi } from "../../api/services/TodoList";
 
-const FoodRecommend = ({meal, loginUser}) => {
+const FoodRecommend = ({meal}) => {
+    const token = localStorage.getItem("token");
     const [dishes, setDishes] = useState(null);
     const [totalCalory, setTotalCalory] = useState(0);
     const [arr, setArr] = useState([]);
@@ -18,7 +19,7 @@ const FoodRecommend = ({meal, loginUser}) => {
     const getTodayDishes = async() => {
         const res = await foodApi.getTodayDishes({
             meal
-        }, loginUser);
+        }, token);
         setRecFoodDone(res.isAdded)
         setDishes(res.result);
     }
@@ -27,14 +28,14 @@ const FoodRecommend = ({meal, loginUser}) => {
     const onSetRecommendFood = async() => {
         try {
             const date = localStorage.getItem('date')
-            const res = await todoApi.createTodoList({date}, loginUser);
+            const res = await todoApi.createTodoList({date}, token);
             const todo_list_id = res.payload?.id;
             const res2 = await todoApi.shareTodoEle({
                 date,
                 todo_list_id,
                 arr,
                 meal
-            }, loginUser);
+            }, token);
             if (res.code === 200 && res2.code === 200) {
                 console.log('식단추가 성공');
                 setRecFoodDone(true)
@@ -49,7 +50,7 @@ const FoodRecommend = ({meal, loginUser}) => {
 
     useEffect(() => {
         getTodayDishes();
-    }, [loginUser]);
+    }, []);
 
     useEffect(() => {
         if (dishes) {
