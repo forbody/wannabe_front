@@ -78,7 +78,7 @@ const TodoEle = ({ e, setIsAchieve }) => {
                     </Grid>
                 ) : (
                     <Grid item xs={12} textAlign="right">
-                        {e.Food[0]?.calory}kacl
+                        {e.Food[0]?.calory}kcal
                     </Grid>
                 )}
             </Grid>

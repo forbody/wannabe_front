@@ -71,7 +71,7 @@ const Exercise = () => {
                     )}
                 </BackgroundBox>
                 <BackgroundBox half>
-                    <h3>헬스 팁</h3> - {randTip?.health_tip}
+                    <h3>건강 팁</h3> - {randTip?.health_tip}
                     <ExerciseModal />
                 </BackgroundBox>
                 <BackgroundBox
