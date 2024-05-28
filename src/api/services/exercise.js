@@ -3,7 +3,7 @@ import api from "../api"
 export const exerciseApi = {
     getExercise: (token) => api.get('exercise', {
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
     getSortExercise: (token,data) => api.get('exercise/sort', {
