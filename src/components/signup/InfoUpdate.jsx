@@ -4,7 +4,6 @@ import male from "../../assets/MaleBodyShape.JPG";
 import female from "../../assets/FemaleBodyShape.JPG";
 import Step from "../../components/signup/Step";
 import { userApi } from "../../api/services/user";
-import { useAuth } from "../../hooks/useAuth";
 
 const InfoUpdate = () => {
     const token = localStorage.getItem("token");

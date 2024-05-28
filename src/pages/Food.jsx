@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import FoodRecommend from "../components/food/FoodRecommend";
 import Water from "../components/food/water";
 import GetUserandRoleModel from "../components/user/GetUserandRoleModel";
-import { useAuth } from "../hooks/useAuth";
 
 const Food = () => {
     const { userProfile, modelProfile, modelImg } = GetUserandRoleModel();

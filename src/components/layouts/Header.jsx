@@ -20,12 +20,12 @@ const Header = () => {
         <Box style={{width:'100%'}}>
         <AppBar position="static" color="white" style={{boxShadow:"none"}}>
             <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={goHome}>
-            Wannabe
-            </Typography>
-            <IconButton onClick={goUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src={ `http://localhost:8000/${userImg}`} />
-            </IconButton>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={goHome}>
+                Wannabe
+                </Typography>
+                <IconButton onClick={goUserMenu} sx={{ p: 0 }}>
+                    <Avatar alt="userImg" src={ `http://localhost:8000/${userImg}`} />
+                </IconButton>
             </Toolbar>
         </AppBar>
         </Box>

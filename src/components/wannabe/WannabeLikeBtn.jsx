@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { IconButton } from "@mui/material";
-import { useAuth } from "../../hooks/useAuth";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useState, useEffect } from 'react';
 

@@ -2,7 +2,6 @@ import { Avatar, Divider, IconButton, List, ListItem, ListItemAvatar, ListItemTe
 import { ForegroundBox } from "../styled_comp/StyledDiv";
 import { useEffect, useState } from "react";
 import { userApi } from "../../api/services/user";
-import { useAuth } from "../../hooks/useAuth";
 import { TiDelete } from "react-icons/ti";
 import Swal from "sweetalert2";
 

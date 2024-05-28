@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
 import { userApi } from "../../api/services/user";
 import male from "../../assets/MaleBodyShape.JPG";
 import female from "../../assets/FemaleBodyShape.JPG";

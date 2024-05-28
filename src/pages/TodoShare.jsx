@@ -3,7 +3,6 @@ import { BackgroundBox, ForegroundBox } from "../components/styled_comp/StyledDi
 import { useNavigate } from "react-router-dom";
 import { todoApi } from "../api/services/TodoList";
 import { useState } from "react";
-import { useAuth } from "../hooks/useAuth";
 
 const TodoShare = () => {
     const token = localStorage.getItem("token");

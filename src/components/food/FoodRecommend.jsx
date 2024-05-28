@@ -79,8 +79,8 @@ const FoodRecommend = ({meal}) => {
             }}
             >
             {
-                dishes && dishes.map(d=> (
-                    <Typography>{d.name}   {d.calory}kcal</Typography>
+                dishes && dishes.map((dish, idx) => (
+                    <Typography key={idx}>{dish?.name} {dish?.calory}kcal</Typography>
                 ))
             }
             <Typography 

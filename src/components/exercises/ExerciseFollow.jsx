@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Box, Typography } from '@mui/material';
 import Carousel from 'react-material-ui-carousel'
-import { useAuth } from "../../hooks/useAuth";
 import ExerciseModal from "./ExerciseModal";
 
 const ExerciseFollow = ({favExercise}) => {
