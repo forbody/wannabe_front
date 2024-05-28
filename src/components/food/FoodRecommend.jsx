@@ -5,13 +5,13 @@ import { Button, Typography } from '@mui/material';
 import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { todoApi } from "../../api/services/TodoList";
 
+
 const FoodRecommend = ({meal}) => {
     // 오늘 날짜 받아오기
     const offset = new Date().getTimezoneOffset() * 60000;
     const currentDate = new Date(Date.now() - offset).toISOString().slice(0, 10);
     localStorage.setItem("date", currentDate);
 
-    const { loginUser } = useAuth();
     const token = localStorage.getItem("token");
     const [dishes, setDishes] = useState(null);
     const [totalCalory, setTotalCalory] = useState(0);
