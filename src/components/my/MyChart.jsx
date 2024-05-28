@@ -32,6 +32,7 @@ const MyChart = ({userProfile}) => {
         }
     }, [userProfile])
 
+    // 아직 userProfile을 못 가져온 상태처리
     if (!userProfile) {
         return <div>Loading...</div>;
     }

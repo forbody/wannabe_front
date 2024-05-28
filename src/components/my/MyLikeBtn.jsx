@@ -70,7 +70,7 @@ const MyLikeBtn = ({userProfile}) => {
     }, [ userProfile, likerOpen]);
     
 
-    // 아직 loginUser, userProfile을 못 가져온 상태처리
+    // 아직 userProfile을 못 가져온 상태처리
     if (!userProfile ) {
         return <div>Loading...</div>;
     } 
