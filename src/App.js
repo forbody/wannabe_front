@@ -21,6 +21,7 @@ import Wannabe from './pages/Wannabe';
 import My from './pages/My';
 import MyInfoModify from './components/my/MyInfoModify';
 import MyInfoUpdate from './components/my/MyInfoUpdate';
+import MyShareList from './components/my/MyShareList';
 
 
 
@@ -44,6 +45,7 @@ function App() {
           <Route path='/my' element={<My />} />
           <Route path='/my/update' element={<MyInfoUpdate />} />
           <Route path='/my/modify' element={<MyInfoModify />} />
+          <Route path='/my/shareList' element={<MyShareList />} />
           {/*<Route path='*' element={<h1>Not Found</h1>} /> */}
         </Routes>
       </Layout>

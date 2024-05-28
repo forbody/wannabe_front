@@ -89,9 +89,11 @@ const Food = () => {
 
             </BackgroundBox>
             <BackgroundBox
-            style={{
-                marginTop:'24px'
-            }}
+                style={{
+                    marginTop:'24px',
+                    flexDirection : 'column',
+                    alignContent : 'center'
+                }}
             >
                 <Water />
             </BackgroundBox>

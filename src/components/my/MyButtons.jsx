@@ -65,7 +65,7 @@ const MyButtons = ({ loginUser, logout }) => {
             >
                 나의 정보 관리
             </Typography>
-            <Button variant="text" size="large" color="secondary" startIcon={<TfiWrite/>} fullWidth>내가 작성한 글 보기</Button>
+            <Button variant="text" size="large" color="secondary" startIcon={<TfiWrite/>} onClick={() => navigate('/my/shareList')} fullWidth>내가 작성한 글 보기</Button>
             <Divider/>
             <Button variant="text" size="large" color="primary" startIcon={<FaUserEdit/>} onClick={ () => navigate('/my/modify') } fullWidth>나의 정보 수정</Button>
             <Divider/>

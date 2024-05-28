@@ -17,7 +17,7 @@ const Header = () => {
     }
 
     return (
-        <Box style={{width:'100%'}}>
+        <Box style={{width:'100%' , border : '1px solid #eee'}}>
         <AppBar position="static" color="white" style={{boxShadow:"none"}}>
             <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={goHome}>
