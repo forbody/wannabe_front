@@ -9,7 +9,6 @@ import { useAuth } from "../../hooks/useAuth";
 import { todoApi } from "../../api/services/TodoList";
 import { useNavigate } from "react-router-dom";
 import ShareEleBox from "./ShareEleBox";
-import { IoHeartOutline, IoHeart } from "react-icons/io5";
 import Swal from "sweetalert2";
 import WannabeLikeBtn from "./WannabeLikeBtn";
 

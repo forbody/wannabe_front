@@ -1,4 +1,4 @@
-# 프로젝트 워너비 Wannabe
+# ✨프로젝트 워너비 Wannabe
 2024.04.30 ~ 2024.06.11
 
 ## [ 프로젝트 목적 ]
@@ -26,31 +26,40 @@
 ## [ 기대 효과 ]
   <워너비> 프로젝트는 게이미피케이션 설계를 통해 MAU 상승과 수익화를 실현하여 지속가능한 프로젝트가 가능하도록 기획 중에 있습니다.  사용자가 설정한 일일 기준, 혹은 셀러브리티의 루틴을 성공적으로 달성할 시 기프티콘 및 광고 제휴사 할인 쿠폰과 교환할 수 있는 포인트 제도를 통해 사용자의 참여도를 높이고 저희 웹을 사용하시는 사용자 분들에게 혜택을 제공하고자 합니다.
 
+---
 
-## [프로젝트 조직]
-### 박형준(팀장): 깃헙 관리, 운동 루틴 페이지 및 기능 구현
+## [ 프로젝트 조직 ]
+### 박형준(팀장): 깃헙 관리, 운동 루틴 기능 및 페이지 담당
 - BE ) 담당 기능 DB 설계
 - FE ) 담당 페이지 구현
 
-### 박소희: 디자인 디렉팅, 로그인-회원가입 기능, 식단 루틴 기능, 셀러브리티 - sns 기능 및 페이지 담당
+
+### 박소희: 디자인 디렉팅, 로그인-회원가입 기능 및 페이지, 식단 루틴 기능 및 페이지, 셀러브리티-sns 기능 및 페이지 담당
 - BE ) 담당 기능 DB 설계
 - FE ) 담당 페이지 구현
 
-### 최승관: UI/UX 설계, 하루일과(ToDoList) 기능, 셀러브리티 - sns 기능 및 페이지 담당
+
+### 최승관: UI/UX 설계, 하루일과(ToDoList) 기능 및 페이지, 셀러브리티-sns 기능 및 페이지 담당
 - BE ) 담당 기능 DB 설계
 - FE ) 담당 페이지 구현
+
 
 ### 하성덕: 최종 PT
-셀러브리티 - sns 기능 및 페이지 담당
 - BE ) 담당 기능 DB 설계
 - FE ) 담당 페이지 구현
 
-## [WBS]
+---
+
+## [ WBS ]
 [워너비 WBS](https://docs.google.com/spreadsheets/d/1p-hbmNvWsR5Qn1klO6QC5e3zyyen4DoxMQCfnWcu8bg/edit?usp=sharing)
 
-## [진행 과정]
+---
+
+## [ 진행 과정 ]
 [1차 PPT](https://docs.google.com/presentation/d/1AJSi-JdQfMTetoEx23gnlov8TFP_3QkC/edit?usp=sharing&ouid=104605004409658940193&rtpof=true&sd=true)
 
+
 [2차 PPT](https://docs.google.com/presentation/d/1vLQyzV0P5JX1XeeyrXu6q-qECwXOsypR/edit?usp=sharing&ouid=104605004409658940193&rtpof=true&sd=true)
+
 
 [3차 PPT](https://docs.google.com/presentation/d/1xFY16FpURTXYKUwmu_tl0jqUK3CNqXMZ/edit?usp=sharing&ouid=104605004409658940193&rtpof=true&sd=true)

@@ -1,6 +1,4 @@
-import { AppBar, Box, IconButton, Typography, Button, Toolbar, Avatar } from "@mui/material";
-
-import { PiSparkleFill } from "react-icons/pi";
+import { AppBar, Box, IconButton, Typography, Toolbar, Avatar } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import GetUserandRoleModel from "../user/GetUserandRoleModel";
 
