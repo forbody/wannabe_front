@@ -64,7 +64,7 @@ const TodoShare = () => {
                         <TextField
                             multiline
                             rows={6}
-                            placeholder="추천 팁을 입력해주세요"
+                            placeholder="추천 팁을 입력해 주세요"
                             variant="outlined"
                             fullWidth
                             onChange={(e) => onSetComments(e)}

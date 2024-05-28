@@ -1,5 +1,6 @@
-import { Grid, styled } from "@mui/material";
+import { Grid } from "@mui/material";
 import BottomNavi from "./BottomNavi";
+import Header from "./Header";
 
 const Main = ({ children }) => {
     return (
@@ -18,6 +19,7 @@ const Main = ({ children }) => {
                     background: 'linear-gradient(135deg, #fdf00e, #33cc33)'
                 }}
             >
+                <Header/>
                 {children}
             <BottomNavi />
         </Grid>

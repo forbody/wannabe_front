@@ -6,7 +6,7 @@ import MyButtons from '../components/my/MyButtons';
 import MyCalendar from '../components/my/MyCalendar';
 import MyChart from '../components/my/MyChart';
 import GetUserandRoleModel from '../components/user/GetUserandRoleModel';
-import MyLike from '../components/my/MyLike';
+import MyLikeBtn from '../components/my/MyLikeBtn';
 
 const My = () => {
     const { loginUser, logout } = useAuth()
@@ -35,10 +35,10 @@ const My = () => {
                 padding:'24px'
             }}
             >
-            {userProfile?.user_name}님의 페이지
+            {userProfile?.user_name} 님의 페이지
             </Typography>
             <BackgroundBox style={{ justifyContent: 'center'}}>
-                <MyLike />
+                <MyLikeBtn />
             </BackgroundBox>
             <BackgroundBox style={{ justifyContent: 'center', marginTop:'24px'}}>
                 <MyCalendar />

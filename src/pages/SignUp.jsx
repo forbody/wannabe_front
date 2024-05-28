@@ -110,8 +110,8 @@ const SignUp = () => {
                     inputData={[
                         {"inputName":"gender", "type":"radio", "message":"성별을 입력해 주세요.", "label":"성별" },
                         {"inputName":"birthday", "type":"date", "message":"생일을 입력해 주세요.", "label":"생일" },
-                        {"inputName":"height", "type":"number", "message":"키를 입력해 주세요.", "label":"키" },
-                        {"inputName":"weight", "type":"number", "message":"몸무게를 입력해 주세요.", "label":"몸무게" },
+                        {"inputName":"height", "type":"tel", "message":"키를 입력해 주세요.", "label":"키" },
+                        {"inputName":"weight", "type":"tel", "message":"몸무게를 입력해 주세요.", "label":"몸무게" },
                     ]}
                     step={step} setStep={setStep} joinData={joinData} setJoinData={setJoinData} />
             </>

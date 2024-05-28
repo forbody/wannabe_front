@@ -6,20 +6,21 @@ import { useEffect, useState } from "react";
 import { useTheme } from '@mui/material/styles';
 import GetUserandRoleModel from "../../components/user/GetUserandRoleModel";
 import { ForegroundBox } from "../styled_comp/StyledDiv";
-import { IoHeart } from "react-icons/io5";
 import { PiSparkleFill } from "react-icons/pi";
 import { FaQuestion } from "react-icons/fa";
 import MobileStepper from '@mui/material/MobileStepper';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import Swal from 'sweetalert2';
+import WannabeLikeBtn from './WannabeLikeBtn';
 
 const WannabeCard = () => {
     const { loginUser } = useAuth()
     const theme = useTheme();
-    const { modelProfile } = GetUserandRoleModel();
+    const { userProfile, modelProfile } = GetUserandRoleModel();
+    const [activeStep, setActiveStep] = useState(0);
     const [roleModels, setRoleModels] = useState(null);
-    const [activeStep, setActiveStep] = React.useState(0);
+    const [liking, setLiking] = useState();
 
     // 다음 버튼
     const handleNext = () => {
@@ -30,7 +31,12 @@ const WannabeCard = () => {
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
-    
+
+    // 롤모델 바꾸기 버튼
+    const handleRoleModel = () => {
+        goUpdate(roleModels[activeStep]?.id)
+    }
+
     // 랜덤 롤모델 3명 가져오기
     const getRandomRoleModels = async () => {
         try {
@@ -42,17 +48,79 @@ const WannabeCard = () => {
         }
     }
 
-    const handleLike = () => {
-        like()
+    // 유저 롤모델 정보 수정
+    const goUpdate = async (whoId) =>{
+        try{
+            if(roleModels){
+                const res = await userApi.modifyRoleModel(
+                    {role_model_id: whoId}
+                    , loginUser)
+                if (res.code === 200) {
+                    Swal.fire({
+                        title: "롤모델을 바꾸었습니다!",
+                        text: res.message,
+                        icon: "success"
+                    });
+                } else {
+                    throw new Error(res.message);
+                }
+            }
+        }catch(err) {
+            Swal.fire({
+                title: "에러 발생",
+                text: err.message,
+                icon: "error"
+            });
+        }
     }
 
-    // 좋아요 기능
-    const like = async () => {
+    // 내가 좋아하는 사람 가져오기 기능
+    const getLikings = async () => {
         try{
-            const res = await userApi.like(`${roleModels[activeStep]?.id}`, loginUser)
+            if (userProfile) {
+                const res = await userApi.getLikers(`${userProfile?.id}`, loginUser)
+                if (res.code === 200) {
+                    console.log('내가 좋아하는 사람 가져오기 성공');
+                    setLiking(res.payload)
+                } else {
+                    throw new Error(res.message);
+                }
+            }
+        }catch(err) {
+            Swal.fire({
+                title: "에러 발생",
+                text: err.message,
+                icon: "error"
+            });
+        }
+    };
+
+    // 좋아요 기능
+    const like = async (whereId) => {
+        try{
+            const res = await userApi.like(`${whereId}`, loginUser)
             if (res.code === 200) {
                 console.log('좋아요 성공');
-                console.log(res);
+                getLikings();
+            } else {
+                throw new Error(res.message);
+            }
+        }catch(err) {
+            Swal.fire({
+                title: "에러 발생",
+                text: err.message,
+                icon: "error"
+            });
+        }
+    }
+
+    // 좋아요 취소 기능
+    const unlike = async (whereId) => {
+        try{
+            const res = await userApi.unlike(`${whereId}`, loginUser)
+            if (res.code === 200) {
+                console.log('좋아요 취소 성공');
+                getLikings();
             } else {
                 throw new Error(res.message);
             }
@@ -66,8 +134,22 @@ const WannabeCard = () => {
     }
 
     useEffect(() => {
+        getLikings();
+    }, [loginUser, userProfile]);
+
+    useEffect(() => {
         getRandomRoleModels();
-    }, [loginUser, modelProfile]);
+    }, [loginUser, userProfile, modelProfile]);
+
+    // 아직 loginUser을 못 가져온 상태처리
+    if (!loginUser) {
+        return <div>Loading...</div>;
+    } 
+
+    // 아직 userProfile을 못 가져온 상태처리
+    if (!userProfile) {
+        return <div>Loading...</div>;
+    } 
 
     // 아직 modelProfile을 못 가져온 상태처리
     if (!modelProfile) {
@@ -134,8 +216,9 @@ const WannabeCard = () => {
                         marginLeft: '4px'
                     }}
                     >
-                    의 추천루틴
+                    님의 추천루틴
                     </span>
+                    { activeStep === 0 ?
                     <Button
                     fullWidth
                     color="secondary"
@@ -146,27 +229,42 @@ const WannabeCard = () => {
                     >
                     자세히 보기
                     </Button>
+                    :
+                    <>
+                    <Button
+                    fullWidth
+                    color="secondary"
+                    variant="contained"
+                    style={{
+                        marginTop: '16px'
+                    }}
+                    >
+                    자세히 보기
+                    </Button>
+                    <Button
+                    fullWidth
+                    color="warning"
+                    variant="contained"
+                    style={{
+                        marginTop: '16px'
+                    }}
+                    startIcon={<PiSparkleFill/>}
+                    onClick={handleRoleModel}
+                    >
+                    이 롤모델로 바꿀래요
+                    </Button>
+                    </>
+                    }
                 </CardContent>
             </CardActionArea>
-            { activeStep === 0 ?
-            <CardActions>
-                <Button fullWidth color="error" variant="text" startIcon={<IoHeart />} onClick={handleLike}>
-                    워너비
-                </Button>
-            </CardActions>
-            :   
-            <CardActions>
-                <Button fullWidth color="error" variant="text" startIcon={<IoHeart />} onClick={handleLike}>
-                    워너비
-                </Button>
-                <Button fullWidth color="secondary" variant="text" startIcon={<PiSparkleFill />}>
-                    팔로우
-                </Button>
-            </CardActions>
-            }
+                <CardActions>
+                    {liking && <WannabeLikeBtn liking={liking} wannabe_id={roleModels[activeStep]?.id} like={like} unlike={unlike} />}
+                    <Typography variant='button' color="error">워너비</Typography>
+                </CardActions>
         </Card>) 
         : null
         }
+        
         <MobileStepper
         variant="dots"
         steps={4}

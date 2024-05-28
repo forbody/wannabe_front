@@ -9,6 +9,9 @@ import { useAuth } from "../../hooks/useAuth";
 import { todoApi } from "../../api/services/TodoList";
 import { useNavigate } from "react-router-dom";
 import ShareEleBox from "./ShareEleBox";
+import { IoHeartOutline, IoHeart } from "react-icons/io5";
+import Swal from "sweetalert2";
+import WannabeLikeBtn from "./WannabeLikeBtn";
 
 const ShowTodoList = ({ e, setIsChange }) => {
     const navigate = useNavigate();
@@ -25,7 +28,8 @@ const ShowTodoList = ({ e, setIsChange }) => {
     const [userImg, setUserImg] = useState("");
     const [loginUserId, setLoginUserId] = useState();
     const [userProfile, setUserProfile] = useState(null);
-    
+    const [liking, setLiking] = useState([]);
+
     const getUploadUser = async () => {
         const userId = e.Users[0].id 
         const res = await userApi.getUser(userId, loginUser)
@@ -67,6 +71,65 @@ const ShowTodoList = ({ e, setIsChange }) => {
         }
     };
 
+    // 내가 좋아하는 사람 가져오기 기능
+    const getLikings = async () => {
+        try{
+            if (userProfile) {
+                const res = await userApi.getLikers(`${userProfile?.id}`, loginUser)
+                if (res.code === 200) {
+                    console.log('내가 좋아하는 사람 가져오기 성공');
+                    setLiking(res.payload)
+                } else {
+                    throw new Error(res.message);
+                }
+            }
+        }catch(err) {
+            Swal.fire({
+                title: "에러 발생",
+                text: err.message,
+                icon: "error"
+            });
+        }
+    };
+
+    // 좋아요 기능
+    const like = async (whereId) => {
+        try{
+            const res = await userApi.like(`${whereId}`, loginUser)
+            if (res.code === 200) {
+                console.log('좋아요 성공');
+                getLikings();
+            } else {
+                throw new Error(res.message);
+            }
+        }catch(err) {
+            Swal.fire({
+                title: "에러 발생",
+                text: err.message,
+                icon: "error"
+            });
+        }
+    }
+
+    // 좋아요 취소 기능
+    const unlike = async (whereId) => {
+        try{
+            const res = await userApi.unlike(`${whereId}`, loginUser)
+            if (res.code === 200) {
+                console.log('좋아요 취소 성공');
+                getLikings();
+            } else {
+                throw new Error(res.message);
+            }
+        }catch(err) {
+            Swal.fire({
+                title: "에러 발생",
+                text: err.message,
+                icon: "error"
+            });
+        }
+    }
+
     useEffect(() => {
         getUserInfo()
         getUploadUser()
@@ -84,9 +147,20 @@ const ShowTodoList = ({ e, setIsChange }) => {
         getTodoEle();
     }, []);
 
+        
+    useEffect(() => {
+        getLikings();
+    }, [loginUser, userProfile]);
+
+    // 아직 loginUser을 못 가져온 상태처리
+    if (!loginUser) {
+        return <div>Loading...</div>;
+    } 
+
     if (userProfile === null) {
         return <div>Loading...</div>;
     }
+
     return (
         <ForegroundBox
             style={{
@@ -138,7 +212,8 @@ const ShowTodoList = ({ e, setIsChange }) => {
                     </>
                 ) : (
                     <Grid item xs={3}>
-                        
+                        {console.log(liking && liking)}
+                        {liking && <WannabeLikeBtn liking={liking} wannabe_id={uploadUserId} like={like} unlike={unlike} />}
                     </Grid>
                 )}
             </Grid>
