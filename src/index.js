@@ -47,7 +47,7 @@ const theme = createTheme({
       main: '#1a1a1a',
       dark: '#000000',
       contrastText: '#f2f2f2',
-    },
+    }
   },
 });
 

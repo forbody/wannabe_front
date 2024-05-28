@@ -74,8 +74,8 @@ const ShowTodoList = ({ e, setIsChange }) => {
     // 내가 좋아하는 사람 가져오기 기능
     const getLikings = async () => {
         try{
-            if (userProfile) {
-                const res = await userApi.getLikers(`${userProfile?.id}`, loginUser)
+            if (loginUserId) {
+                const res = await userApi.getLikers(`${loginUserId}`, loginUser)
                 if (res.code === 200) {
                     console.log('내가 좋아하는 사람 가져오기 성공');
                     setLiking(res.payload)
