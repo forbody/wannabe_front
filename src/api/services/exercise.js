@@ -1,7 +1,15 @@
 import api from "../api"
 
 export const exerciseApi = {
-    getExercise: (loginUser) => api.get('exercise/', {
+    getExercise: (loginUser) => api.get('exercise', {
+        headers: {
+            "Authorization": loginUser,
+        }
+    }),
+    getSortExercise: (loginUser,data) => api.get('exercise/sort', {
+        params: {
+            sort: data
+        },
         headers: {
             "Authorization": loginUser,
         }
@@ -15,5 +23,5 @@ export const exerciseApi = {
         headers: {
             "Authorization": loginUser,
         } 
-    })
+    }),
 }
