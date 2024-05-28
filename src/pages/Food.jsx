@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import FoodRecommend from "../components/food/FoodRecommend";
 import Water from "../components/food/water";
 import GetUserandRoleModel from "../components/user/GetUserandRoleModel";
+import { useAuth } from "../hooks/useAuth";
 
 const Food = () => {
+    const { loginUser } = useAuth()
     const { userProfile, modelProfile, modelImg } = GetUserandRoleModel();
 
     const [meal, setMeal] = useState('');
@@ -27,11 +29,8 @@ const Food = () => {
         }
         }, []);
 
-    if (userProfile === null) {
-        return <div>Loading...</div>;
-    }
-
-    if (modelProfile === null) {
+    // 아직 userProfile, modelProfile을 못 가져온 상태처리
+    if (!userProfile || !modelProfile) {
         return <div>Loading...</div>;
     }
 
@@ -85,7 +84,7 @@ const Food = () => {
                         "오늘도 화이팅이에요!"
                     </Typography>
                 </ForegroundBox>
-                <FoodRecommend meal={meal} />
+                <FoodRecommend meal={meal} loginUser={loginUser}/>
 
             </BackgroundBox>
             <BackgroundBox
@@ -93,7 +92,7 @@ const Food = () => {
                 marginTop:'24px'
             }}
             >
-                <Water />
+                <Water loginUser={loginUser}/>
             </BackgroundBox>
         </Box>
     );

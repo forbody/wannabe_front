@@ -45,15 +45,17 @@ const TodoList = () => {
     const getTodo = async () => {
         try {
             const res1 = await todoApi.getList(date, loginUser);
-            const listId = res1.payload?.id;
-            const res2 = await todoApi.getEle(listId, loginUser);
-            let fo = [];
-            let ex = [];
-            res2.payload.map((e) => {
-                e.category_id == 1 ? ex.push({...e}) : fo.push({...e});
-            });
-            setExercise(ex);
-            setFood(fo);
+            if (res1.payload) {
+                const listId = res1.payload?.id;
+                const res2 = await todoApi.getEle(listId, loginUser);
+                let fo = [];
+                let ex = [];
+                res2.payload.map((e) => {
+                    e.category_id == 1 ? ex.push({...e}) : fo.push({...e});
+                });
+                setExercise(ex);
+                setFood(fo);
+            }
         } catch (err) {
             console.error("Error: ", err);
         }
@@ -90,7 +92,7 @@ const TodoList = () => {
     }
 
     // 아직 userProfile을 못 가져온 상태처리
-    if (userProfile === null) {
+    if (!userProfile) {
         return <div>Loading...</div>;
     } 
 

@@ -6,10 +6,9 @@ import Swal from "sweetalert2";
 import { waterApi } from "../../api/services/water";
 import watercompleteimg from '../../assets/watercomplete.png'
 import { IoIosWater } from "react-icons/io";
-import { useAuth } from "../../hooks/useAuth";
 
-const Water = () => {
-    const { loginUser } = useAuth()
+const Water = ({loginUser}) => {
+    
     const [waterComplete, setWaterComplete] = useState(false);
     const [water, setWater] = useState(0);
 

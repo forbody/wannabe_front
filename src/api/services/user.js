@@ -31,7 +31,7 @@ export const userApi = {
             "Content-Type": "multipart/form-data",
         }
     }),
-    like: (id, loginUser) => api.post('users/like', { id }, {            // 유저 좋아요
+    like: (id, loginUser) => api.post('users/like', { id }, {           // 유저 좋아요
         headers: {
             "Authorization": loginUser,
         }
@@ -40,12 +40,12 @@ export const userApi = {
         headers: {
             "Authorization": loginUser,
         }, data: {id}}),
-    getLikers: (id, loginUser) => api.get(`users/${id}/likers`, {      // 나를 좋아요 한 유저 조회
+    getLikers: (id, loginUser) => api.get(`users/${id}/likers`, {       // 나를 좋아요 한 유저 조회
         headers: {
             "Authorization": loginUser,
         }
     }),
-    getLikings: (id, loginUser) => api.get(`users/${id}/likings`, {    // 내가 좋아요 한 유저 조회
+    getLikings: (id, loginUser) => api.get(`users/${id}/likings`, {     // 내가 좋아요 한 유저 조회
         headers: {
             "Authorization": loginUser,
         }
@@ -55,7 +55,7 @@ export const userApi = {
             "Authorization": loginUser,
         }
     }),
-    modifyRoleModel: (data, loginUser) => api.patch('users/rolemodel', data, {        // 유저 롤모델 수정
+    modifyRoleModel: (data, loginUser) => api.patch('users/rolemodel', data, { // 유저 롤모델 수정
         headers: {
             "Authorization": loginUser,
         }

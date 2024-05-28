@@ -1,17 +1,11 @@
 import { Box, Button, ButtonGroup } from "@mui/material";
 import { ForegroundBox } from "../styled_comp/StyledDiv";
 import { userApi } from "../../api/services/user";
-import GetUserandRoleModel from "../user/GetUserandRoleModel";
-import { useAuth } from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import MyLikingOrLiker from "./MyLikingOrLiker";
 
-const MyLikeBtn = () => {
-    const { loginUser } = useAuth()
-    const { userProfile } = GetUserandRoleModel();
-
+const MyLikeBtn = ({loginUser, userProfile}) => {
     const [liking, setLiking] = useState();
     const [liker, setLiker] = useState();
     
@@ -28,7 +22,7 @@ const MyLikeBtn = () => {
     const getLikings = async () => {
         try{
             if (userProfile){
-                const res = await userApi.getLikers(`${userProfile?.id}`, loginUser)
+                const res = await userApi.getLikings(`${userProfile?.id}`, loginUser)
                 if (res.code === 200) {
                     console.log('내가 좋아하는 사람 가져오기 성공');
                     setLiking(res.payload)
@@ -49,7 +43,7 @@ const MyLikeBtn = () => {
     const getLikers = async () => {
         try{
             if (userProfile){
-                const res = await userApi.getLikings(`${userProfile?.id}`, loginUser)
+                const res = await userApi.getLikers(`${userProfile?.id}`, loginUser)
                 if (res.code === 200) {
                     console.log('나를 좋아하는 사람 가져오기 성공');
                     setLiker(res.payload)
@@ -75,18 +69,8 @@ const MyLikeBtn = () => {
     }, [loginUser, userProfile, likerOpen]);
     
 
-    // 아직 loginUser을 못 가져온 상태처리
-    if (!loginUser) {
-        return <div>Loading...</div>;
-    } 
-
-    // 아직 userProfile을 못 가져온 상태처리
-    if (!userProfile) {
-        return <div>Loading...</div>;
-    } 
-        
-    // 아직 userProfile을 못 가져온 상태처리
-    if (!userProfile) {
+    // 아직 loginUser, userProfile을 못 가져온 상태처리
+    if (!loginUser || !userProfile ) {
         return <div>Loading...</div>;
     } 
 
@@ -113,7 +97,7 @@ const MyLikeBtn = () => {
                 <Button color="secondary" fullWidth onClick={handleLikingOpen}>워너빙</Button>
                 <Button color="secondary" fullWidth onClick={handleLikerOpen}>워너버</Button>
             </ButtonGroup>
-            <MyLikingOrLiker open={likingOpen} handleClose={handleLikingClose} likingOrLiker={liking} ableDel={true} />
+            <MyLikingOrLiker open={likingOpen} handleClose={handleLikingClose} likingOrLiker={liking} mylike={true} />
             <MyLikingOrLiker open={likerOpen} handleClose={handleLikerClose} likingOrLiker={liker} />
         </ForegroundBox>
     );

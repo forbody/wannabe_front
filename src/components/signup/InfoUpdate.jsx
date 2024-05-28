@@ -25,12 +25,10 @@ const InfoUpdate = () => {
     const goUpdate = async (joinData) =>{
         try{
             const res1 = await userApi.addUserDetail(joinData, loginUser)
-            console.log(res1);
             if (res1.code !== 200) {
                 throw new Error(res1.message);
                 };
             const res2 = await userApi.modifyUser(joinData, loginUser)
-            console.log(res2);
             if (res2.code === 200) {
                 Swal.fire({
                     title: "이제 워너비를 이용하실 수 있습니다!",

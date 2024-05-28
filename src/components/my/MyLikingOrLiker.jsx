@@ -6,7 +6,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { TiDelete } from "react-icons/ti";
 import Swal from "sweetalert2";
 
-const MyLikingOrLiker = ({open, handleClose, likingOrLiker, ableDel=false}) => {
+const MyLikingOrLiker = ({open, handleClose, likingOrLiker, mylike=false}) => {
     const { loginUser } = useAuth();
     const [likingOrLikerProfiles, setlikingOrLikerProfiles] = useState([]);
 
@@ -54,7 +54,8 @@ const MyLikingOrLiker = ({open, handleClose, likingOrLiker, ableDel=false}) => {
         fetchUsers();
     }, [likingOrLiker, loginUser]);
 
-    if (likingOrLiker === null) {
+    // 아직 likingOrLiker을 못 가져온 상태처리
+    if (!likingOrLiker) {
         return <div>Loading...</div>;
     }
 
@@ -76,6 +77,19 @@ const MyLikingOrLiker = ({open, handleClose, likingOrLiker, ableDel=false}) => {
                 p: 4,
                 }}
             >
+                {mylike ? 
+                    <Typography
+                        variant="h6"
+                        display="flex"
+                        justifyContent="center"
+                    >워너빙</Typography>
+                :
+                    <Typography
+                    variant="h6"
+                    display="flex"
+                    justifyContent="center"
+                    >워너버</Typography>
+                }
                 { likingOrLikerProfiles.length > 0 ?
                 <List sx={{ width: '100%', maxWidth: 360 }}>
                     {likingOrLikerProfiles.map((profile, index) => (
@@ -84,10 +98,8 @@ const MyLikingOrLiker = ({open, handleClose, likingOrLiker, ableDel=false}) => {
                                 alignItems="flex-start"
                                 disableGutters
                                 secondaryAction={
-                                    ableDel &&
-                                    <IconButton
-                                        onClick={() => handleUnlike(profile.id)}
-                                    >
+                                    mylike &&
+                                    <IconButton onClick={() => handleUnlike(profile.id)}>
                                         <TiDelete/>
                                     </IconButton>
                                 }

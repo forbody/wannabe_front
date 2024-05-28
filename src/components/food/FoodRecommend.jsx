@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
 import { ForegroundBox } from "../styled_comp/StyledDiv";
 import { foodApi } from "../../api/services/food";
 import { Button, Typography } from '@mui/material';
 import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { todoApi } from "../../api/services/TodoList";
 
-const FoodRecommend = ({meal}) => {
-    const { loginUser } = useAuth()
+const FoodRecommend = ({meal, loginUser}) => {
     const [dishes, setDishes] = useState(null);
     const [totalCalory, setTotalCalory] = useState(0);
     const [arr, setArr] = useState([]);
@@ -27,7 +25,6 @@ const FoodRecommend = ({meal}) => {
 
     // meal 추가하기
     const onSetRecommendFood = async() => {
-        console.log(arr);
         try {
             const date = localStorage.getItem('date')
             const res = await todoApi.createTodoList({date}, loginUser);

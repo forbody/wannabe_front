@@ -11,7 +11,6 @@ export const useProvideAuth = () => {
         const cookies = new Cookies();
         if (cookies.get('accessToken') && cookies.get('userId')) {
             localStorage.setItem('token', cookies.get('accessToken'))
-            console.log(cookies.get('accessToken'), cookies.get('userId'));
             setLoginUser(cookies.get('accessToken'));
         }
         cookies.remove('userId')
