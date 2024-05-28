@@ -9,7 +9,6 @@ import { useAuth } from "../../hooks/useAuth";
 import { todoApi } from "../../api/services/TodoList";
 import { useNavigate } from "react-router-dom";
 import ShareEleBox from "./ShareEleBox";
-import { IoHeartOutline, IoHeart } from "react-icons/io5";
 import Swal from "sweetalert2";
 import WannabeLikeBtn from "./WannabeLikeBtn";
 
@@ -74,8 +73,8 @@ const ShowTodoList = ({ e, setIsChange }) => {
     // 내가 좋아하는 사람 가져오기 기능
     const getLikings = async () => {
         try{
-            if (userProfile) {
-                const res = await userApi.getLikers(`${userProfile?.id}`, loginUser)
+            if (loginUserId) {
+                const res = await userApi.getLikers(`${loginUserId}`, loginUser)
                 if (res.code === 200) {
                     console.log('내가 좋아하는 사람 가져오기 성공');
                     setLiking(res.payload)
