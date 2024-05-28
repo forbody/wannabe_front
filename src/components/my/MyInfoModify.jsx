@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { userApi } from "../../api/services/user";
 import male from "../../assets/MaleBodyShape.JPG";
@@ -74,7 +74,7 @@ const MyInfoModify = () => {
             flexDirection='column'
             alignItems='center'
             style={{
-                padding:'120px 0',
+                padding:'60px 0 120px',
                 overflowY: 'scroll',
                 scrollbarWidth: 'none'
             }}

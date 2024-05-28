@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { useAuth } from "../../hooks/useAuth";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 
