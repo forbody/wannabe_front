@@ -12,13 +12,13 @@ import { useAuth } from "../hooks/useAuth";
 import InfoUpdate from "../components/signup/InfoUpdate";
 import { todoApi } from "../api/services/TodoList";
 import Swal from "sweetalert2";
-import GetUserandRoleModel from "../components/user/GetUserandRoleModel";
+import useUserandRoleModel from "../hooks/useUserandRoleModel";
 
 const TodoList = () => {
     const token = localStorage.getItem("token");
     const { loginUser, kakaoLogin }= useAuth();
     // 카카오 로그인 유저 가운데 구유저/신유저 구분
-    const { userProfile } = GetUserandRoleModel();
+    const { userProfile } = useUserandRoleModel();
 
     // 오늘 날짜 받아오기
     const offset = new Date().getTimezoneOffset() * 60000;

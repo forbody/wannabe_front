@@ -13,7 +13,7 @@ const Wannabe = () => {
     const { loginUser, getUserInfoByToken } = useAuth();
     const [shareList, setShareList] = useState();
     const [isChange, setIsChange] = useState(false);
-    const [liking, setLiking] = useState();
+    const [liking, setLiking] = useState([]);
 
     // 내가 좋아하는 사람 가져오기 기능
     const getLikings = async () => {
