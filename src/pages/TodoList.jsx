@@ -1,4 +1,4 @@
-import { Box , IconButton } from "@mui/material";
+import { Box , Fab, IconButton } from "@mui/material";
 import Weekly from "../components/todo_list/Weekly";
 import { BackgroundBox } from "../components/styled_comp/StyledDiv";
 import TodoBoxExercise from "../components/todo_list/TodoBoxExercise";
@@ -14,6 +14,7 @@ import { todoApi } from "../api/services/TodoList";
 import Swal from "sweetalert2";
 import useUserandRoleModel from "../hooks/useUserandRoleModel";
 import Loading from "../components/Loading";
+import NavigationIcon from "@mui/icons-material/Navigation";
 
 const TodoList = () => {
     const token = localStorage.getItem("token");
@@ -117,18 +118,17 @@ const TodoList = () => {
                 scrollbarWidth: "none",
             }}
         >
-            <Weekly
-                date={date}
-                setDate={setDate}
-                setDay={setDay}
-            />
+            {/* <Fab variant="extended">
+                <NavigationIcon sx={{ mr: 1 }} />
+                Navigate
+            </Fab> */}
+            <Weekly date={date} setDate={setDate} setDay={setDay} />
             <BackgroundBox
                 style={{
                     width: "90%",
                     justifyContent: "center",
-                    marginTop :'10px'
+                    marginTop: "10px",
                 }}
-                
             >
                 <Box
                     sx={{
