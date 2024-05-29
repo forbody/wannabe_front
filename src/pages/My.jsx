@@ -29,7 +29,7 @@ const My = () => {
                 scrollbarWidth: 'none'
             }}
         >
-            {userImg && <img src={ `http://localhost:8000/${userImg}`} width='200' alt={"img"} style={{borderRadius:"200px"}} />}
+            {userImg && <img src={ `http://localhost:8000/${userImg}`} width='200' height="200" alt={"img"} style={{borderRadius:"200px", objectFit : "cover"}} />}
             <Typography
             variant='h6'
             fontWeight='600'

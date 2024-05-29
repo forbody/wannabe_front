@@ -36,7 +36,10 @@ const BottomNavi = () => {
                 width: '375px', 
                 position: 'absolute', 
                 bottom: 0, 
-                zIndex: 2
+                zIndex: 2,
+                border : '1px solid #eee',
+                boxShadow : 'none',
+                borderRadius : '0'
                 }}
             elevation={3}
         >
