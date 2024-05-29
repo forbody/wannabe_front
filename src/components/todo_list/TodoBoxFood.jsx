@@ -44,7 +44,7 @@ const TodoBoxFood = ({ element, setIsAchieve, children }) => {
             style={{
                 width: "300px",
                 flexDirection: "column",
-                marginTop: "10px",
+                marginTop: "5px",
             }}
         >
             <Grid

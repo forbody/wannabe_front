@@ -97,7 +97,7 @@ const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
                 backgroundColor: "#ffffff99",
                 width: "300px",
                 flexDirection: "column",
-                marginTop: "10px",
+                marginTop: "5px",
             }}
         >
             <Grid container spacing={0} alignItems="center">

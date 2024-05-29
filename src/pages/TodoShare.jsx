@@ -1,4 +1,4 @@
-import { Box, Button, Grid, TextField } from "@mui/material";
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { BackgroundBox, ForegroundBox } from "../components/styled_comp/StyledDiv";
 import { useNavigate } from "react-router-dom";
 import { todoApi } from "../api/services/TodoList";
@@ -49,8 +49,10 @@ const TodoShare = () => {
                 scrollbarWidth: "none",
             }}
         >
-            <h1>TodoShare</h1>
-            <BackgroundBox style={{ width: "90%" }}>
+            <BackgroundBox style={{ width: "90%" , justifyContent:'center'}}>
+                <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                    일과 공유하기
+                </Typography>
                 <ForegroundBox
                     style={{
                         width: "335px",
