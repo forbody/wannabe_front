@@ -21,6 +21,7 @@ import Wannabe from './pages/Wannabe';
 import My from './pages/My';
 import MyInfoModify from './components/my/MyInfoModify';
 import MyInfoUpdate from './components/my/MyInfoUpdate';
+import Loading from './components/Loading';
 
 
 
@@ -44,6 +45,9 @@ function App() {
           <Route path='/my' element={<My />} />
           <Route path='/my/update' element={<MyInfoUpdate />} />
           <Route path='/my/modify' element={<MyInfoModify />} />
+          <Route path='/Loading' element={<Loading />} /> 
+          {/*임시 삭제하기*/}
+
           {/*<Route path='*' element={<h1>Not Found</h1>} /> */}
         </Routes>
       </Layout>
