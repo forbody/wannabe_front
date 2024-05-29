@@ -2,26 +2,19 @@ import { Routes, Route } from 'react-router-dom';
 import { LoginContext } from './contexts/LoginContext';
 import { useProvideAuth } from './hooks/useProvideAuth';
 import Layout from "./components/layouts/Layout";
-
 import Landing from './pages/Landing';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
-
 import Exercise from './pages/Exercise';
-
 import Food from './pages/Food';
-
 import TodoList from './pages/TodoList';
 import TodoForm from './pages/TodoForm';
 import TodoShare from './pages/TodoShare';
-
 import Wannabe from './pages/Wannabe';
-
 import My from './pages/My';
 import MyInfoModify from './components/my/MyInfoModify';
 import MyInfoUpdate from './components/my/MyInfoUpdate';
 import MyShareList from './components/my/MyShareList';
-
 import Error404 from './pages/Error/Error404';
 import Error500 from './pages/Error/Error500';
 
