@@ -5,7 +5,7 @@ import { LineChart } from '@mui/x-charts/LineChart';
 import { FaUserPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-const MyChart = ({userProfile}) => {
+const MyBmiChart = ({userProfile}) => {
     const navigate = useNavigate();
     const [userBmiArray, setUserBmiArray] = useState([]);
     const [bmiDateArray, setBmiDateArray] = useState([]);
@@ -79,4 +79,4 @@ const MyChart = ({userProfile}) => {
         </>
     );
 }
-export default MyChart;
+export default MyBmiChart;

@@ -1,16 +1,16 @@
 import { useAuth } from '../hooks/useAuth';
+import useUserandRoleModel from '../hooks/useUserandRoleModel';
 import { Box, Typography } from '@mui/material';
 import { BackgroundBox } from '../components/styled_comp/StyledDiv';
 import * as React from 'react';
-import MyButtons from '../components/my/MyButtons';
-import MyCalendar from '../components/my/MyCalendar';
-import MyChart from '../components/my/MyChart';
-import GetUserandRoleModel from '../components/user/GetUserandRoleModel';
 import MyLikeBtn from '../components/my/MyLikeBtn';
+import MyCalendar from '../components/my/MyCalendar';
+import MyBmiChart from '../components/my/MyBmiChart';
+import MyInfoButtons from '../components/my/MyInfoButtons';
 
 const My = () => {
     const { logout } = useAuth()
-    const { userProfile, userImg } = GetUserandRoleModel();
+    const { userProfile, userImg } = useUserandRoleModel();
     
     // 아직 userProfile을 못 가져온 상태처리
     if (!userProfile) {
@@ -42,14 +42,14 @@ const My = () => {
             <BackgroundBox style={{ justifyContent: 'center'}}>
                 <MyLikeBtn userProfile={userProfile} />
             </BackgroundBox>
-            <BackgroundBox style={{ justifyContent: 'center', marginTop:'24px'}}>
+            <BackgroundBox style={{ justifyContent: 'center', marginTop:'10px'}}>
                 <MyCalendar />
             </BackgroundBox>
-            <BackgroundBox style={{ justifyContent: 'center', marginTop:'24px' }}>
-                <MyChart userProfile={userProfile} />
+            <BackgroundBox style={{ justifyContent: 'center', marginTop:'10px' }}>
+                <MyBmiChart userProfile={userProfile} />
             </BackgroundBox>
-            <BackgroundBox style={{ justifyContent: 'center', marginTop:'24px' }}>
-                <MyButtons logout={logout} />
+            <BackgroundBox style={{ justifyContent: 'center', marginTop:'10px' }}>
+                <MyInfoButtons logout={logout} />
             </BackgroundBox>
         </Box>
     );

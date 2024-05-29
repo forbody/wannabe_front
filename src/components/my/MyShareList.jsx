@@ -1,30 +1,33 @@
 import { useEffect, useState } from "react";
 import { todoApi } from "../../api/services/TodoList";
-import { useAuth } from "../../hooks/useAuth";
 import { BackgroundBox } from "../styled_comp/StyledDiv";
 import ShowTodoList from "../wannabe/ShowTodoList";
 import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const MyShareList = () => {
-    const {loginUser} = useAuth()
+    const token = localStorage.getItem("token");
     const [myShareList, setMyShareList] = useState();
     const [isChange, setIsChange] = useState();
     const navigate = useNavigate()
 
     const getMyShareList= async() => {
         try {
-            const res= await todoApi.getMyShareList(loginUser)
-            setMyShareList(res.payload)
-            
-        } catch (err) {
+            const res = await todoApi.getMyShareList(token)
+            if (res.code === 200) {
+                setMyShareList(res.payload)
+            } else {
+                throw new Error(res.message);
+            }
+        }catch (err) {
             console.error(err);
         }
     }
 
     useEffect(() => {
         getMyShareList()
-    },[])
+    },[token])
+
     return (
         <Box
             height="100vh"
@@ -40,7 +43,8 @@ const MyShareList = () => {
             <BackgroundBox
                 style={{justifyContent:'center'}}
             >
-                {myShareList?.map((e) => (
+                {console.log('myShareList', myShareList)}
+                {myShareList && myShareList.map((e) => (
                     <ShowTodoList e={e} key={e.id} setIsChange={setIsChange} />
                 ))}
                 <Box width='95%' marginTop="10px">

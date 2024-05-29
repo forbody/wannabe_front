@@ -8,7 +8,7 @@ import ExerciseFollow from "../components/exercises/ExerciseFollow";
 import { useAuth } from './../hooks/useAuth';
 import Carousel from "react-material-ui-carousel";
 import ExerciseModal from "../components/exercises/ExerciseModal";
-import GetUserandRoleModel from "../components/user/GetUserandRoleModel";
+import useUserandRoleModel from "../hooks/useUserandRoleModel";
 import { exerciseApi } from "../api/services/exercise";
 import StarsIcon from '@mui/icons-material/Stars';
 
@@ -31,7 +31,7 @@ const Exercise = () => {
     const [exerciseSortName, setExerciseSortName] = useState(sorts);
     // 태그 리스트  state
 
-    const { modelImg } = GetUserandRoleModel();
+    const { modelImg } = useUserandRoleModel();
 
     const getExercises = async () => {
         // 운동 리스트 조회 기능

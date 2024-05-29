@@ -3,6 +3,7 @@ import axios from "axios";
 import { Cookies } from "react-cookie";
 import { jwtDecode } from "jwt-decode";
 import { userApi } from "../api/services/user";
+import { createBrowserRouter } from "react-router-dom";
 
 export const useProvideAuth = () => {
     const [loginUser, setLoginUser] = useState(localStorage.getItem("token"));
@@ -38,12 +39,25 @@ export const useProvideAuth = () => {
         }
     }
 
-    const logout = (callback) => {
-        localStorage.removeItem("userId");
-        localStorage.removeItem("token");
-        setLoginUser(null);
-        localStorage.removeItem("date")
-        // 리프레쉬 토큰 삭제
+    const logout = async(callback) => {
+        // 리프레쉬 토큰 null로 변경
+        try{
+            const token = localStorage.getItem("token");
+            const res = await userApi.modifyRefreshToken(
+                {refresh_token: null}
+                , token)
+            if (res.code === 200) {
+                console.log("리프레쉬 토큰 null로 변경 완료");
+                setLoginUser(null);
+                localStorage.removeItem("userId");
+                localStorage.removeItem("token");
+                localStorage.removeItem("date")
+            } else {
+                throw new Error(res.message);
+            }
+        } catch(err) {
+            console.error(err);
+        }
         callback();
     }
 
@@ -58,11 +72,17 @@ export const useProvideAuth = () => {
         }
     }
 
+    const goToErrPage = (err, callback) => {
+        console.log(err);
+        logout(() => callback());
+    }
+
     return {
         loginUser,
         login,
         logout,
         kakaoLogin,
-        getUserInfoByToken
+        getUserInfoByToken,
+        goToErrPage
     }
 }

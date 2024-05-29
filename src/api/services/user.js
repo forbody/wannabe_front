@@ -60,6 +60,11 @@ export const userApi = {
             "Authorization": token,
         }
     }),
+    modifyRefreshToken: (data, token) => api.patch('users/modifyRefreshToken', data, { // 리프레쉬 토큰 수정
+        headers: {
+            "Authorization": token,
+        }
+    }),
 }
 
 

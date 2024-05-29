@@ -1,22 +1,16 @@
-.rwdpDayPickerContainer {
-    /* width: 100%; */
+.mbsc-ios.mbsc-datepicker-inline {
+    border-color:  white;
 }
-.rwdpPrevWeekArrow{
 
-}
-.rwdpNextWeekArrow{
+.mbsc-ios.mbsc-calendar-button.mbsc-button {
+    color: #ff7961;
+} 
 
+.mbsc-ios.mbsc-selected .mbsc-calendar-cell-text {
+    background: #ff7961;
+    border-color: #ff7961;
 }
-.rwdpDayBoxDesktop{
 
-}
-.rwdp-DayCircle-container {
-    /* width: 20px; */
-}
-.rwdp-DayCircle{
-    width: 20px;
-    height: 20px;
-}
-.rwdp-DayCircle-selected{
-
+.mbsc-ios.mbsc-calendar-today {
+    color : #ff7961;
 }

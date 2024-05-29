@@ -50,7 +50,7 @@ const FoodRecommend = ({meal}) => {
                 throw new Error(res.message);
             }
         } catch (err) {
-            console.error("Error: ", err);
+            console.error(err)
         }
     };
 
