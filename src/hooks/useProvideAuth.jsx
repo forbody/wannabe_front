@@ -44,7 +44,7 @@ export const useProvideAuth = () => {
         try{
             const token = localStorage.getItem("token");
             const res = await userApi.modifyRefreshToken(
-                {refresh_token: ""}
+                {refresh_token: null}
                 , token)
             if (res.code === 200) {
                 console.log("리프레쉬 토큰 null로 변경 완료");
