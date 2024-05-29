@@ -7,7 +7,7 @@ import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
 import { useNavigate, useParams } from "react-router-dom";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { cyan } from "@mui/material/colors";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useAuth } from "../hooks/useAuth";
 import InfoUpdate from "../components/signup/InfoUpdate";
 import { todoApi } from "../api/services/TodoList";
@@ -34,15 +34,19 @@ const TodoList = () => {
     const [food, setFood] = useState([]);
     const [exercise, setExercise] = useState([]);
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     // getTodo()함수 호출 
     useEffect(() => {
         localStorage.setItem('date' , date)
         localStorage.setItem('day', day)
         getTodo();
-    },[date, isAchieve]) 
-
+        setExercise([])
+        setFood([]);
+    },[date]) 
+    useEffect(() => {
+        getTodo();
+    },[isAchieve])
     // todolist 요청함수
     const getTodo = async () => {
         try {
@@ -114,12 +118,18 @@ const TodoList = () => {
                 scrollbarWidth: "none",
             }}
         >
-            <Weekly date={date} setDate={setDate} setDay={setDay} />
+            <Weekly
+                date={date}
+                setDate={setDate}
+                setDay={setDay}
+            />
             <BackgroundBox
                 style={{
                     width: "90%",
                     justifyContent: "center",
+                    marginTop :'10px'
                 }}
+                
             >
                 <Box
                     sx={{

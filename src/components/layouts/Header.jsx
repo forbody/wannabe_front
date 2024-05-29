@@ -24,7 +24,7 @@ const Header = () => {
                 Wannabe
                 </Typography>
                 <IconButton onClick={goUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="userImg" src={ `http://localhost:8000/${userImg}`} />
+                    <Avatar alt="userImg" src={ `http://localhost:8000/${userImg}`} sx={{boxShadow:'0px 0px 2px #888'}}/>
                 </IconButton>
             </Toolbar>
         </AppBar>

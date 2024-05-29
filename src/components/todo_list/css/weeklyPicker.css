@@ -1,3 +1,16 @@
 .mbsc-ios.mbsc-datepicker-inline {
     border-color:  white;
 }
+
+.mbsc-ios.mbsc-calendar-button.mbsc-button {
+    color: #ff7961;
+} 
+
+.mbsc-ios.mbsc-selected .mbsc-calendar-cell-text {
+    background: #ff7961;
+    border-color: #ff7961;
+}
+
+.mbsc-ios.mbsc-calendar-today {
+    color : #ff7961;
+}

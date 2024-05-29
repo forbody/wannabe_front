@@ -107,7 +107,7 @@ const Wannabe = () => {
             <BackgroundBox>
                 <WannabeCard liking={liking} like={like} unlike={unlike}/>
             </BackgroundBox>
-            <BackgroundBox>
+            <BackgroundBox style={{marginTop : '10px'}}>
                 {shareList?.map((e) => (
                     <ShowTodoList liking={liking} like={like} unlike={unlike} e={e} key={e.id} setIsChange={setIsChange} />
                 ))}
