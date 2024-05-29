@@ -1,4 +1,3 @@
-import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { LoginContext } from './contexts/LoginContext';
 import { useProvideAuth } from './hooks/useProvideAuth';
