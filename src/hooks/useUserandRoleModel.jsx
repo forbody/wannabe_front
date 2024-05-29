@@ -1,8 +1,8 @@
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "./useAuth";
 import { useEffect, useState } from "react";
-import { userApi } from "../../api/services/user";
+import { userApi } from "../api/services/user";
 
-const GetUserandRoleModel = () => {
+const useUserandRoleModel = () => {
     const token = localStorage.getItem("token");
     const { loginUser, getUserInfoByToken } = useAuth();
     
@@ -79,4 +79,4 @@ const GetUserandRoleModel = () => {
 
     return { userProfile, userImg, modelProfile, modelImg };
 };
-export default GetUserandRoleModel;
+export default useUserandRoleModel;

@@ -36,7 +36,7 @@ const Error500 = () => {
                     <Typography variant="caption" gutterBottom>
                         GitHub - @forbody
                     </Typography>
-                    <Button variant="contained" fullWidth style={{marginTop:'12px'}} onClick={() => navigate(-1)}>뒤로가기</Button>
+                    <Button variant="contained" fullWidth style={{marginTop:'12px'}} onClick={() => navigate('/')}>홈으로</Button>
                 </ForegroundBox>
             </BackgroundBox>
         </Box>

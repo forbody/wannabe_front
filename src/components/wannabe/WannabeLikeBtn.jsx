@@ -7,12 +7,16 @@ const WannabeLikeBtn = ({alreadyliked, like_id, like, unlike}) => {
     const [isLiked, setIsLiked] = useState(false);
 
     const handleLike = () => {
-        like(like_id)
-        setIsLiked(true);
+        if (alreadyliked) {
+            like(like_id)
+            setIsLiked(true);
+        }
     }
     const handleUnlike = () => {
-        unlike(like_id)
-        setIsLiked(false);
+        if (alreadyliked) {
+            unlike(like_id)
+            setIsLiked(false);
+        }
     }
 
     // 이미 좋아요 된 사람인지?
@@ -23,13 +27,13 @@ const WannabeLikeBtn = ({alreadyliked, like_id, like, unlike}) => {
     }, [alreadyliked, like_id]);
 
     // 아직 alreadyliked를 못 가져온 상태처리
-    if (!alreadyliked) {
+    if (alreadyliked === null) {
         return <div>Loading...</div>;
     } 
 
     return ( 
         <IconButton
-            color="error"
+            color="coral"
             onClick={isLiked ? handleUnlike : handleLike}
         >
             {isLiked ? <IoHeart /> : <IoHeartOutline />}

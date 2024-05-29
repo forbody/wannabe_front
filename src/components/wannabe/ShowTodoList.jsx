@@ -86,8 +86,8 @@ const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
         getTodoEle();
     }, []);
 
-    // 아직 loginUser, userProfile, liking을 못 가져온 상태처리
-    if (!loginUser || !userProfile || !liking) {
+    // 아직 loginUser, userProfile을 못 가져온 상태처리
+    if (!loginUser || !userProfile ) {
         return <div>Loading...</div>;
     } 
 
@@ -143,11 +143,10 @@ const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
                     </>
                 ) : (
                     <Grid item xs={2}>
-                        {console.log(liking && liking)}
-                        {liking && (
+                        {liking && uploadUserId && (
                             <WannabeLikeBtn
-                                liking={liking}
-                                wannabe_id={uploadUserId}
+                                alreadyliked={liking}
+                                like_id={uploadUserId}
                                 like={like}
                                 unlike={unlike}
                             />

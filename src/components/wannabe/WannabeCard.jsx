@@ -3,7 +3,8 @@ import { Avatar, Button, Card, CardActionArea, CardActions, CardContent, CardHea
 import { userApi } from "../../api/services/user";
 import { useEffect, useState } from "react";
 import { useTheme } from '@mui/material/styles';
-import GetUserandRoleModel from "../../components/user/GetUserandRoleModel";
+import useUserandRoleModel from "../../hooks/useUserandRoleModel";
+import { useAuth } from '../../hooks/useAuth';
 import { ForegroundBox } from "../styled_comp/StyledDiv";
 import { PiSparkleFill } from "react-icons/pi";
 import { FaQuestion } from "react-icons/fa";
@@ -12,13 +13,12 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import Swal from 'sweetalert2';
 import WannabeLikeBtn from './WannabeLikeBtn';
-import { useAuth } from '../../hooks/useAuth';
 
 const WannabeCard = ({liking, like, unlike}) => {
     const token = localStorage.getItem("token");
     const { loginUser } = useAuth();
     const theme = useTheme();
-    const { userProfile, modelProfile } = GetUserandRoleModel();
+    const { userProfile, modelProfile } = useUserandRoleModel();
     const [activeStep, setActiveStep] = useState(0);
     const [roleModels, setRoleModels] = useState(null);
     
@@ -165,7 +165,7 @@ const WannabeCard = ({liking, like, unlike}) => {
                     </Button>
                     <Button
                     fullWidth
-                    color="warning"
+                    color="coral"
                     variant="contained"
                     style={{
                         marginTop: '16px'
