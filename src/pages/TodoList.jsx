@@ -13,6 +13,7 @@ import InfoUpdate from "../components/signup/InfoUpdate";
 import { todoApi } from "../api/services/TodoList";
 import Swal from "sweetalert2";
 import useUserandRoleModel from "../hooks/useUserandRoleModel";
+import Loading from "../components/Loading";
 import NavigationIcon from "@mui/icons-material/Navigation";
 
 const TodoList = () => {
@@ -99,11 +100,9 @@ const TodoList = () => {
         kakaoLogin();
     }
 
-    // 아직 userProfile을 못 가져온 상태처리
     if (!userProfile) {
-        return <div>Loading...</div>;
-    } 
-
+        return <Loading />;
+    }
     // 카카오 신유저는 <InfoUpdate /> 컴포넌트 출력, 로컬 로그인 유저와 카카오 구유저는 <TodoList /> 페이지 출력
     return userProfile?.birthday === null || userProfile?.gender === null ? (
         <InfoUpdate />
