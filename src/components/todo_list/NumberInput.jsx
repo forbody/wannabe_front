@@ -3,14 +3,14 @@ import TextField from "@mui/material/TextField";
 
 const NumberInput = ({ children, count , setCount}) => {
     const onSetCount = (e) => {
-      setCount(e.target.value);
+        setCount(e.target.value);
     }
     return (
         <Box sx={{ marginTop: "10px" }}>
             <TextField
                 placeholder={children}
                 variant="outlined"
-                type="number"
+                type="tel"
                 onChange={(e) => onSetCount(e)}
             />
         </Box>
