@@ -5,12 +5,12 @@ import * as React from 'react';
 import MyButtons from '../components/my/MyButtons';
 import MyCalendar from '../components/my/MyCalendar';
 import MyChart from '../components/my/MyChart';
-import GetUserandRoleModel from '../components/user/GetUserandRoleModel';
+import useUserandRoleModel from '../hooks/useUserandRoleModel';
 import MyLikeBtn from '../components/my/MyLikeBtn';
 
 const My = () => {
     const { logout } = useAuth()
-    const { userProfile, userImg } = GetUserandRoleModel();
+    const { userProfile, userImg } = useUserandRoleModel();
     
     // 아직 userProfile을 못 가져온 상태처리
     if (!userProfile) {
@@ -42,13 +42,13 @@ const My = () => {
             <BackgroundBox style={{ justifyContent: 'center'}}>
                 <MyLikeBtn userProfile={userProfile} />
             </BackgroundBox>
-            <BackgroundBox style={{ justifyContent: 'center', marginTop:'24px'}}>
+            <BackgroundBox style={{ justifyContent: 'center', marginTop:'10px'}}>
                 <MyCalendar />
             </BackgroundBox>
-            <BackgroundBox style={{ justifyContent: 'center', marginTop:'24px' }}>
+            <BackgroundBox style={{ justifyContent: 'center', marginTop:'10px' }}>
                 <MyChart userProfile={userProfile} />
             </BackgroundBox>
-            <BackgroundBox style={{ justifyContent: 'center', marginTop:'24px' }}>
+            <BackgroundBox style={{ justifyContent: 'center', marginTop:'10px' }}>
                 <MyButtons logout={logout} />
             </BackgroundBox>
         </Box>
