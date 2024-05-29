@@ -43,7 +43,6 @@ const MyShareList = () => {
             <BackgroundBox
                 style={{justifyContent:'center'}}
             >
-                {console.log('myShareList', myShareList)}
                 {myShareList && myShareList.map((e) => (
                     <ShowTodoList e={e} key={e.id} setIsChange={setIsChange} />
                 ))}
