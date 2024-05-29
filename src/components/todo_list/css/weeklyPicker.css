@@ -1,22 +1,3 @@
-.rwdpDayPickerContainer {
-    /* width: 100%; */
-}
-.rwdpPrevWeekArrow{
-
-}
-.rwdpNextWeekArrow{
-
-}
-.rwdpDayBoxDesktop{
-
-}
-.rwdp-DayCircle-container {
-    /* width: 20px; */
-}
-.rwdp-DayCircle{
-    width: 20px;
-    height: 20px;
-}
-.rwdp-DayCircle-selected{
-
+.mbsc-ios.mbsc-datepicker-inline {
+    border-color:  white;
 }

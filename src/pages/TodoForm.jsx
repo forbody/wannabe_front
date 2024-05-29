@@ -1,4 +1,4 @@
-import { Box, Button, Grid, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { Box, Button, Grid, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 import { BackgroundBox, ForegroundBox } from '../components/styled_comp/StyledDiv';
 import DropDownForm from "../components/todo_list/DropDownForm";
 import { useEffect, useState } from 'react';
@@ -124,8 +124,10 @@ const TodoForm = () => {
                 scrollbarWidth: "none",
             }}
         >
-            <h1>Todo Form</h1>
-            <BackgroundBox style={{ width: "90%" }}>
+            <BackgroundBox style={{ width: "90%" , justifyContent:'center'}}>
+                <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                    일과 등록
+                </Typography>
                 <ForegroundBox
                     style={{
                         width: "335px",

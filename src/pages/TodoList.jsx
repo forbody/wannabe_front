@@ -43,6 +43,7 @@ const TodoList = () => {
         getTodo();
     },[date, isAchieve]) 
 
+    // todolist 요청함수
     const getTodo = async () => {
         try {
             const res1 = await todoApi.getList(date, token);
@@ -62,6 +63,7 @@ const TodoList = () => {
         }
     }
 
+    // todolist 공유하기
     const goTodoShareForm = async () => {
         try {
             const res = await todoApi.getList(date, token);
@@ -112,8 +114,7 @@ const TodoList = () => {
                 scrollbarWidth: "none",
             }}
         >
-            
-            <Weekly setDate={setDate} setDay={setDay} />
+            <Weekly date={date} setDate={setDate} setDay={setDay} />
             <BackgroundBox
                 style={{
                     width: "90%",
