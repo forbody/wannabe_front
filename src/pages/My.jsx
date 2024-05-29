@@ -1,12 +1,12 @@
 import { useAuth } from '../hooks/useAuth';
+import useUserandRoleModel from '../hooks/useUserandRoleModel';
 import { Box, Typography } from '@mui/material';
 import { BackgroundBox } from '../components/styled_comp/StyledDiv';
 import * as React from 'react';
-import MyButtons from '../components/my/MyButtons';
-import MyCalendar from '../components/my/MyCalendar';
-import MyChart from '../components/my/MyChart';
-import useUserandRoleModel from '../hooks/useUserandRoleModel';
 import MyLikeBtn from '../components/my/MyLikeBtn';
+import MyCalendar from '../components/my/MyCalendar';
+import MyBmiChart from '../components/my/MyBmiChart';
+import MyInfoButtons from '../components/my/MyInfoButtons';
 
 const My = () => {
     const { logout } = useAuth()
@@ -46,10 +46,10 @@ const My = () => {
                 <MyCalendar />
             </BackgroundBox>
             <BackgroundBox style={{ justifyContent: 'center', marginTop:'10px' }}>
-                <MyChart userProfile={userProfile} />
+                <MyBmiChart userProfile={userProfile} />
             </BackgroundBox>
             <BackgroundBox style={{ justifyContent: 'center', marginTop:'10px' }}>
-                <MyButtons logout={logout} />
+                <MyInfoButtons logout={logout} />
             </BackgroundBox>
         </Box>
     );

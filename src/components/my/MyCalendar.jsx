@@ -1,6 +1,5 @@
 import * as React from 'react';
 import dayjs from 'dayjs';
-import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import 'dayjs/locale/ko'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -9,25 +8,32 @@ import { ForegroundBox } from '../styled_comp/StyledDiv';
 import { Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { todoApi } from '../../api/services/TodoList';
+import DayAchieve from './DayAchive';
 
 const MyCalendar = () => {
     const token = localStorage.getItem("token");
+
     
     const offset = new Date().getTimezoneOffset() * 60000;
     const today = new Date(Date.now() - offset).toISOString().slice(0, 10);
+
     // achieve 실시간 적용(test용)
     // 달력에서 클릭한 날짜 받아오기(첫 접속시 자동으로 오늘날짜 받아옴)
+
     const [value, setValue] = useState(dayjs(today));
     const [date, setDate] = useState(today);
     // 카테고리별 스테이트관리
     const [elements, setElements] = useState();
     const [goal, setGoal] = useState();
 
+
     // getTodo()함수 호출 
     useEffect(() => {
         getTodo();
     },[date]) 
 
+
+    // 달성도 가져오기
     const getTodo = async () => {
         try {
             const res1 = await todoApi.getList(date, token);
@@ -56,7 +62,6 @@ const MyCalendar = () => {
         setDate(`${YYYY}-${MM}-${DD}`);
     }
 
-        
     return (
         <>
             <ForegroundBox

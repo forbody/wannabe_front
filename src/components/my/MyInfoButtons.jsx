@@ -8,7 +8,7 @@ import { Divider, Typography } from '@mui/material';
 import Swal from 'sweetalert2';
 import { userApi } from '../../api/services/user';
 
-const MyButtons = ({ logout }) => {
+const MyInfoButtons = ({ logout }) => {
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
     const deleteUser = () => {
@@ -77,4 +77,4 @@ const MyButtons = ({ logout }) => {
     );
 }
 
-export default MyButtons;
+export default MyInfoButtons;
