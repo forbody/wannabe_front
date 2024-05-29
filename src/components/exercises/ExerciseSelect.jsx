@@ -6,6 +6,8 @@ import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -18,24 +20,10 @@ const MenuProps = {
     },
 };
 
-const names = [
-        '#가슴',
-        '#등',
-        '#어깨',
-        '#하체',
-        '#전신',
-    ];
-
-    export default function ExerciseSelect() {
-        const [personName, setPersonName] = React.useState([]);
-    
+    export default function ExerciseSelect({sorts, exerciseSortName, setExerciseSortName}) {
         const handleChange = (event) => {
-        const {
-            target: { value },
-        } = event;
-        setPersonName(
-            typeof value === 'string' ? value.split(',') : value,
-        );
+            const { target: { value } } = event;
+            setExerciseSortName(typeof value === 'string' ? value.split(',') : value,);
         };
     
         return (
@@ -46,16 +34,16 @@ const names = [
                     labelId="demo-multiple-checkbox-label"
                     id="demo-multiple-checkbox"
                     multiple
-                    value={personName}
+                    value={exerciseSortName}
                     onChange={handleChange}
                     input={<OutlinedInput label="Tag" />}
                     renderValue={(selected) => selected.join(', ')}
                     MenuProps={MenuProps}
                 >
-                    {names.map((name) => (
-                        <MenuItem key={name} value={name}>
-                            <Checkbox checked={personName.indexOf(name) > -1} />
-                            <ListItemText primary={name} />
+                    {sorts.map((sort) => (
+                        <MenuItem key={sort} value={sort}>
+                            <Checkbox checked={exerciseSortName.indexOf(sort) > -1} />
+                            <ListItemText primary={sort} />
                         </MenuItem>
                     ))}
                 </Select>

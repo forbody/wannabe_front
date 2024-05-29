@@ -8,7 +8,8 @@ import { Divider, Typography } from '@mui/material';
 import Swal from 'sweetalert2';
 import { userApi } from '../../api/services/user';
 
-const MyButtons = ({ loginUser, logout }) => {
+const MyButtons = ({ logout }) => {
+    const token = localStorage.getItem("token");
     const navigate = useNavigate();
     const deleteUser = () => {
         try{
@@ -23,7 +24,7 @@ const MyButtons = ({ loginUser, logout }) => {
                 cancelButtonText: "아니요"
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    const res = await userApi.deleteUser(loginUser)
+                    const res = await userApi.deleteUser(token)
                     if (res.code === 200) {
                     Swal.fire({
                     title: "회원탈퇴가 성공적으로 되었습니다!",
@@ -65,7 +66,7 @@ const MyButtons = ({ loginUser, logout }) => {
             >
                 나의 정보 관리
             </Typography>
-            <Button variant="text" size="large" color="secondary" startIcon={<TfiWrite/>} fullWidth>내가 작성한 글 보기</Button>
+            <Button variant="text" size="large" color="secondary" startIcon={<TfiWrite/>} onClick={() => navigate('/my/shareList')} fullWidth>내가 작성한 글 보기</Button>
             <Divider/>
             <Button variant="text" size="large" color="primary" startIcon={<FaUserEdit/>} onClick={ () => navigate('/my/modify') } fullWidth>나의 정보 수정</Button>
             <Divider/>

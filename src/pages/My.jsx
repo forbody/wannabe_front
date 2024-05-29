@@ -6,14 +6,17 @@ import MyButtons from '../components/my/MyButtons';
 import MyCalendar from '../components/my/MyCalendar';
 import MyChart from '../components/my/MyChart';
 import GetUserandRoleModel from '../components/user/GetUserandRoleModel';
+import MyLikeBtn from '../components/my/MyLikeBtn';
 
 const My = () => {
-    const { loginUser, logout } = useAuth()
+    const { logout } = useAuth()
     const { userProfile, userImg } = GetUserandRoleModel();
     
-    if (userProfile === null) {
+    // 아직 userProfile을 못 가져온 상태처리
+    if (!userProfile) {
         return <div>Loading...</div>;
     }
+    
     return ( 
         <Box
             height='100vh'
@@ -26,7 +29,7 @@ const My = () => {
                 scrollbarWidth: 'none'
             }}
         >
-            {userImg && <img src={ `http://localhost:8000/${userImg}`} width='200' alt={"img"} style={{borderRadius:"200px"}} />}
+            {userImg && <img src={ `http://localhost:8000/${userImg}`} width='200' height="200" alt={"img"} style={{borderRadius:"200px", objectFit : "cover"}} />}
             <Typography
             variant='h6'
             fontWeight='600'
@@ -34,16 +37,19 @@ const My = () => {
                 padding:'24px'
             }}
             >
-            {userProfile.user_name}님의 페이지
+            {userProfile?.user_name} 님의 페이지
             </Typography>
             <BackgroundBox style={{ justifyContent: 'center'}}>
+                <MyLikeBtn userProfile={userProfile} />
+            </BackgroundBox>
+            <BackgroundBox style={{ justifyContent: 'center', marginTop:'24px'}}>
                 <MyCalendar />
             </BackgroundBox>
             <BackgroundBox style={{ justifyContent: 'center', marginTop:'24px' }}>
-                <MyChart/>
+                <MyChart userProfile={userProfile} />
             </BackgroundBox>
             <BackgroundBox style={{ justifyContent: 'center', marginTop:'24px' }}>
-                <MyButtons loginUser={loginUser} logout={logout}/>
+                <MyButtons logout={logout} />
             </BackgroundBox>
         </Box>
     );

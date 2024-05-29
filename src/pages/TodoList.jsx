@@ -16,6 +16,7 @@ import GetUserandRoleModel from "../components/user/GetUserandRoleModel";
 import Loading from "../components/Loading";
 
 const TodoList = () => {
+    const token = localStorage.getItem("token");
     const { loginUser, kakaoLogin }= useAuth();
     // 카카오 로그인 유저 가운데 구유저/신유저 구분
     const { userProfile } = GetUserandRoleModel();
@@ -45,17 +46,18 @@ const TodoList = () => {
 
     const getTodo = async () => {
         try {
-            const res1 = await todoApi.getList(date, loginUser);
-            const listId = res1.payload?.id;
-            const res2 = await todoApi.getEle(listId, loginUser);
-            let fo = [];
-            let ex = [];
-            res2.payload.map((e) => {
-                e.category_id == 1 ? ex.push({...e}) : fo.push({...e});
-            });
-            setExercise(ex);
-            setFood(fo);
-            
+            const res1 = await todoApi.getList(date, token);
+            if (res1.payload) {
+                const listId = res1.payload?.id;
+                const res2 = await todoApi.getEle(listId, token);
+                let fo = [];
+                let ex = [];
+                res2.payload.map((e) => {
+                    e.category_id == 1 ? ex.push({...e}) : fo.push({...e});
+                });
+                setExercise(ex);
+                setFood(fo);
+            }
         } catch (err) {
             console.error("Error: ", err);
         }
@@ -63,7 +65,7 @@ const TodoList = () => {
 
     const goTodoShareForm = async () => {
         try {
-            const res = await todoApi.getList(date, loginUser);
+            const res = await todoApi.getList(date, token);
             if (!Boolean(res.payload?.Todo_elements)) {
                 Swal.fire({
                     title: "일과를 등록해주세요.",
@@ -95,7 +97,7 @@ const TodoList = () => {
         return <Loading />;
     }
     // 카카오 신유저는 <InfoUpdate /> 컴포넌트 출력, 로컬 로그인 유저와 카카오 구유저는 <TodoList /> 페이지 출력
-    return userProfile.birthday === null || userProfile.gender === null ? (
+    return userProfile?.birthday === null || userProfile?.gender === null ? (
         <InfoUpdate />
     ) : (
         <Box
@@ -103,7 +105,13 @@ const TodoList = () => {
             display="flex"
             flexDirection="column"
             alignItems="center"
+            style={{
+                padding: "36px 0 80px",
+                overflowY: "scroll",
+                scrollbarWidth: "none",
+            }}
         >
+            
             <Weekly setDate={setDate} setDay={setDay} />
             <BackgroundBox
                 style={{

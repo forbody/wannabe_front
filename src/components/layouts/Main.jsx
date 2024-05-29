@@ -1,5 +1,6 @@
-import { Grid, styled } from "@mui/material";
+import { Grid } from "@mui/material";
 import BottomNavi from "./BottomNavi";
+import Header from "./Header";
 
 const Main = ({ children }) => {
     console.log(children);
@@ -10,7 +11,7 @@ const Main = ({ children }) => {
                 margin= "0 auto"
                 direction="column"
                 justify="center"
-                justifyContent="center"
+                justifyContent='flex-start'
                 alignItems="center"
                 alignContent="center"
                 wrap="nowrap"
@@ -19,7 +20,8 @@ const Main = ({ children }) => {
                     background: 'linear-gradient(135deg, #fdf00e, #33cc33)'
                 }}
             >
-                {children}
+            <Header/>
+            {children}
             <BottomNavi />
         </Grid>
     );

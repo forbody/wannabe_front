@@ -4,9 +4,9 @@ import male from "../../assets/MaleBodyShape.JPG";
 import female from "../../assets/FemaleBodyShape.JPG";
 import Step from "../../components/signup/Step";
 import { userApi } from "../../api/services/user";
-import { useAuth } from "../../hooks/useAuth";
 
 const InfoUpdate = () => {
+    const token = localStorage.getItem("token");
     const [step, setStep] = useState(1);
     const [joinData, setJoinData] = useState({
         email: "",
@@ -21,16 +21,13 @@ const InfoUpdate = () => {
         user_name: "",
     });
     
-    const {loginUser} = useAuth();
     const goUpdate = async (joinData) =>{
         try{
-            const res1 = await userApi.addUserDetail(joinData, loginUser)
-            console.log(res1);
+            const res1 = await userApi.addUserDetail(joinData, token)
             if (res1.code !== 200) {
                 throw new Error(res1.message);
                 };
-            const res2 = await userApi.modifyUser(joinData, loginUser)
-            console.log(res2);
+            const res2 = await userApi.modifyUser(joinData, token)
             if (res2.code === 200) {
                 Swal.fire({
                     title: "이제 워너비를 이용하실 수 있습니다!",
@@ -69,8 +66,8 @@ const InfoUpdate = () => {
                     inputData={[
                         {"inputName":"gender", "type":"radio", "message":"성별을 입력해 주세요.", "label":"성별" },
                         {"inputName":"birthday", "type":"date", "message":"생일을 입력해 주세요.", "label":"생일" },
-                        {"inputName":"height", "type":"number", "message":"키를 입력해 주세요.", "label":"키" },
-                        {"inputName":"weight", "type":"number", "message":"몸무게를 입력해 주세요.", "label":"몸무게" },
+                        {"inputName":"height", "type":"tel", "message":"키를 입력해 주세요.", "label":"키" },
+                        {"inputName":"weight", "type":"tel", "message":"몸무게를 입력해 주세요.", "label":"몸무게" },
                     ]}
                     step={step} setStep={setStep} joinData={joinData} setJoinData={setJoinData} />
             </>

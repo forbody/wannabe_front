@@ -27,18 +27,15 @@ const Food = () => {
         }
         }, []);
 
-    if (userProfile === null) {
-        return <div>Loading...</div>;
-    }
-
-    if (modelProfile === null) {
+    // 아직 userProfile, modelProfile을 못 가져온 상태처리
+    if (!userProfile || !modelProfile) {
         return <div>Loading...</div>;
     }
 
     return ( 
         <Box
             width='100%'
-            height='100vh'
+            height='100%'
             display='flex'
             flexDirection='column'
             alignItems='center'
@@ -64,7 +61,7 @@ const Food = () => {
                             padding:'0 24px'
                         }}
                     >
-                        {modelProfile.user_name}님이 추천하는
+                        {modelProfile.user_name} 님이 추천하는
                     </Typography>
                     <Typography
                         variant='h6'
@@ -89,12 +86,13 @@ const Food = () => {
 
             </BackgroundBox>
             <BackgroundBox
-            style={{
-                marginTop:'24px'
-            }}
+                style={{
+                    marginTop:'24px',
+                    flexDirection : 'column',
+                    alignContent : 'center'
+                }}
             >
                 <Water />
-
             </BackgroundBox>
         </Box>
     );

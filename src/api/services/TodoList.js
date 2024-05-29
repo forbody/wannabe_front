@@ -9,66 +9,71 @@ const option =
 
 
 export const todoApi = {
-    getList : (date, loginUser) => api.get(`/todo_list/${date}`, {
+    getList : (date, token) => api.get(`/todo_list/${date}`, {
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
-    getEle : (id, loginUser) => api.get(`/todo_element/${id}`, {
+    getEle : (id, token) => api.get(`/todo_element/${id}`, {
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
-    updateEleAchieve : (id, loginUser) => api.patch(`/todo_element/achieve/${id}`,{} ,{
+    updateEleAchieve : (id, token) => api.patch(`/todo_element/achieve/${id}`,{} ,{
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
     getCategory : (id) => api.get(`/category/${id}`),
-    createTodoList : (data, loginUser) => api.post(`/todo_list`, data ,{
+    createTodoList : (data, token) => api.post(`/todo_list`, data ,{
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
-    createTodoEle : (data, loginUser) => api.post(`/todo_element`,data, {
+    createTodoEle : (data, token) => api.post(`/todo_element`,data, {
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
-    deleteTodoEle : (id, loginUser) => api.delete(`/todo_element/${id}`,{
+    deleteTodoEle : (id, token) => api.delete(`/todo_element/${id}`,{
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
-    uploadShareComment : (data, loginUser) => api.post(`/todo_list/share/`, data, {
+    uploadShareComment : (data, token) => api.post(`/todo_list/share/`, data, {
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
-    modifyShareComment : (id, data, loginUser) => api.patch(`/todo_list/share/${id}`, data, {
+    modifyShareComment : (id, data, token) => api.patch(`/todo_list/share/${id}`, data, {
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
 
-    modifyListShare : (id, loginUser) => api.patch(`/todo_list/${id}`, {}, {
+    modifyListShare : (id, token) => api.patch(`/todo_list/${id}`, {}, {
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
-    getShareList : (loginUser) => api.get(`/todo_list/`, {
+    getShareList : (token) => api.get(`/todo_list/all`, {
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
-    shareTodoEle: (data, loginUser) => api.post(`/todo_element/share`,data,{
+    getMyShareList : (token) => api.get(`/todo_list/my`, {
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
-    deleteShareComment : (id, loginUser) =>api.delete(`/todo_list/share/${id}`,{
+    shareTodoEle: (data, token) => api.post(`/todo_element/share`,data,{
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
+        }
+    }),
+    deleteShareComment : (id, token) =>api.delete(`/todo_list/share/${id}`,{
+        headers: {
+            "Authorization": token,
         }
     })
 }

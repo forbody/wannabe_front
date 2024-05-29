@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
+import { useState } from "react";
 import { userApi } from "../../api/services/user";
 import male from "../../assets/MaleBodyShape.JPG";
 import female from "../../assets/FemaleBodyShape.JPG";
@@ -9,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
 
 const MyInfoUpdate = () => {
+    const token = localStorage.getItem("token");
     const navigate = useNavigate();
     const [step, setStep] = useState(1);
     const [joinData, setJoinData] = useState({
@@ -18,10 +18,9 @@ const MyInfoUpdate = () => {
         img: "",
     });
     
-    const {loginUser} = useAuth();
     const goUpdate = async (joinData) =>{
         try{
-            const res = await userApi.addUserDetail(joinData, loginUser)
+            const res = await userApi.addUserDetail(joinData, token)
             if (res.code === 200) {
                 Swal.fire({
                     title: "성공적으로 추가되었습니다!",
@@ -47,8 +46,8 @@ const MyInfoUpdate = () => {
             <>
                 <Step title="신체 지수 변화 추가"
                     inputData={[
-                        {"inputName":"height", "type":"number", "message":"키", "label":"키" },
-                        {"inputName":"weight", "type":"number", "message":"몸무게", "label":"몸무게" },
+                        {"inputName":"height", "type":"tel", "message":"키", "label":"키" },
+                        {"inputName":"weight", "type":"tel", "message":"몸무게", "label":"몸무게" },
                         {"img": joinData.gender === "M" ? male : female, "inputName":"bodyshape", "type":"checkbox", "message":"나에게 가장 적절한 체형을 선택해 주세요.", "label":"체형" },
                         {"inputName":"img", "type":"file", "accept":"image/*", "message":"프로필 사진", "label":"프로필 사진" }
                     ]} 

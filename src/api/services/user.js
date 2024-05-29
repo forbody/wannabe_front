@@ -1,29 +1,29 @@
 import api from "../api"
 
 export const userApi = {
-    getUsers: (loginUser) => api.get('users', {                        // 모든 유저 정보 조회
+    getUsers: (token) => api.get('users', {                        // 모든 유저 정보 조회
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
-    getUser: (id, loginUser) => api.get(`users/${id}`, {               // 특정 유저 정보 조회
+    getUser: (id, token) => api.get(`users/${id}`, {               // 특정 유저 정보 조회
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
-    modifyUser: (data, loginUser) => api.patch('users', data, {        // 유저 정보 수정
+    modifyUser: (data, token) => api.patch('users', data, {        // 유저 정보 수정
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
-    deleteUser: (loginUser) => api.delete('users', {                   // 유저 삭제
+    deleteUser: (token) => api.delete('users', {                   // 유저 삭제
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
-    addUserDetail: (data, loginUser) => api.post('users', data, {      // 유저 세부 정보 추가
+    addUserDetail: (data, token) => api.post('users', data, {      // 유저 세부 정보 추가
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
     uploadUserImg: (data) => api.post('users/image', data, {           // 유저 세부 정보 이미지 업로드
@@ -31,28 +31,33 @@ export const userApi = {
             "Content-Type": "multipart/form-data",
         }
     }),
-    like: (id, loginUser) => api.post('users/like', { id }, {            // 유저 좋아요
+    like: (id, token) => api.post('users/like', { id }, {           // 유저 좋아요
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
-    unlike: (id, loginUser) => api.delete('users/like', {               // 유저 좋아요 취소
+    unlike: (id, token) => api.delete('users/like', {               // 유저 좋아요 취소
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }, data: {id}}),
-    getLikers: (id, loginUser) => api.get(`users/${id}/likers`, {      // 나를 좋아요 한 유저 조회
+    getLikers: (id, token) => api.get(`users/${id}/likers`, {       // 나를 좋아요 한 유저 조회
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
-    getLikings: (id, loginUser) => api.get(`users/${id}/likings`, {    // 내가 좋아요 한 유저 조회
+    getLikings: (id, token) => api.get(`users/${id}/likings`, {     // 내가 좋아요 한 유저 조회
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
         }
     }),
-    getRandomRoleModels: (loginUser) => api.get(`users/random-rolemodel`, {   // 랜덤 셀러브리티 3명 가져오기
+    getRandomRoleModels: (token) => api.get(`users/random-rolemodel`, {   // 랜덤 셀러브리티 3명 가져오기
         headers: {
-            "Authorization": loginUser,
+            "Authorization": token,
+        }
+    }),
+    modifyRoleModel: (data, token) => api.patch('users/rolemodel', data, { // 유저 롤모델 수정
+        headers: {
+            "Authorization": token,
         }
     }),
 }

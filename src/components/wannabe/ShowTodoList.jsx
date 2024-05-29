@@ -9,8 +9,10 @@ import { useAuth } from "../../hooks/useAuth";
 import { todoApi } from "../../api/services/TodoList";
 import { useNavigate } from "react-router-dom";
 import ShareEleBox from "./ShareEleBox";
+import WannabeLikeBtn from "./WannabeLikeBtn";
 
-const ShowTodoList = ({ e, setIsChange }) => {
+const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
+    const token = localStorage.getItem("token");
     const navigate = useNavigate();
     const offset = new Date().getTimezoneOffset() * 60000;
     const currentDate = new Date(Date.now() - offset).toISOString().slice(0, 10);
@@ -18,18 +20,17 @@ const ShowTodoList = ({ e, setIsChange }) => {
 
     const { loginUser, logout, getUserInfoByToken } = useAuth();
 
-    const [userProfile, setUserProfile] = useState(null);
-    const [userImg, setUserImg] = useState("");
-
     const [exercise, setExercise] = useState();
     const [breakfast, setBreakfast] = useState();
     const [lunch, setLunch] = useState();
     const [dinner, setDinner] = useState();
+    const [userImg, setUserImg] = useState("");
     const [loginUserId, setLoginUserId] = useState();
+    const [userProfile, setUserProfile] = useState(null);
 
     const getUploadUser = async () => {
         const userId = e.Users[0].id 
-        const res = await userApi.getUser(userId, loginUser)
+        const res = await userApi.getUser(userId, token)
         setUserProfile(res.payload);
     }
 
@@ -40,11 +41,11 @@ const ShowTodoList = ({ e, setIsChange }) => {
     };
     const getTodoEle = async () => {
         try {
-            const res = await todoApi.getEle(e.id, loginUser);
-            const exercise = res.payload.filter((e) => e.order == 0);
+            const res = await todoApi.getEle(e.id, token);
             const breakfast = res.payload.filter((e) => e.order == 1);
             const lunch = res.payload.filter((e) => e.order == 2);
             const dinner = res.payload.filter((e) => e.order == 3);
+            const exercise = res.payload.filter((e) => e.order == 4);
             setExercise(exercise)
             setBreakfast(breakfast)
             setLunch(lunch)
@@ -60,8 +61,8 @@ const ShowTodoList = ({ e, setIsChange }) => {
     };
     const onDeleteShare = async () => {
         try {
-            await todoApi.modifyListShare(e.id, loginUser);
-            await todoApi.deleteShareComment(e.Share_comments[0]?.id, loginUser);
+            await todoApi.modifyListShare(e.id, token);
+            await todoApi.deleteShareComment(e.Share_comments[0]?.id, token);
             setIsChange(prev => !prev)
         } catch (err) {
             console.error("Error: ", err);
@@ -85,9 +86,11 @@ const ShowTodoList = ({ e, setIsChange }) => {
         getTodoEle();
     }, []);
 
-    if (userProfile === null) {
+    // 아직 loginUser, userProfile, liking을 못 가져온 상태처리
+    if (!loginUser || !userProfile || !liking) {
         return <div>Loading...</div>;
-    }
+    } 
+
     return (
         <ForegroundBox
             style={{
@@ -97,24 +100,25 @@ const ShowTodoList = ({ e, setIsChange }) => {
                 marginTop: "10px",
             }}
         >
-            <Grid container spacing={0} alignItems='center'>
+            <Grid container spacing={0} alignItems="center">
                 {userImg && (
                     <Grid item xs={2}>
                         <img
                             src={`http://localhost:8000/${userImg}`}
                             width="40"
+                            height="40"
                             alt={"img"}
-                            style={{ borderRadius: "240px" }}
+                            style={{ borderRadius: "240px", objectFit:'cover' }}
                         />
                     </Grid>
                 )}
-                <Grid item xs={7}>
+                <Grid item xs={8}>
                     {userProfile?.user_name}
                 </Grid>
 
                 {loginUserId === uploadUserId ? (
                     <>
-                        <Grid item xs={1.5}>
+                        <Grid item xs={1}>
                             <IconButton
                                 sx={{ margin: "0", padding: "0" }}
                                 onClick={() => onModifyComments()}
@@ -125,7 +129,7 @@ const ShowTodoList = ({ e, setIsChange }) => {
                                 />
                             </IconButton>
                         </Grid>
-                        <Grid item xs={1.5}>
+                        <Grid item xs={1}>
                             <IconButton
                                 sx={{ margin: "0", padding: "0" }}
                                 onClick={() => onDeleteShare()}
@@ -138,8 +142,16 @@ const ShowTodoList = ({ e, setIsChange }) => {
                         </Grid>
                     </>
                 ) : (
-                    <Grid item xs={3}>
-
+                    <Grid item xs={2}>
+                        {console.log(liking && liking)}
+                        {liking && (
+                            <WannabeLikeBtn
+                                liking={liking}
+                                wannabe_id={uploadUserId}
+                                like={like}
+                                unlike={unlike}
+                            />
+                        )}
                     </Grid>
                 )}
             </Grid>
@@ -163,9 +175,7 @@ const ShowTodoList = ({ e, setIsChange }) => {
             ) : (
                 false
             )}
-            <ForegroundBox>
-                {e.Share_comments[0]?.comment}
-            </ForegroundBox>
+            <ForegroundBox>{e.Share_comments[0]?.comment}</ForegroundBox>
         </ForegroundBox>
     );
 };
