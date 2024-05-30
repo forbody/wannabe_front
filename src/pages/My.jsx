@@ -19,15 +19,10 @@ const My = () => {
     
     return ( 
         <Box
-            height='100vh'
             display='flex'
             flexDirection='column'
             alignItems='center'
-            style={{
-                padding:'36px 0 80px',
-                overflowY: 'scroll',
-                scrollbarWidth: 'none'
-            }}
+            style={{margin: "16px 0"}}
         >
             {userImg && <img src={ `http://localhost:8000/${userImg}`} width='200' height="200" alt={"img"} style={{borderRadius:"200px", objectFit : "cover", backgroundColor:'white'}} />}
             <Typography

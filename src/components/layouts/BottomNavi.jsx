@@ -33,8 +33,8 @@ const BottomNavi = () => {
     return (
         <Paper 
             sx={{ 
-                width: '375px', 
-                position: 'absolute', 
+                width: '100%',
+                position: 'sticky', 
                 bottom: 0, 
                 zIndex: 2,
                 border : '1px solid #eee',
@@ -58,7 +58,7 @@ const BottomNavi = () => {
                         label={m.label}
                         value={m.value}
                         icon={m.icon}
-                        sx={{ minWidth: '75px' }}
+                        sx={{ minWidth: '20%' }}
                     />
                     ))
                 }

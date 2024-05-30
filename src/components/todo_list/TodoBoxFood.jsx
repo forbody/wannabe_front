@@ -42,7 +42,7 @@ const TodoBoxFood = ({ element, setIsAchieve, children }) => {
     return (
         <ForegroundBox
             style={{
-                width: "300px",
+                width: "100%",
                 flexDirection: "column",
                 marginTop: "5px",
             }}

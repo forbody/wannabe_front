@@ -1,18 +1,22 @@
-import { Box, styled } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 import { BackgroundBox } from "../components/styled_comp/StyledDiv";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ExerciseDetail from "../components/exercises/ExerciseDetail";
 import ExerciseSelect from "../components/exercises/ExerciseSelect";
 import ExerciseFollow from "../components/exercises/ExerciseFollow";
+import TopButton from "../components/exercises/TopButton";
 import { useAuth } from './../hooks/useAuth';
 import Carousel from "react-material-ui-carousel";
 import ExerciseModal from "../components/exercises/ExerciseModal";
 import useUserandRoleModel from "../hooks/useUserandRoleModel";
 import { exerciseApi } from "../api/services/exercise";
 import StarsIcon from '@mui/icons-material/Stars';
+import { zIndex } from '@mui/material/styles/zIndex'
+
 
 const Exercise = () => {
+    
     const token = localStorage.getItem("token");
     const sorts = [
         '#가슴',
@@ -29,9 +33,12 @@ const Exercise = () => {
     const [selectedExercise, setSelectedExercise] = useState({});
     const [isExerciseModalOpen, setIsExerciseModalOpen] = useState(false);
     const [exerciseSortName, setExerciseSortName] = useState(sorts);
-    // 태그 리스트  state
+  
+  
+    const { modelImg, modelProfile } = GetUserandRoleModel();
 
-    const { modelImg } = useUserandRoleModel();
+    const scrollContainerRef = useRef(null);
+
 
     const getExercises = async () => {
         // 운동 리스트 조회 기능
@@ -65,13 +72,11 @@ const Exercise = () => {
     }, [refreshFav]);
     // 해당 유저가 즐겨찾기한 운동 목록 조회
     
-    // // 맨 위로 올리는
-
-
     return (
         <>
             <h1>운동</h1>
             <Box
+                ref={scrollContainerRef}
                 sx={{
                     display: "flex",
                     width: "100%",
@@ -80,28 +85,42 @@ const Exercise = () => {
                     scrollbarWidth: "none",
                     justifyContent: "center",
                     alignContent: "flex-start",
+                    position: 'relateve',
+                    margin: "16px 0"                 
                 }}
             >
-                <BackgroundBox half>
+                {/* 워너비가 말로 전해주는 느낌 */}
+                
+                {/* <BackgroundBox half> */}
+                <Container>
                     {modelImg && (
+                        <ImageBox>
                         <img
                             src={`http://localhost:8000/${modelImg}`}
-                            width="100%"
                             alt={"img"}
-                            style={{ borderRadius: "20px" }}
+                            style={{ width: '100%', height: '100%', objectFit: 'fill' }}
                         />
+                        </ImageBox>
                     )}
-                </BackgroundBox>
-                <BackgroundBox half>
-                    
-                    <h3>건강을 위한 팁!!</h3> - {randTip?.health_tip}
-                </BackgroundBox>
+                </Container>
+                {/* </BackgroundBox> */}
+                {/* <BackgroundBox half> */}
+                <Container>
+                    <SpeechBubble>
+                    <h3>{modelProfile?.user_name} 님의 건강을 위한 팁!!</h3> 
+                    <p>-{randTip?.health_tip}</p>
+
+                    </SpeechBubble>
+                {/* </BackgroundBox> */}
+                </Container>
+
+
                 <BackgroundBox
                     display="flex"
                     style={{flexDirection:"column", alignItems:"stretch"}}
                 >
                     <h3 style={{ display: 'flex', alignItems: 'center', fontSize: '20px' }}>
-                    <StarsIcon style={{ color: 'green', fontSize: 'inherit', marginRight: '10px' }} />
+                    <StarsIcon style={{ color: '#ff7961', fontSize: 'inherit', marginRight: '10px' }} />
                     내가 즐겨찾기한 운동
                     </h3>
                     <br />
@@ -123,11 +142,15 @@ const Exercise = () => {
                     style={{justifyContent:'center'}}
                 >
                     <h3>운동 목록</h3>
+
                     {/* // 프롭스로 태그 리스트 전달 */}
                     <ExerciseSelect sorts={sorts} exerciseSortName={exerciseSortName} setExerciseSortName={setExerciseSortName} />
-                </BackgroundBox>
-                <BackgroundBox>
-                    <>
+                </BackgroundBox>                
+                <BackgroundBox display="flex"
+                    style={{
+                        justifyContent: 'center',
+                        position: 'relative'
+                }}>
                         {favExercises &&
                             exercises && exercises.map((exercise) => (
                                 <ExerciseDetail
@@ -150,16 +173,54 @@ const Exercise = () => {
                                 setIsExerciseModalOpen(false);
                                 setSelectedExercise({});
                             }}
-                        />        
-                    </>
+                        />
                 </BackgroundBox>
+                <TopButton scrollContainerRef={scrollContainerRef} />
             </Box>
         </>
     );
 }
 
+const Container = styled(Box)(() => ({
+    display: 'flex',
+    objectFit: 'contain',
+    alignItems: 'center',
+    padding: '20px',
+    borderRadius: '20px',
+    margin: '20px',
+    width: '100%'
+}));
 
+const ImageBox = styled(Box)(() => ({
+    width: '100%',
+    height: '420px', 
+    borderRadius: '5em',
+    overflow: 'hidden',
+    marginRight: '20px',
+    flexShrink: 0,
+    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.8)',
+}));
 
-
-
+const SpeechBubble = styled(Box)(() => ({
+    position: 'relative',
+    background: 'white',
+    borderRadius: '2em',
+    padding: '10px',
+    marginLeft: '20px',
+    flexGrow: 3,
+    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.5)', 
+    '&:after': {
+        content: "''",
+        position: 'absolute',
+        left: '20%',
+        top: 0,
+        width: 0 ,
+        height: 0,
+        border: '46px solid transparent',
+        borderBottomColor: '#ffffff',
+        borderRight: 0,
+        borderTop: 0,
+        marginTop: '-44px',
+    }
+}));
 export default Exercise;
