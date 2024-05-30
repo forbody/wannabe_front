@@ -1,4 +1,4 @@
-import { Box , IconButton } from "@mui/material";
+import { Box , Fab, IconButton } from "@mui/material";
 import Weekly from "../components/todo_list/Weekly";
 import { BackgroundBox } from "../components/styled_comp/StyledDiv";
 import TodoBoxExercise from "../components/todo_list/TodoBoxExercise";
@@ -13,6 +13,8 @@ import InfoUpdate from "../components/signup/InfoUpdate";
 import { todoApi } from "../api/services/TodoList";
 import Swal from "sweetalert2";
 import useUserandRoleModel from "../hooks/useUserandRoleModel";
+import Loading from "../components/Loading";
+import NavigationIcon from "@mui/icons-material/Navigation";
 
 const TodoList = () => {
     const token = localStorage.getItem("token");
@@ -98,11 +100,9 @@ const TodoList = () => {
         kakaoLogin();
     }
 
-    // 아직 userProfile을 못 가져온 상태처리
     if (!userProfile) {
-        return <div>Loading...</div>;
-    } 
-
+        return <Loading />;
+    }
     // 카카오 신유저는 <InfoUpdate /> 컴포넌트 출력, 로컬 로그인 유저와 카카오 구유저는 <TodoList /> 페이지 출력
     return userProfile?.birthday === null || userProfile?.gender === null ? (
         <InfoUpdate />
@@ -118,18 +118,17 @@ const TodoList = () => {
                 scrollbarWidth: "none",
             }}
         >
-            <Weekly
-                date={date}
-                setDate={setDate}
-                setDay={setDay}
-            />
+            {/* <Fab variant="extended">
+                <NavigationIcon sx={{ mr: 1 }} />
+                Navigate
+            </Fab> */}
+            <Weekly date={date} setDate={setDate} setDay={setDay} />
             <BackgroundBox
                 style={{
                     width: "90%",
                     justifyContent: "center",
-                    marginTop :'10px'
+                    marginTop: "10px",
                 }}
-                
             >
                 <Box
                     sx={{
