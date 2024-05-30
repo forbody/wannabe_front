@@ -63,7 +63,7 @@ function ExerciseModal ({
                 전체화면 시 음소거 해제 가능!
                 <br />
                 <Button variant="contained" fullWidth style={{marginTop:'4px'}} onClick={onClose}>닫기</Button>
-                {/* 오류 발생 // 목록에 있는 영상 가져왔다 닫으면 오류 */}
+
             </Modal>
 
         </div>
@@ -71,8 +71,5 @@ function ExerciseModal ({
 
     
 }
-
-// 얘를 이제 각 운동마다 집어넣어야해
-// 버튼말고 이미지 위에 point cusor + hover 효과를 줘서 이동 되게끔
 
 export default ExerciseModal;
