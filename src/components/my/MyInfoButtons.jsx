@@ -72,7 +72,7 @@ const MyInfoButtons = ({ logout }) => {
             <Divider/>
             <Button variant="text" size="large" color="warning" startIcon={<FaUserMinus/>} onClick={() => logout( () => { navigate('/') } )} fullWidth>로그아웃</Button>
             <Divider/>
-            <Button variant="text" size="large" color="error" startIcon={<FaUserMinus/>} onClick={ deleteUser } fullWidth>회원탈퇴</Button>
+            <Button variant="text" size="large" color="error" startIcon={<FaUserMinus/>} onClick={ deleteUser } fullWidth>회원 탈퇴</Button>
         </ForegroundBox>
     );
 }

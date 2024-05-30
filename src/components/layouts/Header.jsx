@@ -2,7 +2,6 @@ import { AppBar, IconButton, Typography, Toolbar, Avatar, useScrollTrigger, Slid
 import { useLocation, useNavigate } from "react-router-dom";
 import useUserandRoleModel from "../../hooks/useUserandRoleModel";
 import { useAuth } from "../../hooks/useAuth";
-import * as React from 'react';
 
 const HideOnScroll = ({ children, window }) => {
     console.log(window);

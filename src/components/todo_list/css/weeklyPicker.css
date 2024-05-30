@@ -14,3 +14,7 @@
 .mbsc-ios.mbsc-calendar-today {
     color : #ff4d4d;
 }
+
+.mbsc-calendar-cell>div:first-child {
+    display: none !important;
+}

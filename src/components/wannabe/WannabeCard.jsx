@@ -141,7 +141,7 @@ const WannabeCard = ({liking, like, unlike}) => {
                         marginLeft: '4px'
                     }}
                     >
-                    님의 추천루틴
+                    님의 추천 루틴
                     </span>
                     { activeStep === 0 ?
                     <Button

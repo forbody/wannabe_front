@@ -6,6 +6,7 @@ import { blue, red } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 import { todoApi } from '../api/services/TodoList';
 import NumberInput from '../components/todo_list/NumberInput';
+import Swal from 'sweetalert2';
 
 const TodoForm = () => {
     const token = localStorage.getItem("token");
@@ -85,28 +86,35 @@ const TodoForm = () => {
 
     const onUploadTodoEle = async () => {
         try {
-            const res = await todoApi.createTodoList(
-                {
-                    date: localStorage.getItem("date"),
-                },
-                token
-            );
-            const res2 = await todoApi.createTodoEle(
-                {
-                    category_id: category,
-                    todo_id: selectItem,
-                    order: order,
-                    date: localStorage.getItem("date"),
-                    todo_list_id: res.payload.id,
-                    reps : reps,
-                    sets : sets,
-                },
-                token
-            );
-            console.log(res2);
-            localStorage.removeItem("date");
-            localStorage.removeItem("day");
-            navigate("/todolist");
+            if(selectItem) {
+                const res = await todoApi.createTodoList(
+                    {
+                        date: localStorage.getItem("date"),
+                    },
+                    token
+                );
+                const res2 = await todoApi.createTodoEle(
+                    {
+                        category_id: category,
+                        todo_id: selectItem,
+                        order: order,
+                        date: localStorage.getItem("date"),
+                        todo_list_id: res.payload.id,
+                        reps : reps,
+                        sets : sets,
+                    },
+                    token
+                );
+                localStorage.removeItem("date");
+                localStorage.removeItem("day");
+                navigate("/todolist");
+            } else {
+                Swal.fire({
+                    title: "일과를 선택해 주세요.",
+                    // text: "That thing is still around?",
+                    icon: "warning",
+                });
+            }
         } catch (err) {
             console.error("Error: ", err);
         }

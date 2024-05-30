@@ -53,10 +53,10 @@ const TodoBoxFood = ({ element, setIsAchieve, children }) => {
                 alignItems={"center"}
                 style={{ fontSize: "20px", fontWeight: "bold" }}
             >
-                <Grid item xs={8}>
+                <Grid item xs={6}>
                     {children}
                 </Grid>
-                <Grid item xs={2} sx={{ textAlign: "center" }}>
+                <Grid item xs={4} sx={{ textAlign: "right" }}>
                     {achieve} / {total}
                 </Grid>
                 <Grid
