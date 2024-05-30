@@ -86,8 +86,8 @@ const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
         getTodoEle();
     }, []);
 
-    // 아직 loginUser, userProfile, liking을 못 가져온 상태처리
-    if (!loginUser || !userProfile || !liking) {
+    // 아직 loginUser, userProfile을 못 가져온 상태처리
+    if (!loginUser || !userProfile ) {
         return <div>Loading...</div>;
     } 
 
@@ -97,27 +97,28 @@ const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
                 backgroundColor: "#ffffff99",
                 width: "300px",
                 flexDirection: "column",
-                marginTop: "10px",
+                marginTop: "5px",
             }}
         >
-            <Grid container spacing={0} alignItems='center'>
+            <Grid container spacing={0} alignItems="center">
                 {userImg && (
                     <Grid item xs={2}>
                         <img
                             src={`http://localhost:8000/${userImg}`}
                             width="40"
+                            height="40"
                             alt={"img"}
-                            style={{ borderRadius: "240px" }}
+                            style={{ borderRadius: "240px", objectFit:'cover' }}
                         />
                     </Grid>
                 )}
-                <Grid item xs={7}>
+                <Grid item xs={8}>
                     {userProfile?.user_name}
                 </Grid>
 
                 {loginUserId === uploadUserId ? (
                     <>
-                        <Grid item xs={1.5}>
+                        <Grid item xs={1}>
                             <IconButton
                                 sx={{ margin: "0", padding: "0" }}
                                 onClick={() => onModifyComments()}
@@ -128,7 +129,7 @@ const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
                                 />
                             </IconButton>
                         </Grid>
-                        <Grid item xs={1.5}>
+                        <Grid item xs={1}>
                             <IconButton
                                 sx={{ margin: "0", padding: "0" }}
                                 onClick={() => onDeleteShare()}
@@ -141,8 +142,15 @@ const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
                         </Grid>
                     </>
                 ) : (
-                    <Grid item xs={3}>
-                        {liking && <WannabeLikeBtn alreadyliked={liking} like_id={uploadUserId} like={like} unlike={unlike} />}
+                    <Grid item xs={2}>
+                        {liking && uploadUserId && (
+                            <WannabeLikeBtn
+                                alreadyliked={liking}
+                                like_id={uploadUserId}
+                                like={like}
+                                unlike={unlike}
+                            />
+                        )}
                     </Grid>
                 )}
             </Grid>
@@ -166,9 +174,7 @@ const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
             ) : (
                 false
             )}
-            <ForegroundBox>
-                {e.Share_comments[0]?.comment}
-            </ForegroundBox>
+            <ForegroundBox>{e.Share_comments[0]?.comment}</ForegroundBox>
         </ForegroundBox>
     );
 };

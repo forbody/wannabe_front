@@ -3,6 +3,7 @@ import BottomNavi from "./BottomNavi";
 import Header from "./Header";
 
 const Main = ({ children }) => {
+    console.log(children);
     return (
         <Grid
                 container

@@ -1,4 +1,4 @@
-import { Box, Grid, IconButton } from "@mui/material";
+import { Box, Grid, IconButton, Typography } from "@mui/material";
 import { cyan } from "@mui/material/colors";
 import { useAuth } from "../../hooks/useAuth";
 import { todoApi } from "../../api/services/TodoList";
@@ -62,11 +62,9 @@ const ShareEleBox = ({ children, elements  }) => {
                 <Grid item xs={9} fontSize={20}>
                     {children}
                 </Grid>
-                {loginUserId === elements[0]?.UserId ?
-                    <Grid item xs={1.5}>
-                    </Grid>
-                    :
-
+                {loginUserId === elements[0]?.UserId ? (
+                    <Grid item xs={1.5}></Grid>
+                ) : (
                     <Grid item xs={1.5}>
                         <IconButton
                             sx={{ margin: "0", padding: "0" }}
@@ -77,7 +75,7 @@ const ShareEleBox = ({ children, elements  }) => {
                             />
                         </IconButton>
                     </Grid>
-                }
+                )}
                 <Grid item xs={1.5} onClick={() => onIsTrue()}>
                     <IconButton
                         sx={{ margin: "0", padding: "0", textAlign: "center" }}
@@ -92,35 +90,43 @@ const ShareEleBox = ({ children, elements  }) => {
                 {isTrue &&
                     elements.map((e) =>
                         e.category_id == 1 ? (
-                            <Box
-                                sx={{
-                                    width: "90%",
-                                    padding: "0px 10px",
-                                    fontSize: "14px",
-                                }}
-                                key={e.id}
-                            >
-                                {e.Exercises[0].name}
-                            </Box>
+                            <Grid container key={e.id} fontSize='14px'>
+                                <Grid item xs={8}>
+                                    {e.Exercises[0].name}
+                                </Grid>
+                                <Grid item xs={2}>
+                                    {e.reps}회
+                                </Grid>
+                                <Grid item xs={2}>
+                                    {e.sets}세트
+                                </Grid>
+                            </Grid>
                         ) : (
                             <Grid
                                 container
-                                sx={{
-                                    width: "90%",
-                                    padding: "0px 10px",
-                                    fontSize: "14px",
-                                }}
+                                fontSize='14px'
                                 key={e.id}
                             >
-                                <Grid item xs={10}>
+                                <Grid item xs={9}>
                                     {e.Food[0].name}
                                 </Grid>
-                                <Grid item xs={2}>
+                                <Grid item xs={3}>
                                     {e.Food[0].calory}kcal
                                 </Grid>
                             </Grid>
                         )
                     )}
+                {isTrue && !isNaN(totalCal) && (
+                    <Box
+                        width="100%"
+                        borderTop="1px solid black"
+                        textAlign="right"
+                    >
+                        <Typography color="secondary">
+                            {totalCal}kcal
+                        </Typography>
+                    </Box>
+                )}
             </Grid>
         </ForegroundBox>
     );

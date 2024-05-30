@@ -3,10 +3,10 @@ import { BackgroundBox, ForegroundBox } from "../components/styled_comp/StyledDi
 import { useEffect, useState } from "react";
 import FoodRecommend from "../components/food/FoodRecommend";
 import Water from "../components/food/water";
-import GetUserandRoleModel from "../components/user/GetUserandRoleModel";
+import useUserandRoleModel from "../hooks/useUserandRoleModel";
 
 const Food = () => {
-    const { userProfile, modelProfile, modelImg } = GetUserandRoleModel();
+    const { userProfile, modelProfile, modelImg } = useUserandRoleModel();
 
     const [meal, setMeal] = useState('');
     const [timeColor, setTimeColor] = useState('linear-gradient(135deg, #fdf00e, #33cc33)')
@@ -86,9 +86,11 @@ const Food = () => {
 
             </BackgroundBox>
             <BackgroundBox
-            style={{
-                marginTop:'24px'
-            }}
+                style={{
+                    marginTop:'10px',
+                    flexDirection : 'column',
+                    alignContent : 'center'
+                }}
             >
                 <Water />
             </BackgroundBox>
