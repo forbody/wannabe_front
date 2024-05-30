@@ -33,8 +33,8 @@ const Exercise = () => {
     const [selectedExercise, setSelectedExercise] = useState({});
     const [isExerciseModalOpen, setIsExerciseModalOpen] = useState(false);
     const [exerciseSortName, setExerciseSortName] = useState(sorts);
-    // 태그 리스트  state
-
+  
+  
     const { modelImg, modelProfile } = GetUserandRoleModel();
 
     const scrollContainerRef = useRef(null);
