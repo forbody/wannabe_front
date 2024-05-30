@@ -4,12 +4,16 @@ import { useAuth } from "../../hooks/useAuth";
 import { IconButton, styled } from "@mui/material";
 import zIndex from "@mui/material/styles/zIndex";
 import StarsIcon from '@mui/icons-material/Stars';
+import { exerciseApi } from "../../api/services/exercise";
 
 const ExerciseDetail = ({exercise, favExercises, refreshFav, setRefreshFav, onClick }) => {
 
     const token = localStorage.getItem("token");
     const [match, setMatch] = useState();
     const [openDesc, setOpenDesc] = useState(false);
+
+    const [favExercise, setFavExercise] = useState();
+    const [delExercise, setDelExercise] = useState();
     
     useEffect(() => {
         setMatch(favExercises.some(f => f.id === exercise.id));
@@ -18,39 +22,39 @@ const ExerciseDetail = ({exercise, favExercises, refreshFav, setRefreshFav, onCl
     const handleOpenDesc = ()=> {
         setOpenDesc(!openDesc);
     }
-
-    const addFavExercise = async(id) => {
-        // axios.post(
-        //     '/api',
-        //     { name: name },
-        //     { headers: { Authorization: token } }
-        // )
-        // axios post
-        const res = await axios.post('http://localhost:8000/v1/exercise/favorite',
-            { id }, {
-            headers: { Authorization: token }
-        });
-        if(res.data.code === 200) {
-            setRefreshFav(!refreshFav)
-            setMatch(true);
-        }
+    const addFavExercise = async (id) => {
+        const res = await exerciseApi.postFavExercise(id, token);
+        setFavExercise(res.payload);
+        setRefreshFav(!refreshFav)
+        setMatch(true);
     }
-
-    const delFavExercise = async(id) => {
-        // axios.delete(
-        //     'api',
-        //     { headers: { Authorization: token }, data: { name: name } }
-        // )
-        const res = await axios.delete(
-            'http://localhost:8000/v1/exercise/favorite',
-            { headers: { Authorization: token }, data: { id } }
-        )
-        if(res.data.code === 200) {
-            setRefreshFav(!refreshFav)
-            setMatch(false);
-        }
-        console.log(res);
+    // const addFavExercise = async(id) => {
+    //     const res = await axios.post('http://localhost:8000/v1/exercise/favorite',
+    //         { id }, {
+    //         headers: { Authorization: token }
+    //     });
+    //     if(res.data.code === 200) {
+    //         setRefreshFav(!refreshFav)
+    //         setMatch(true);
+    //     }
+    // }
+    const delFavExercise = async (id) => {
+        const res = await exerciseApi.deleteFavExercise(token, {id});
+        setDelExercise(res.payload);
+        setRefreshFav(!refreshFav)
+        setMatch(false);
     }
+    // const delFavExercise = async(id) => {
+    //     const res = await axios.delete(
+    //         'http://localhost:8000/v1/exercise/favorite',
+    //         { headers: { Authorization: token }, data: { id } }
+    //     )
+    //     if(res.data.code === 200) {
+    //         setRefreshFav(!refreshFav)
+    //         setMatch(false);
+    //     }
+    //     console.log(res);
+    // }
 
     return ( 
         <div key={exercise.id} style={{ position: 'relative', width: '100%' }} >
@@ -62,7 +66,7 @@ const ExerciseDetail = ({exercise, favExercises, refreshFav, setRefreshFav, onCl
                 (<button 
                     onClick={()=>delFavExercise(exercise.id)} 
                     style={{cursor:'pointer', border: 'none', outline: 'none', border: 'none', background: 'none', padding: 0, margin: 0,position:'absolute', right: 0}}>
-                    <StarsIcon style={{color:"green", fontSize:'36px'}}/></button>) 
+                    <StarsIcon style={{color:"#ff7961", fontSize:'36px'}}/></button>) 
                 :
                 // 즐겨찾기 추가
                 (<button 
@@ -70,7 +74,7 @@ const ExerciseDetail = ({exercise, favExercises, refreshFav, setRefreshFav, onCl
                     style={{cursor:'pointer', border: 'none', outline: 'none', border: 'none', background: 'none', padding: 0, margin: 0,position:'absolute', right: 0}}>
                     <StarsIcon style={{color:"lightgray", fontSize:'36px'}} /></button>) 
             }
-            <ExerImg src={'http://localhost:8000'+exercise.img} width='100%' onClick={onClick} style={{cursor:'pointer' }}/>
+            <ExerImg src={'http://localhost:8000'+exercise.img} width='100%' height='215px'  onClick={onClick} style={{cursor:'pointer' }}/>
             
             {/* 수정(5.27) -- 상세 정보는 이미지 클릭했을 시 모달창 내에서 보일 수 있게끔 버튼 삭제 */}
             {/* <button onClick={handleOpenDesc}>상세정보</button> */}
