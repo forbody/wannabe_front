@@ -124,12 +124,12 @@ const Water = () => {
                 ],
                 innerRadius: 30,
                 outerRadius: 100,
-                paddingAngle: 5,
+                paddingAngle: 2,
                 cornerRadius: 5,
-                cx: 130,
+                cx:'75%',
                 },
             ]}
-            width={300}
+            maxWidth={360}
             height={200}
             />
             </>

@@ -78,8 +78,16 @@ const Login = () => {
                         padding: '16px'
                     }}
                 >
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                    <FormControl>
+                    <form onSubmit={handleSubmit(onSubmit)}
+                    style={{
+                        width:'100%'
+                    }}
+                    >
+                    <FormControl
+                    style={{
+                        width:'100%'
+                    }}
+                    >
                     <OutlinedInput
                     type="text" 
                     id="email"
@@ -88,9 +96,14 @@ const Login = () => {
                     style={{
                         marginTop:'32px'
                     }}
+                    fullWidth
                     />{errors.email && <Typography color="error">이메일은 필수값입니다.</Typography>}
                     </FormControl>
-                    <FormControl>
+                    <FormControl
+                    style={{
+                        width:'100%'
+                    }}
+                    >
                     <OutlinedInput
                     type="password" 
                     id="password"
@@ -99,6 +112,7 @@ const Login = () => {
                     style={{
                         marginTop:'24px'
                     }}
+                    fullWidth
                     />{errors.password && <Typography color="error">비밀번호는 필수값입니다.</Typography>}
                     </FormControl>
                     <Button

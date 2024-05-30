@@ -86,6 +86,7 @@ const Exercise = () => {
                     justifyContent: "center",
                     alignContent: "flex-start",
                     position: 'relateve',
+                    margin: "16px 0"                 
                 }}
             >
                 {/* 워너비가 말로 전해주는 느낌 */}

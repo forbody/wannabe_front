@@ -34,15 +34,11 @@ const Food = () => {
 
     return ( 
         <Box
-            width='100%'
-            height='100%'
             display='flex'
             flexDirection='column'
             alignItems='center'
             style={{
-                padding:'36px 0 80px',
-                overflowY: 'scroll',
-                scrollbarWidth: 'none',
+                padding: "16px 0",
                 background: timeColor
             }}
         >
