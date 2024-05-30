@@ -4,12 +4,10 @@ import useUserandRoleModel from "../../hooks/useUserandRoleModel";
 import { useAuth } from "../../hooks/useAuth";
 
 const HideOnScroll = ({ children, window }) => {
-    console.log(window);
     const trigger = useScrollTrigger({
         target: window ? window() : undefined,
     });
 
-    console.log(trigger);
     return (
         <Slide appear={false} direction="down" in={!trigger} sx={{position: 'sticky'}}>
             {children}
