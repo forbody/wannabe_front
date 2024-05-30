@@ -85,6 +85,7 @@ const Exercise = () => {
                     justifyContent: "center",
                     alignContent: "flex-start",
                     position: 'relateve',
+                    margin: "16px 0"                 
                 }}
             >
                 {/* 워너비가 말로 전해주는 느낌 */}
@@ -119,7 +120,7 @@ const Exercise = () => {
                 >
                     <h3 style={{ display: 'flex', alignItems: 'center', fontSize: '20px' }}>
                     <StarsIcon style={{ color: '#ff7961', fontSize: 'inherit', marginRight: '10px' }} />
-                    내가 즐겨찾기 한 운동
+                    내가 즐겨찾기한 운동
                     </h3>
                     <br />
                     <Carousel

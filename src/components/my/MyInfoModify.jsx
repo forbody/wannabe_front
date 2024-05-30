@@ -68,16 +68,16 @@ const MyInfoModify = () => {
     } 
     return (
     <Box
-            height='100vh'
-            display='flex'
-            flexDirection='column'
-            alignItems='center'
-            style={{
-                padding:'60px 0 120px',
-                overflowY: 'scroll',
-                scrollbarWidth: 'none'
-            }}
-        >
+        height='100vh'
+        display='flex'
+        flexDirection='column'
+        alignItems='center'
+        style={{
+            padding:'36px 0 60px',
+            overflowY: 'scroll',
+            scrollbarWidth: 'none'
+        }}
+    >
         {stepComp}
     </Box>
     )

@@ -64,7 +64,7 @@ const MyBmiChart = ({userProfile}) => {
                 area: true,
                 },
             ]}
-            width={290}
+            maxWidth={360}
             height={200}
             />
         </ForegroundBox>

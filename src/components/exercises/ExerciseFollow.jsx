@@ -32,8 +32,8 @@ const ExerciseFollow = ({favExercise}) => {
 }
 const ExerImg = styled(`img`)({
         'display': 'block',
-        'width': '230px',
-        'height': '150px',
+        'width': '300px',
+        'height': '200px',
         'cursor': 'pointer',
         'borderRadius': '8px',
         'boxShadow': '0 4px 8px rgba(0, 0, 0, 0.1)',

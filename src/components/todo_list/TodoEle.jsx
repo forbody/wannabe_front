@@ -18,9 +18,6 @@ const TodoEle = ({ e, setIsAchieve }) => {
             console.error("Error: ", err);
         }
     }
-    const onModifyELe = () => {
-        console.log(1); // 하...이부분 어떻게만들어야하나~~~
-    };
     const onDeleteELe = async () => {
         try {
             await todoApi.deleteTodoEle(e.id, token);
@@ -42,23 +39,10 @@ const TodoEle = ({ e, setIsAchieve }) => {
                         size="small"
                     />
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={9}>
                     {e.category_id == 1
                         ? e.Exercises[0]?.name
                         : e.Food[0]?.name}
-                </Grid>
-                <Grid
-                    item
-                    xs={1}
-                    sx={{ textAlign: "center" }}
-                    onClick={() => onModifyELe()}
-                >
-                    <IconButton sx={{ margin: "0", padding: "0" }}>
-                        <EditIcon
-                            fontSize="small"
-                            sx={{ color: orange[400] }}
-                        />
-                    </IconButton>
                 </Grid>
                 <Grid
                     item
@@ -71,13 +55,19 @@ const TodoEle = ({ e, setIsAchieve }) => {
                     </IconButton>
                 </Grid>
                 {e.category_id == 1 ? (
-                    <Grid item xs={12} textAlign="right">
-                        {e.reps}회 {e.sets}세트
-                    </Grid>
+                    <>
+                        <Grid item xs={2}></Grid>
+                        <Grid item xs={10} fontSize="80%" color="#999">
+                            {e.reps}회 {e.sets}세트
+                        </Grid>
+                    </>
                 ) : (
-                    <Grid item xs={12} textAlign="right">
-                        {e.Food[0]?.calory}kcal
-                    </Grid>
+                    <>
+                        <Grid item xs={2}></Grid>
+                        <Grid item xs={10} fontSize="80%" color="#999">
+                            {e.Food[0]?.calory}kcal
+                        </Grid>
+                    </>
                 )}
             </Grid>
         </>

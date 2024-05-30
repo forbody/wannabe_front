@@ -3,11 +3,9 @@ import BottomNavi from "./BottomNavi";
 import Header from "./Header";
 
 const Main = ({ children }) => {
-    console.log(children);
     return (
         <Grid
                 container
-                width="375px"
                 margin= "0 auto"
                 direction="column"
                 justify="center"
@@ -15,14 +13,14 @@ const Main = ({ children }) => {
                 alignItems="center"
                 alignContent="center"
                 wrap="nowrap"
-                height="100vh"
                 style={{
-                    background: 'linear-gradient(135deg, #fdf00e, #33cc33)'
+                    maxWidth: '430px',
+                    background: 'linear-gradient(135deg, #fdf00e, #33cc33)',
                 }}
             >
-            <Header/>
-            {children}
-            <BottomNavi />
+                <Header/>
+                {children}
+                <BottomNavi />
         </Grid>
     );
 }
