@@ -95,7 +95,7 @@ const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
         <ForegroundBox
             style={{
                 backgroundColor: "#ffffff99",
-                width: "300px",
+                width: "400px",
                 flexDirection: "column",
                 marginTop: "5px",
             }}

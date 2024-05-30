@@ -18,17 +18,7 @@ const My = () => {
     }
     
     return ( 
-        <Box
-            height='100vh'
-            display='flex'
-            flexDirection='column'
-            alignItems='center'
-            style={{
-                padding:'36px 0 80px',
-                overflowY: 'scroll',
-                scrollbarWidth: 'none'
-            }}
-        >
+        <>
             {userImg && <img src={ `http://localhost:8000/${userImg}`} width='200' height="200" alt={"img"} style={{borderRadius:"200px", objectFit : "cover"}} />}
             <Typography
             variant='h6'
@@ -51,7 +41,7 @@ const My = () => {
             <BackgroundBox style={{ justifyContent: 'center', marginTop:'10px' }}>
                 <MyInfoButtons logout={logout} />
             </BackgroundBox>
-        </Box>
+        </>
     );
 }
 

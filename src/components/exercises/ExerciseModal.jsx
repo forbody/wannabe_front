@@ -2,6 +2,7 @@
 import Modal from "react-modal";
 import React, { useState } from "react";
 import YouTube from "react-youtube";
+import { Button } from "@mui/material";
 
 
 function ExerciseModal ({
@@ -61,7 +62,7 @@ function ExerciseModal ({
                 
                 전체화면 시 음소거 해제 가능!
                 <br />
-                <button onClick={onClose}>닫기</button>
+                <Button variant="contained" fullWidth style={{marginTop:'4px'}} onClick={onClose}>닫기</Button>
                 {/* 오류 발생 // 목록에 있는 영상 가져왔다 닫으면 오류 */}
             </Modal>
 

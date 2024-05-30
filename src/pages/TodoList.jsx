@@ -112,11 +112,6 @@ const TodoList = () => {
             display="flex"
             flexDirection="column"
             alignItems="center"
-            style={{
-                padding: "36px 0 80px",
-                overflowY: "scroll",
-                scrollbarWidth: "none",
-            }}
         >
             {/* <Fab variant="extended">
                 <NavigationIcon sx={{ mr: 1 }} />

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { todoApi } from "../api/services/TodoList";
 import { BackgroundBox} from "../components/styled_comp/StyledDiv";
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import ShowTodoList from "../components/wannabe/ShowTodoList";
 import WannabeCard from "../components/wannabe/WannabeCard";
 import { useAuth } from "../hooks/useAuth";
@@ -93,17 +93,7 @@ const Wannabe = () => {
     }, [isChange]);
 
     return ( 
-        <Box
-            height='100vh'
-            display='flex'
-            flexDirection='column'
-            alignItems='center'
-            style={{
-                padding:'36px 0 80px',
-                overflowY: 'scroll',
-                scrollbarWidth: 'none'
-            }}
-        >
+        <>
             <BackgroundBox>
                 <WannabeCard liking={liking} like={like} unlike={unlike}/>
             </BackgroundBox>
@@ -112,7 +102,7 @@ const Wannabe = () => {
                     <ShowTodoList liking={liking} like={like} unlike={unlike} e={e} key={e.id} setIsChange={setIsChange} />
                 ))}
             </BackgroundBox>
-        </Box>
+        </>
     );
 }
 

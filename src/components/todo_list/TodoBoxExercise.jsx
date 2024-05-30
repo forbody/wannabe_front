@@ -18,7 +18,7 @@ const TodoBoxExercise = ({ element, setIsAchieve, children }) => {
     return (
         <ForegroundBox
             style={{
-                width: "300px",
+                width: "100%",
                 flexDirection: "column",
                 marginTop: "10px",
             }}
@@ -52,8 +52,8 @@ const TodoBoxExercise = ({ element, setIsAchieve, children }) => {
             </Grid>
             {isTrue && element
                 ? element.map((e) => (
-                      <TodoEle e={e} key={e.id} setIsAchieve={setIsAchieve} />
-                  ))
+                    <TodoEle e={e} key={e.id} setIsAchieve={setIsAchieve} />
+                ))
                 : false}
         </ForegroundBox>
     );
