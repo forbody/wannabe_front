@@ -1,37 +1,54 @@
 
 import '@mobiscroll/react/dist/css/mobiscroll.min.css';
 import { Datepicker } from '@mobiscroll/react';
-import { BackgroundBox } from '../styled_comp/StyledDiv';
-import { Button } from '@mui/material'
+import { BackgroundBox, ForegroundBox } from '../styled_comp/StyledDiv';
+import ReactWeeklyDayPicker from "react-weekly-day-picker";
+import './css/weeklyPicker.css'
+import { Typography } from '@mui/material';
+import { useEffect, useRef } from 'react';
 
 
 
 
-const Weekly = ({ setDate, setDay }) => {
+const Weekly = ({ setDate, setDay, date }) => {
     const onselectDate = (date) => {
         const offset = new Date().getTimezoneOffset() * 60000;
         const temp = new Date(date - offset);
         const selectDate = temp.toISOString().slice(0, 10);
         setDate(selectDate);
-        setDay(temp.getDay())
+        setDay(temp.getDay());
     };
+
+    // useEffect(() => {
+    //     setDateLoading(false);
+    // }, []);
+
+    const ref = useRef();
     return (
         <>
-            <h1>TODO LIST</h1>
             <BackgroundBox
                 style={{
                     width: "90%",
                     justifyContent: "center",
                 }}
             >
-                <Datepicker
-                    display="inline"
-                    calendarType="week"
-                    calendarSize={1}
-                    theme="ios"
-                    themeVariant="dark"
-                    onCellClick={(e) => onselectDate(e.date)}
-                />
+                <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                    {date.slice(5, 7)}월 {date.slice(8, 10)}일 일과
+                </Typography>
+                <ForegroundBox>
+                    {ref ? 
+                        <Datepicker
+                        ref={ref}
+                        display="inline"
+                        calendarType="week"
+                        calendarSize={1}
+                        theme="ios"
+                        themeVariant="light"
+                        onCellClick={(e) => onselectDate(e.date)}
+                    />
+                    : <>zzzz</>}
+                    
+                </ForegroundBox>
             </BackgroundBox>
         </>
     );

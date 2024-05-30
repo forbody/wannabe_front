@@ -6,12 +6,15 @@ import Swal from "sweetalert2";
 import { waterApi } from "../../api/services/water";
 import watercompleteimg from '../../assets/watercomplete.png'
 import { IoIosWater } from "react-icons/io";
+import { useAuth } from './../../hooks/useAuth';
+import { useNavigate } from "react-router-dom";
 
 const Water = () => {
+    const { goToErrPage } = useAuth();
     const token = localStorage.getItem("token");
     const [waterComplete, setWaterComplete] = useState(false);
     const [water, setWater] = useState(0);
-
+    const navigate = useNavigate();
     // 물 마시기 버튼
     const handleWater = () => {
         setWater(water => (water) + 10);
@@ -28,12 +31,12 @@ const Water = () => {
                 throw new Error(res.message);
             }
         }catch(err) {
-
-            Swal.fire({
-                title: "에러 발생",
-                text: err.message,
-                icon: "error"
-            });
+            goToErrPage(err, () => navigate('/err'));
+            // Swal.fire({
+            //     title: "에러 발생",
+            //     text: err.message,
+            //     icon: "error"
+            // });
         }
     }
 

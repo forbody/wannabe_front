@@ -9,7 +9,7 @@ import TopButton from "../components/exercises/TopButton";
 import { useAuth } from './../hooks/useAuth';
 import Carousel from "react-material-ui-carousel";
 import ExerciseModal from "../components/exercises/ExerciseModal";
-import GetUserandRoleModel from "../components/user/GetUserandRoleModel";
+import useUserandRoleModel from "../hooks/useUserandRoleModel";
 import { exerciseApi } from "../api/services/exercise";
 import StarsIcon from '@mui/icons-material/Stars';
 import { zIndex } from '@mui/material/styles/zIndex'

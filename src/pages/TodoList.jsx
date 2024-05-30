@@ -1,4 +1,4 @@
-import { Box , IconButton } from "@mui/material";
+import { Box , Fab, IconButton } from "@mui/material";
 import Weekly from "../components/todo_list/Weekly";
 import { BackgroundBox } from "../components/styled_comp/StyledDiv";
 import TodoBoxExercise from "../components/todo_list/TodoBoxExercise";
@@ -7,18 +7,20 @@ import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
 import { useNavigate, useParams } from "react-router-dom";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { cyan } from "@mui/material/colors";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useAuth } from "../hooks/useAuth";
 import InfoUpdate from "../components/signup/InfoUpdate";
 import { todoApi } from "../api/services/TodoList";
 import Swal from "sweetalert2";
-import GetUserandRoleModel from "../components/user/GetUserandRoleModel";
+import useUserandRoleModel from "../hooks/useUserandRoleModel";
+import Loading from "../components/Loading";
+import NavigationIcon from "@mui/icons-material/Navigation";
 
 const TodoList = () => {
     const token = localStorage.getItem("token");
     const { loginUser, kakaoLogin }= useAuth();
     // 카카오 로그인 유저 가운데 구유저/신유저 구분
-    const { userProfile } = GetUserandRoleModel();
+    const { userProfile } = useUserandRoleModel();
 
     // 오늘 날짜 받아오기
     const offset = new Date().getTimezoneOffset() * 60000;
@@ -34,15 +36,20 @@ const TodoList = () => {
     const [food, setFood] = useState([]);
     const [exercise, setExercise] = useState([]);
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     // getTodo()함수 호출 
     useEffect(() => {
         localStorage.setItem('date' , date)
         localStorage.setItem('day', day)
         getTodo();
-    },[date, isAchieve]) 
-
+        setExercise([])
+        setFood([]);
+    },[date]) 
+    useEffect(() => {
+        getTodo();
+    },[isAchieve])
+    // todolist 요청함수
     const getTodo = async () => {
         try {
             const res1 = await todoApi.getList(date, token);
@@ -62,6 +69,7 @@ const TodoList = () => {
         }
     }
 
+    // todolist 공유하기
     const goTodoShareForm = async () => {
         try {
             const res = await todoApi.getList(date, token);
@@ -92,11 +100,9 @@ const TodoList = () => {
         kakaoLogin();
     }
 
-    // 아직 userProfile을 못 가져온 상태처리
     if (!userProfile) {
-        return <div>Loading...</div>;
-    } 
-
+        return <Loading />;
+    }
     // 카카오 신유저는 <InfoUpdate /> 컴포넌트 출력, 로컬 로그인 유저와 카카오 구유저는 <TodoList /> 페이지 출력
     return userProfile?.birthday === null || userProfile?.gender === null ? (
         <InfoUpdate />
@@ -112,11 +118,16 @@ const TodoList = () => {
                 scrollbarWidth: "none",
             }}
         >
-            <Weekly setDate={setDate} setDay={setDay} />
+            {/* <Fab variant="extended">
+                <NavigationIcon sx={{ mr: 1 }} />
+                Navigate
+            </Fab> */}
+            <Weekly date={date} setDate={setDate} setDay={setDay} />
             <BackgroundBox
                 style={{
                     width: "90%",
                     justifyContent: "center",
+                    marginTop: "10px",
                 }}
             >
                 <Box
