@@ -38,6 +38,7 @@ const Food = () => {
             flexDirection='column'
             alignItems='center'
             style={{
+                padding: "16px 0",
                 background: timeColor
             }}
         >

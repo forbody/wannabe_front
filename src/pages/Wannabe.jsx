@@ -93,16 +93,21 @@ const Wannabe = () => {
     }, [isChange]);
 
     return ( 
-        <>
-            <BackgroundBox>
+        <Box
+            display='flex'
+            flexDirection='column'
+            alignItems='center'
+            style={{margin: "16px 0"}}
+        >
+            <BackgroundBox style={{ justifyContent: 'center'}}>
                 <WannabeCard liking={liking} like={like} unlike={unlike}/>
             </BackgroundBox>
-            <BackgroundBox style={{marginTop : '10px'}}>
+            <BackgroundBox style={{ justifyContent: 'center', marginTop : '10px' }}>
                 {shareList?.map((e) => (
                     <ShowTodoList liking={liking} like={like} unlike={unlike} e={e} key={e.id} setIsChange={setIsChange} />
                 ))}
             </BackgroundBox>
-        </>
+        </Box>
     );
 }
 

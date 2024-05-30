@@ -112,6 +112,7 @@ const TodoList = () => {
             display="flex"
             flexDirection="column"
             alignItems="center"
+            style={{margin: "16px 0"}}
         >
             {/* <Fab variant="extended">
                 <NavigationIcon sx={{ mr: 1 }} />
