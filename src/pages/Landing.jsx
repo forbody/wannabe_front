@@ -34,6 +34,7 @@ const Landing = () => {
     
     return ( 
         <Box
+            width='100%'
             height='100vh'
             display='flex'
             flexDirection='column'
@@ -55,12 +56,12 @@ const Landing = () => {
             alignItems='center'
             >
                 <BackgroundBox
+                width='80%'
                 display='flex'
                 justifyContent='spaceAround'
                 style={{
-                    width:'80%',
                     padding:'32px',
-                    backgroundColor:'#00000050'
+                    backgroundColor:'#00000070'
                 }}
                 >
                     <Button
@@ -75,12 +76,15 @@ const Landing = () => {
                     </Button>
                     <Typography variant="caption" style={{ margin: '24px auto 0', color:'white'}}>간편 로그인</Typography>
                     <hr width='100%' color='white' style={{ margin: '0'}}/>
-                    <form>
+                    <form
+                    style={{
+                        width:'100%'
+                    }}
+                    >
                         <Button
                             variant="contained"
                             fullWidth
                             style={{
-                                width:'240px',
                                 marginTop:'16px',
                                 backgroundColor:'#FAE100'
                             }}

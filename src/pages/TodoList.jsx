@@ -1,5 +1,4 @@
 import { Box , Fab, IconButton } from "@mui/material";
-import Weekly from "../components/todo_list/Weekly";
 import { BackgroundBox } from "../components/styled_comp/StyledDiv";
 import TodoBoxExercise from "../components/todo_list/TodoBoxExercise";
 import TodoBoxFood from "../components/todo_list/TodoBoxFood"
@@ -7,7 +6,7 @@ import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
 import { useNavigate, useParams } from "react-router-dom";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { cyan } from "@mui/material/colors";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useState, Suspense, lazy } from "react";
 import { useAuth } from "../hooks/useAuth";
 import InfoUpdate from "../components/signup/InfoUpdate";
 import { todoApi } from "../api/services/TodoList";
@@ -15,6 +14,7 @@ import Swal from "sweetalert2";
 import useUserandRoleModel from "../hooks/useUserandRoleModel";
 import Loading from "../components/Loading";
 import NavigationIcon from "@mui/icons-material/Navigation";
+import Weekly from "../components/todo_list/Weekly";
 
 const TodoList = () => {
     const token = localStorage.getItem("token");
@@ -112,11 +112,7 @@ const TodoList = () => {
             display="flex"
             flexDirection="column"
             alignItems="center"
-            style={{
-                padding: "36px 0 80px",
-                overflowY: "scroll",
-                scrollbarWidth: "none",
-            }}
+            style={{margin: "16px 0"}}
         >
             {/* <Fab variant="extended">
                 <NavigationIcon sx={{ mr: 1 }} />

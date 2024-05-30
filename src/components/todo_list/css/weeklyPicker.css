@@ -3,14 +3,18 @@
 }
 
 .mbsc-ios.mbsc-calendar-button.mbsc-button {
-    color: #ff7961;
+    color: #ff4d4d;
 } 
 
 .mbsc-ios.mbsc-selected .mbsc-calendar-cell-text {
-    background: #ff7961;
-    border-color: #ff7961;
+    background: #ff4d4d;
+    border-color: #ff4d4d;
 }
 
 .mbsc-ios.mbsc-calendar-today {
-    color : #ff7961;
+    color : #ff4d4d;
+}
+
+.mbsc-calendar-cell>div:first-child {
+    display: none !important;
 }

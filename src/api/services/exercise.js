@@ -24,4 +24,17 @@ export const exerciseApi = {
             "Authorization": token,
         } 
     }),
+
+
+    postFavExercise : (id , token) => api.post('exercise/favorite', { id }, {
+        headers: { 
+            "Authorization": token ,
+        }
+    }),
+    deleteFavExercise: (token, {id}) => api.delete('exercise/favorite', { 
+        headers: { 
+            "Authorization": token },
+            "data" : {id} , 
+        } 
+    )
 }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Avatar, Button, Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, Typography } from "@mui/material";
+import { Avatar, Button, Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, Modal, Typography } from "@mui/material";
 import { userApi } from "../../api/services/user";
 import { useEffect, useState } from "react";
 import { useTheme } from '@mui/material/styles';
@@ -13,6 +13,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import Swal from 'sweetalert2';
 import WannabeLikeBtn from './WannabeLikeBtn';
+import WannabeDetailModal from './WannabeDetailModal';
 
 const WannabeCard = ({liking, like, unlike}) => {
     const token = localStorage.getItem("token");
@@ -21,21 +22,23 @@ const WannabeCard = ({liking, like, unlike}) => {
     const { userProfile, modelProfile } = useUserandRoleModel();
     const [activeStep, setActiveStep] = useState(0);
     const [roleModels, setRoleModels] = useState(null);
-    
+    const [open, setOpen] = React.useState(false);
+
     // 다음 버튼
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    };
+    const handleNext = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
 
     // 이전 버튼 
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
+    const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
 
     // 롤모델 바꾸기 버튼
-    const handleRoleModel = () => {
-        goUpdate(roleModels[activeStep]?.id)
-    }
+    const handleRoleModel = () => goUpdate(roleModels[activeStep]?.id)
+
+    // 워너비 모달 열기
+    const handleOpen = () => setOpen(true);
+
+    // 워너비 모달 닫기
+    const handleClose = () => setOpen(false);
+
 
     // 랜덤 롤모델 3명 가져오기
     const getRandomRoleModels = async () => {
@@ -138,7 +141,7 @@ const WannabeCard = ({liking, like, unlike}) => {
                         marginLeft: '4px'
                     }}
                     >
-                    님의 추천루틴
+                    님의 추천 루틴
                     </span>
                     { activeStep === 0 ?
                     <Button
@@ -148,35 +151,38 @@ const WannabeCard = ({liking, like, unlike}) => {
                     style={{
                         marginTop: '16px'
                     }}
+                    onClick={handleOpen}
                     >
                     자세히 보기
                     </Button>
                     :
                     <>
-                    <Button
-                    fullWidth
-                    color="secondary"
-                    variant="contained"
-                    style={{
-                        marginTop: '16px'
-                    }}
-                    >
-                    자세히 보기
-                    </Button>
-                    <Button
-                    fullWidth
-                    color="coral"
-                    variant="contained"
-                    style={{
-                        marginTop: '16px'
-                    }}
-                    startIcon={<PiSparkleFill/>}
-                    onClick={handleRoleModel}
-                    >
-                    이 롤모델로 바꿀래요
-                    </Button>
+                        <Button
+                        fullWidth
+                        color="secondary"
+                        variant="contained"
+                        style={{
+                            marginTop: '16px'
+                        }}
+                        onClick={handleOpen}
+                        >
+                        자세히 보기
+                        </Button>
+                        <Button
+                        fullWidth
+                        color="coral"
+                        variant="contained"
+                        style={{
+                            marginTop: '16px'
+                        }}
+                        startIcon={<PiSparkleFill/>}
+                        onClick={handleRoleModel}
+                        >
+                        이 롤모델로 바꿀래요
+                        </Button>
                     </>
                     }
+                    {roleModels && <WannabeDetailModal open={open} handleClose={handleClose} roleModels={roleModels} activeStep={activeStep}/>}
                 </CardContent>
             </CardActionArea>
                 <CardActions>
