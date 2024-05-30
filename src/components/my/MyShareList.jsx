@@ -42,7 +42,7 @@ const MyShareList = () => {
         >
             <BackgroundBox style={{ justifyContent: "center" }}>
                 {console.log(myShareList)}
-                {myShareList.length ? (
+                {myShareList?.length ? (
                     myShareList.map((e) => (
                         <ShowTodoList
                             e={e}
@@ -60,7 +60,7 @@ const MyShareList = () => {
                         }}
                     >
                         <Box textAlign="center" color='secondary'>공유된 일과가 없습니다.</Box>
-                        <Box textAlign="center" color='secondary'>나의 일과를 공유해주세요!</Box>
+                        <Box textAlign="center" color='secondary'>나의 일과를 공유해 주세요!</Box>
                     </ForegroundBox>
                 )}
                 <Box width="95%" marginTop="10px">

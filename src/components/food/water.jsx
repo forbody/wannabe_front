@@ -98,7 +98,7 @@ const Water = () => {
                 justifyContent:'center'
             }}
             >
-                하루 물 권장 섭취량을 달성 했어요!🎉
+                하루 물 권장 섭취량을 달성했어요!🎉
             </Typography>
             <img src={watercompleteimg} alt="watercompleteimg" />
             </>
