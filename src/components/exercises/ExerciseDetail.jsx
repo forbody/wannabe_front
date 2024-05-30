@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../hooks/useAuth";
-import { IconButton, styled } from "@mui/material";
+import { IconButton, Typography, styled } from "@mui/material";
 import zIndex from "@mui/material/styles/zIndex";
 import StarsIcon from '@mui/icons-material/Stars';
 import { exerciseApi } from "../../api/services/exercise";
+import { ForegroundBox } from "../styled_comp/StyledDiv";
 
 const ExerciseDetail = ({exercise, favExercises, refreshFav, setRefreshFav, onClick }) => {
 
@@ -57,22 +58,22 @@ const ExerciseDetail = ({exercise, favExercises, refreshFav, setRefreshFav, onCl
     // }
 
     return ( 
-        <div key={exercise.id} style={{ position: 'relative', width: '100%' }} >
-            <h3>{exercise.name}</h3>
+        <ForegroundBox key={exercise.id} style={{ position: 'relative', width: '100%', marginTop:'10px' }} >
+            <Typography variant="h6" style={{fontWeight:'bold'}}>{exercise.name}</Typography>
 
             { 
                 match ?
                 // 즐겨찾기 취소
-                (<button 
+                (<IconButton
                     onClick={()=>delFavExercise(exercise.id)} 
-                    style={{cursor:'pointer', border: 'none', outline: 'none', border: 'none', background: 'none', padding: 0, margin: 0,position:'absolute', right: 0}}>
-                    <StarsIcon style={{color:"#ff7961", fontSize:'36px'}}/></button>) 
+                    style={{cursor:'pointer', border: 'none', outline: 'none', border: 'none', background: 'none', padding: 0, margin: 0, position:'absolute', right: 10, top:10}}>
+                    <StarsIcon style={{color:"#ff7961", fontSize:'36px'}}/></IconButton>) 
                 :
                 // 즐겨찾기 추가
-                (<button 
+                (<IconButton
                     onClick={()=>addFavExercise(exercise.id)} 
-                    style={{cursor:'pointer', border: 'none', outline: 'none', border: 'none', background: 'none', padding: 0, margin: 0,position:'absolute', right: 0}}>
-                    <StarsIcon style={{color:"lightgray", fontSize:'36px'}} /></button>) 
+                    style={{cursor:'pointer', border: 'none', outline: 'none', border: 'none', background: 'none', padding: 0, margin: 0, position:'absolute', right: 10 , top:10}}>
+                    <StarsIcon style={{color:"lightgray", fontSize:'36px'}} /></IconButton>) 
             }
             <ExerImg src={'http://localhost:8000'+exercise.img} width='100%' height='215px'  onClick={onClick} style={{cursor:'pointer' }}/>
             
@@ -81,7 +82,7 @@ const ExerciseDetail = ({exercise, favExercises, refreshFav, setRefreshFav, onCl
             {/* {
                 openDesc &&  <p>{exercise.description}</p>
             } */}
-        </div>
+        </ForegroundBox>
     );
 }
 

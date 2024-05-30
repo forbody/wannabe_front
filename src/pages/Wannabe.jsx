@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { todoApi } from "../api/services/TodoList";
 import { BackgroundBox} from "../components/styled_comp/StyledDiv";
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 import ShowTodoList from "../components/wannabe/ShowTodoList";
 import WannabeCard from "../components/wannabe/WannabeCard";
 import { useAuth } from "../hooks/useAuth";
