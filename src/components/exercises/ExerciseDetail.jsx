@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../hooks/useAuth";
-import { IconButton, Typography, styled } from "@mui/material";
+import { Divider, IconButton, Typography, styled } from "@mui/material";
 import zIndex from "@mui/material/styles/zIndex";
 import StarsIcon from '@mui/icons-material/Stars';
 import { exerciseApi } from "../../api/services/exercise";
@@ -60,7 +60,6 @@ const ExerciseDetail = ({exercise, favExercises, refreshFav, setRefreshFav, onCl
     return ( 
         <ForegroundBox key={exercise.id} style={{ position: 'relative', width: '100%', marginTop:'10px' }} >
             <Typography variant="h6" style={{fontWeight:'bold'}}>{exercise.name}</Typography>
-
             { 
                 match ?
                 // 즐겨찾기 취소

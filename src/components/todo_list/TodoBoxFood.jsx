@@ -76,7 +76,7 @@ const TodoBoxFood = ({ element, setIsAchieve, children }) => {
             </Grid>
             {isTrue ? (
                 <>
-                    {breakfast.length ? (
+                    {breakfast?.length ? (
                         <>
                             <Box
                                 sx={{
@@ -115,7 +115,7 @@ const TodoBoxFood = ({ element, setIsAchieve, children }) => {
                     ) : (
                         false
                     )}
-                    {lunch.length ? (
+                    {lunch?.length ? (
                         <>
                             <Box
                                 sx={{
@@ -154,7 +154,7 @@ const TodoBoxFood = ({ element, setIsAchieve, children }) => {
                     ) : (
                         false
                     )}
-                    {dinner.length ? (
+                    {dinner?.length ? (
                         <>
                             <Box
                                 sx={{

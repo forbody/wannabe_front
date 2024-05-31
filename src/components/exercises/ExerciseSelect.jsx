@@ -29,7 +29,7 @@ const MenuProps = {
         return (
         <div>
             <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel id="demo-multiple-checkbox-label">Tag</InputLabel>
+                <InputLabel id="demo-multiple-checkbox-label" color="secondary">Tag</InputLabel>
                 <Select
                     labelId="demo-multiple-checkbox-label"
                     id="demo-multiple-checkbox"
@@ -39,10 +39,12 @@ const MenuProps = {
                     input={<OutlinedInput label="Tag" />}
                     renderValue={(selected) => selected.join(', ')}
                     MenuProps={MenuProps}
+                    color="secondary"
+                    style={{ marginBottom: '20px'}}
                 >
                     {sorts.map((sort) => (
                         <MenuItem key={sort} value={sort}>
-                            <Checkbox checked={exerciseSortName.indexOf(sort) > -1} />
+                            <Checkbox checked={exerciseSortName.indexOf(sort) > -1} color="secondary" />
                             <ListItemText primary={sort} />
                         </MenuItem>
                     ))}

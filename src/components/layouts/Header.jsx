@@ -1,12 +1,14 @@
-import { AppBar, IconButton, Typography, Toolbar, Avatar, useScrollTrigger, Slide } from "@mui/material";
+import { AppBar, IconButton, Toolbar, Avatar, useScrollTrigger, Slide, Button } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import useUserandRoleModel from "../../hooks/useUserandRoleModel";
 import { useAuth } from "../../hooks/useAuth";
+import logo_green2 from "../../assets/logo_green2.png"
 
-const HideOnScroll = ({ children, window }) => {
+const HideOnScroll = ({ children, window, setShowTopBtn}) => {
     const trigger = useScrollTrigger({
         target: window ? window() : undefined,
     });
+    setShowTopBtn(trigger);
 
     return (
         <Slide appear={false} direction="down" in={!trigger} sx={{position: 'sticky'}}>
@@ -30,13 +32,22 @@ const Header = (props) => {
     }
 
     return (
-            <HideOnScroll>
+            <HideOnScroll setShowTopBtn={props.setShowTopBtn}>
             <AppBar color="white" style={{boxShadow:"none"}}>
-                <Toolbar>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={goHome}>
+                <Toolbar
+                    display="flex"
+                    style={{
+                        justifyContent: "space-between",
+                        borderLeft: "1px solid #eee",
+                        borderRight: "1px solid #eee",
+                        borderBottom: "1px solid #eee"
+                    }}
+                >
+                    <img src={logo_green2} alt="logo" width="40px" />
+                    <Button variant="text" color="secondary" onClick={goHome}>
                     Wannabe
-                    </Typography>
-                    <IconButton onClick={goUserMenu} sx={{ p: 0 }}>
+                    </Button>
+                    <IconButton onClick={goUserMenu}>
                         <Avatar alt="userImg" src={ `http://localhost:8000/${userImg}`} sx={{boxShadow:'0px 0px 2px #888'}}/>
                     </IconButton>
                 </Toolbar>

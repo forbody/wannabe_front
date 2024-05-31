@@ -1,5 +1,5 @@
 import { Box , Fab, IconButton } from "@mui/material";
-import { BackgroundBox } from "../components/styled_comp/StyledDiv";
+import { BackgroundBox, PageBox } from "../components/styled_comp/StyledDiv";
 import TodoBoxExercise from "../components/todo_list/TodoBoxExercise";
 import TodoBoxFood from "../components/todo_list/TodoBoxFood"
 import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
@@ -107,13 +107,7 @@ const TodoList = () => {
     return userProfile?.birthday === null || userProfile?.gender === null ? (
         <InfoUpdate />
     ) : (
-        <Box
-            height="100vh"
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            style={{margin: "16px 0"}}
-        >
+        <PageBox>
             {/* <Fab variant="extended">
                 <NavigationIcon sx={{ mr: 1 }} />
                 Navigate
@@ -123,7 +117,7 @@ const TodoList = () => {
                 style={{
                     width: "90%",
                     justifyContent: "center",
-                    marginTop: "10px",
+                    marginTop: "10px"
                 }}
             >
                 <Box
@@ -156,7 +150,7 @@ const TodoList = () => {
                     식단
                 </TodoBoxFood>
             </BackgroundBox>
-        </Box>
+        </PageBox>
     );
 }
 

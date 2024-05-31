@@ -64,6 +64,7 @@ const WannabeCard = ({liking, like, unlike}) => {
                         text: res.message,
                         icon: "success"
                     });
+                    window.location.reload()
                 } else {
                     throw new Error(res.message);
                 }
@@ -118,7 +119,6 @@ const WannabeCard = ({liking, like, unlike}) => {
         }
         {steps.includes(activeStep) ? (
         <Card>
-            <CardActionArea>
                 <CardMedia
                     component="img"
                     height="300"
@@ -184,7 +184,6 @@ const WannabeCard = ({liking, like, unlike}) => {
                     }
                     {roleModels && <WannabeDetailModal open={open} handleClose={handleClose} roleModels={roleModels} activeStep={activeStep}/>}
                 </CardContent>
-            </CardActionArea>
                 <CardActions>
                     {liking && <WannabeLikeBtn alreadyliked={liking} like_id={roleModels[activeStep]?.id} like={like} unlike={unlike} />}
                     <Typography variant='button' color="error">워너비</Typography>

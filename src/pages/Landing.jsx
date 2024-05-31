@@ -14,6 +14,8 @@ import bg5 from '../assets/BGImage/bg5.jpeg'
 import bg6 from '../assets/BGImage/bg6.jpeg'
 import bg7 from '../assets/BGImage/bg7.jpeg'
 import bg8 from '../assets/BGImage/bg8.jpeg'
+import logo_white from '../assets/logo_white.png'
+
 
 const Landing = () => {
     const navigate = useNavigate()
@@ -46,7 +48,12 @@ const Landing = () => {
                 backgroundSize: 'cover'
             }}
         >
-            <Box>
+            <Box
+                display='flex'
+                flexDirection='column'
+                alignItems='flex-end'
+            >
+                <img src={logo_white} alt="logo" width="60px" />
                 <Typography variant='h2' fontWeight={800} color='primary'>Wannabe</Typography>
                 <Typography color='#fff'>당신이 꿈꾸는 그대로, 워너비</Typography>
             </Box>

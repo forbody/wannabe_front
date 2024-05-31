@@ -47,33 +47,35 @@ const MyInfoButtons = ({ logout }) => {
         
     } 
     return ( 
-        <ForegroundBox
-            display='flex'
-            style={{
-                width:'100%',
-                flexDirection: 'column',
-                justifyContent: 'space-between'
-            }}
-            >
+        <>
             <Typography
-            display='flex'
-            variant='h6'
-            fontWeight='600'
-            style={{
-                marginBottom:'8px',
-                justifyContent:'center'
-            }}
-            >
+                display='flex'
+                variant='h6'
+                fontWeight='600'
+                style={{
+                    marginBottom:'8px',
+                    justifyContent:'center'
+                }}
+                >
                 나의 정보 관리
             </Typography>
-            <Button variant="text" size="large" color="secondary" startIcon={<TfiWrite/>} onClick={() => navigate('/my/shareList')} fullWidth>내가 작성한 글 보기</Button>
-            <Divider/>
-            <Button variant="text" size="large" color="primary" startIcon={<FaUserEdit/>} onClick={ () => navigate('/my/modify') } fullWidth>나의 정보 수정</Button>
-            <Divider/>
-            <Button variant="text" size="large" color="warning" startIcon={<FaUserMinus/>} onClick={() => logout( () => { navigate('/') } )} fullWidth>로그아웃</Button>
-            <Divider/>
-            <Button variant="text" size="large" color="error" startIcon={<FaUserMinus/>} onClick={ deleteUser } fullWidth>회원 탈퇴</Button>
-        </ForegroundBox>
+            <ForegroundBox
+                display='flex'
+                style={{
+                    width:'100%',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between'
+                }}
+                >
+                <Button variant="text" size="large" color="secondary" startIcon={<TfiWrite/>} onClick={() => navigate('/my/shareList')} fullWidth>내가 작성한 글 보기</Button>
+                <Divider/>
+                <Button variant="text" size="large" color="primary" startIcon={<FaUserEdit/>} onClick={ () => navigate('/my/modify') } fullWidth>나의 정보 수정</Button>
+                <Divider/>
+                <Button variant="text" size="large" color="warning" startIcon={<FaUserMinus/>} onClick={() => logout( () => { navigate('/') } )} fullWidth>로그아웃</Button>
+                <Divider/>
+                <Button variant="text" size="large" color="error" startIcon={<FaUserMinus/>} onClick={ deleteUser } fullWidth>회원 탈퇴</Button>
+            </ForegroundBox>
+        </>
     );
 }
 

@@ -1,7 +1,7 @@
 import { useAuth } from '../hooks/useAuth';
 import useUserandRoleModel from '../hooks/useUserandRoleModel';
 import { Box, Typography } from '@mui/material';
-import { BackgroundBox } from '../components/styled_comp/StyledDiv';
+import { BackgroundBox, PageBox } from '../components/styled_comp/StyledDiv';
 import * as React from 'react';
 import MyLikeBtn from '../components/my/MyLikeBtn';
 import MyCalendar from '../components/my/MyCalendar';
@@ -23,13 +23,8 @@ const My = () => {
     
 
     return ( 
-        <Box
-            display='flex'
-            flexDirection='column'
-            alignItems='center'
-            style={{margin: "16px 0"}}
-        >
-            {userImg && <img src={ `http://localhost:8000/${userImg}`} width='200' height="200" alt={"img"} style={{borderRadius:"200px", objectFit : "cover", backgroundColor:'white'}} />}
+        <PageBox>
+            {userImg && <img src={ `http://localhost:8000/${userImg}`} width='200' height="200" alt={"img"} style={{ borderRadius:"200px", objectFit : "cover", backgroundColor:'white'}} />}
             <Typography
             variant='h6'
             fontWeight='600'
@@ -57,7 +52,7 @@ const My = () => {
                 <Loading />
                 <Feedback />
             </BackgroundBox>
-        </Box>
+        </PageBox>
     );
 
     // return (
