@@ -29,7 +29,9 @@ const MyShareList = () => {
     },[token, myShareList])
 
     return (
-        <PageBox>
+        <PageBox
+            justifyContent="center"
+        >
             <BackgroundBox style={{ justifyContent: "center" }}>
                 {console.log(myShareList)}
                 {myShareList?.length ? (

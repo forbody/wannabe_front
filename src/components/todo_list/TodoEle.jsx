@@ -1,7 +1,7 @@
 import { Checkbox, Grid, IconButton } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { orange, red } from "@mui/material/colors";
+import { red } from "@mui/material/colors";
 import { todoApi } from "../../api/services/TodoList";
 
 const TodoEle = ({ e, setIsAchieve }) => {

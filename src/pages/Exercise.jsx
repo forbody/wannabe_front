@@ -1,5 +1,5 @@
 import { Box, Typography, styled } from "@mui/material";
-import { BackgroundBox, PageBox } from "../components/styled_comp/StyledDiv";
+import { BackgroundBox, ForegroundBox, PageBox } from "../components/styled_comp/StyledDiv";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import ExerciseDetail from "../components/exercises/ExerciseDetail";
@@ -112,34 +112,32 @@ const Exercise = () => {
                 <StarsIcon style={{ color: '#ff7961', fontSize: 'inherit', marginRight: '10px' }} />
                 내가 즐겨찾기 한 운동
                 </h3>
-                <br />
-                <Carousel
-                    showArrows={false}
-                    autoPlay={false}
-                    infiniteLoop={true}
-                    showThumbs={false}
-                    swipe={true}
-                >
-                    {favExercises &&
-                        favExercises.map((f) => (
-                            <ExerciseFollow favExercise={f} />
-                        ))}
-                </Carousel>
+                <ForegroundBox>
+                    <br />
+                    <Carousel
+                        showArrows={false}
+                        autoPlay={false}
+                        infiniteLoop={true}
+                        showThumbs={false}
+                        swipe={true}
+                    >
+                        {favExercises &&
+                            favExercises.map((f) => (
+                                <ExerciseFollow favExercise={f} />
+                            ))}
+                    </Carousel>
+                </ForegroundBox>
             </BackgroundBox>
+
             <BackgroundBox
                 display="flex"
-                style={{justifyContent:'center'}}
-            >
-                <h3>운동 목록</h3>
-
-                {/* // 프롭스로 태그 리스트 전달 */}
-                <ExerciseSelect sorts={sorts} exerciseSortName={exerciseSortName} setExerciseSortName={setExerciseSortName} />
-            </BackgroundBox>                
-            <BackgroundBox display="flex"
                 style={{
-                    justifyContent: 'center',
-                    position: 'relative'
-            }}>
+                    justifyContent:'center'
+                }}
+            >
+                <Typography variant="h6" fontWeight="bold">운동 목록</Typography>
+                    {/* // 프롭스로 태그 리스트 전달 */}
+                    <ExerciseSelect sorts={sorts} exerciseSortName={exerciseSortName} setExerciseSortName={setExerciseSortName}/>
                     {favExercises &&
                         exercises && exercises.map((exercise) => (
                             <ExerciseDetail
