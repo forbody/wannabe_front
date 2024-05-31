@@ -1,5 +1,5 @@
 import { Box, Typography, styled } from "@mui/material";
-import { BackgroundBox } from "../components/styled_comp/StyledDiv";
+import { BackgroundBox, PageBox } from "../components/styled_comp/StyledDiv";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import ExerciseDetail from "../components/exercises/ExerciseDetail";
@@ -12,6 +12,7 @@ import ExerciseModal from "../components/exercises/ExerciseModal";
 import useUserandRoleModel from "../hooks/useUserandRoleModel";
 import { exerciseApi } from "../api/services/exercise";
 import StarsIcon from '@mui/icons-material/Stars';
+import { bgcolor } from "@mui/system";
 
 
 const Exercise = () => {
@@ -69,105 +70,101 @@ const Exercise = () => {
     // 해당 유저가 즐겨찾기한 운동 목록 조회
     
     return (
-        <>
-            <Box
-                sx={{
-                    display: "flex",
-                    width: "100%",
-                    flexWrap: "wrap",
-                    overflowY: "scroll",
-                    scrollbarWidth: "none",
-                    justifyContent: "center",
-                    alignContent: "flex-start",
-                    position: 'relateve',
-                }}
+        <Box
+            sx={{
+                display: "flex",
+                width: "100%",
+                flexWrap: "wrap",
+                overflowY: "scroll",
+                scrollbarWidth: "none",
+                justifyContent: "center",
+                alignContent: "flex-start",
+                position: 'relateve',
+            }}
+        >
+            {/* 워너비가 말로 전해주는 느낌 */}
+            <Container>
+                {modelImg && (
+                    <ImageBox>
+                    <img
+                        src={`http://localhost:8000/${modelImg}`}
+                        alt={"img"}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                    </ImageBox>
+                )}
+            </Container>
+            {/* </BackgroundBox> */}
+            {/* <BackgroundBox half> */}
+            <Container>
+                <SpeechBubble>
+                <h3>{modelProfile?.user_name} 님의 건강을 위한 팁!!</h3> 
+                <p>-{randTip?.health_tip}</p>
+                </SpeechBubble>
+            </Container>
+            
+
+            <BackgroundBox
+                display="flex"
+                style={{flexDirection:"column", alignItems:"stretch"}}
             >
-                {/* 워너비가 말로 전해주는 느낌 */}
-                
-                <Container>
-                    {modelImg && (
-                        <ImageBox>
-                        <img
-                            src={`http://localhost:8000/${modelImg}`}
-                            alt={"img"}
-                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        />
-                        </ImageBox>
-                    )}
-                </Container>
-                {/* </BackgroundBox> */}
-                {/* <BackgroundBox half> */}
-                <Container>
-                    <SpeechBubble>
-                    <h3>{modelProfile?.user_name} 님의 건강을 위한 팁!!</h3> 
-                    <p>-{randTip?.health_tip}</p>
-                    </SpeechBubble>
-                </Container>
-                
-
-
-                <BackgroundBox
-                    display="flex"
-                    style={{flexDirection:"column", alignItems:"stretch"}}
+                <h3 style={{ display: 'flex', alignItems: 'center', fontSize: '20px' }}>
+                <StarsIcon style={{ color: '#ff7961', fontSize: 'inherit', marginRight: '10px' }} />
+                내가 즐겨찾기 한 운동
+                </h3>
+                <br />
+                <Carousel
+                    showArrows={false}
+                    autoPlay={false}
+                    infiniteLoop={true}
+                    showThumbs={false}
+                    swipe={true}
                 >
-                    <h3 style={{ display: 'flex', alignItems: 'center', fontSize: '20px' }}>
-                    <StarsIcon style={{ color: '#ff7961', fontSize: 'inherit', marginRight: '10px' }} />
-                    내가 즐겨찾기 한 운동
-                    </h3>
-                    <br />
-                    <Carousel
-                        showArrows={false}
-                        autoPlay={false}
-                        infiniteLoop={true}
-                        showThumbs={false}
-                        swipe={true}
-                    >
-                        {favExercises &&
-                            favExercises.map((f) => (
-                                <ExerciseFollow favExercise={f} />
-                            ))}
-                    </Carousel>
-                </BackgroundBox>
-                <BackgroundBox
-                    display="flex"
-                    style={{justifyContent:'center'}}
-                >
-                    <h3>운동 목록</h3>
+                    {favExercises &&
+                        favExercises.map((f) => (
+                            <ExerciseFollow favExercise={f} />
+                        ))}
+                </Carousel>
+            </BackgroundBox>
+            <BackgroundBox
+                display="flex"
+                style={{justifyContent:'center'}}
+            >
+                <h3>운동 목록</h3>
 
-                    {/* // 프롭스로 태그 리스트 전달 */}
-                    <ExerciseSelect sorts={sorts} exerciseSortName={exerciseSortName} setExerciseSortName={setExerciseSortName} />
-                </BackgroundBox>                
-                <BackgroundBox display="flex"
-                    style={{
-                        justifyContent: 'center',
-                        position: 'relative'
-                }}>
-                        {favExercises &&
-                            exercises && exercises.map((exercise) => (
-                                <ExerciseDetail
-                                    key={exercise.id}
-                                    exercise={exercise}
-                                    favExercises={favExercises}
-                                    refreshFav={refreshFav}
-                                    setRefreshFav={setRefreshFav}
-                                    onClick={() => {
-                                        setIsExerciseModalOpen(true);
-                                        setSelectedExercise(exercise)
-                                    }}
-                                />
-                                
-                            ))}
-                        <ExerciseModal 
-                            exercise={selectedExercise}
-                            isOpen={isExerciseModalOpen}
-                            onClose={() => {
-                                setIsExerciseModalOpen(false);
-                                setSelectedExercise({});
-                            }}
-                        />
-                </BackgroundBox>
-            </Box>
-        </>
+                {/* // 프롭스로 태그 리스트 전달 */}
+                <ExerciseSelect sorts={sorts} exerciseSortName={exerciseSortName} setExerciseSortName={setExerciseSortName} />
+            </BackgroundBox>                
+            <BackgroundBox display="flex"
+                style={{
+                    justifyContent: 'center',
+                    position: 'relative'
+            }}>
+                    {favExercises &&
+                        exercises && exercises.map((exercise) => (
+                            <ExerciseDetail
+                                key={exercise.id}
+                                exercise={exercise}
+                                favExercises={favExercises}
+                                refreshFav={refreshFav}
+                                setRefreshFav={setRefreshFav}
+                                onClick={() => {
+                                    setIsExerciseModalOpen(true);
+                                    setSelectedExercise(exercise)
+                                }}
+                            />
+                            
+                        ))}
+                    <ExerciseModal 
+                        exercise={selectedExercise}
+                        isOpen={isExerciseModalOpen}
+                        onClose={() => {
+                            setIsExerciseModalOpen(false);
+                            setSelectedExercise({});
+                        }}
+                    />
+            </BackgroundBox>
+        </Box>
     );
 }
 

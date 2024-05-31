@@ -101,18 +101,27 @@ const Step = ({title, inputData, step, setStep, joinData, setJoinData, goJoin, l
     }
     return ( 
         <Box
-            width='80%'
-            height='100vh'
-            display='flex'
-            flexDirection='column'
-            justifyContent='center'
-            alignItems='center'
+        sx={{
+            minHeight: "100vh",
+            display: "flex",
+            width: "100%",
+            flexWrap: "wrap",
+            overflowY: "scroll",
+            scrollbarWidth: "none",
+            alignItems: "center",
+            position: 'relateve',
+            margin: "16px 0",
+            flexDirection: "column",
+            justifyContent:'center',
+            alignItems:'center'
+        }}
+            
         >
             <Typography variant="h5" fontWeight={800}>{title}</Typography>
             <BackgroundBox
                 display='flex'
                 style={{
-                    width:'100%',
+                    width:'90%',
                     marginTop:'36px',
                     padding: '16px',
                     justifyContent: 'space-around'

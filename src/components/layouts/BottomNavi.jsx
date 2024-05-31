@@ -33,8 +33,8 @@ const BottomNavi = () => {
     return (
         <Paper 
             sx={{ 
-                width: '100%',
-                position: 'sticky', 
+                width: '430px',
+                position: 'fixed', 
                 bottom: 0, 
                 zIndex: 2,
                 border : '1px solid #eee',
