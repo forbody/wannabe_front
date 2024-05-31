@@ -32,7 +32,6 @@ const Exercise = () => {
     const [selectedExercise, setSelectedExercise] = useState({});
     const [isExerciseModalOpen, setIsExerciseModalOpen] = useState(false);
     const [exerciseSortName, setExerciseSortName] = useState(sorts);
-
     const { modelImg, modelProfile } = useUserandRoleModel();
 
     
@@ -71,7 +70,6 @@ const Exercise = () => {
     
     return (
         <>
-            <h1>운동</h1>
             <Box
                 sx={{
                     display: "flex",
@@ -86,14 +84,13 @@ const Exercise = () => {
             >
                 {/* 워너비가 말로 전해주는 느낌 */}
                 
-                {/* <BackgroundBox half> */}
                 <Container>
                     {modelImg && (
                         <ImageBox>
                         <img
                             src={`http://localhost:8000/${modelImg}`}
                             alt={"img"}
-                            style={{ width: '100%', height: '100%', objectFit: 'fill' }}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                         />
                         </ImageBox>
                     )}
@@ -104,10 +101,9 @@ const Exercise = () => {
                     <SpeechBubble>
                     <h3>{modelProfile?.user_name} 님의 건강을 위한 팁!!</h3> 
                     <p>-{randTip?.health_tip}</p>
-
                     </SpeechBubble>
-                {/* </BackgroundBox> */}
                 </Container>
+                
 
 
                 <BackgroundBox

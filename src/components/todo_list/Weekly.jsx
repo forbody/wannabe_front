@@ -33,8 +33,12 @@ const Weekly = ({ setDate, setDay, date }) => {
                 <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                     {date.slice(5, 7)}월 {date.slice(8, 10)}일 일과
                 </Typography>
-                <ForegroundBox>
-                    
+                <ForegroundBox
+                style={{
+                    width: "100%",
+                    marginTop: "10px"
+                }}
+                >
                     <Datepicker
                     ref={ref}
                     display="inline"

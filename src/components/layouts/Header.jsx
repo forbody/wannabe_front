@@ -3,11 +3,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useUserandRoleModel from "../../hooks/useUserandRoleModel";
 import { useAuth } from "../../hooks/useAuth";
 
+
 const HideOnScroll = ({ children, window, setShowTopBtn}) => {
     const trigger = useScrollTrigger({
         target: window ? window() : undefined,
     });
     setShowTopBtn(trigger);
+
     return (
         <Slide appear={false} direction="down" in={!trigger} sx={{position: 'sticky'}}>
             {children}
