@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { todoApi } from "../../api/services/TodoList";
-import { BackgroundBox, ForegroundBox } from "../styled_comp/StyledDiv";
+import { BackgroundBox, ForegroundBox, PageBox } from "../styled_comp/StyledDiv";
 import ShowTodoList from "../wannabe/ShowTodoList";
 import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -26,20 +26,10 @@ const MyShareList = () => {
 
     useEffect(() => {
         getMyShareList()
-    },[token])
+    },[token, myShareList])
 
     return (
-        <Box
-            height="100vh"
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            style={{
-                padding: "36px 0 80px",
-                overflowY: "scroll",
-                scrollbarWidth: "none",
-            }}
-        >
+        <PageBox>
             <BackgroundBox style={{ justifyContent: "center" }}>
                 {console.log(myShareList)}
                 {myShareList?.length ? (
@@ -54,7 +44,7 @@ const MyShareList = () => {
                     <ForegroundBox
                         style={{
                             backgroundColor: "#ffffff99",
-                            width: "300px",
+                            width: "100%",
                             flexDirection: "column",
                             marginTop: "5px",
                         }}
@@ -74,7 +64,7 @@ const MyShareList = () => {
                     </Button>
                 </Box>
             </BackgroundBox>
-        </Box>
+        </PageBox>
     );
 }
 

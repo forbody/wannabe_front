@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import Step from "../signup/Step";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
+import { PageBox } from "../styled_comp/StyledDiv";
 
 const MyInfoModify = () => {
     const token = localStorage.getItem("token");
@@ -49,37 +50,25 @@ const MyInfoModify = () => {
     let stepComp;
     if (step === 1) {
         stepComp = (
-            <>
-                <Step title="나의 정보 수정"
-                    inputData={[
-                        {"inputName":"email", "type":"email", "message":"이메일", "label":"이메일" },
-                        {"inputName":"gender", "type":"radio", "message":"성별", "label":"성별" },
-                        {"inputName":"birthday", "type":"date", "message":"생일", "label":"생일" },
-                        {"inputName":"height", "type":"tel", "message":"키", "label":"키" },
-                        {"inputName":"weight", "type":"tel", "message":"몸무게", "label":"몸무게" },
-                        {"img": joinData.gender === "M" ? male : female, "inputName":"bodyshape", "type":"checkbox", "message":"나에게 가장 적절한 체형을 선택해 주세요.", "label":"체형" },
-                        {"inputName":"img", "type":"file", "accept":"image/*", "message":"프로필 사진", "label":"프로필 사진" },
-                        {"inputName":"user_name", "type":"text", "message":"이름", "label":"이름" },
-
-                    ]} 
-                    lastStep={true} step={step} setStep={setStep} joinData={joinData} setJoinData={setJoinData} goJoin={() => goUpdate(joinData)}/>
-            </>
+            <Step title="나의 정보 수정"
+                inputData={[
+                    {"inputName":"email", "type":"email", "message":"이메일", "label":"이메일" },
+                    {"inputName":"gender", "type":"radio", "message":"성별", "label":"성별" },
+                    {"inputName":"birthday", "type":"date", "message":"생일", "label":"생일" },
+                    {"inputName":"height", "type":"tel", "message":"키", "label":"키" },
+                    {"inputName":"weight", "type":"tel", "message":"몸무게", "label":"몸무게" },
+                    {"img": joinData.gender === "M" ? male : female, "inputName":"bodyshape", "type":"checkbox", "message":"나에게 가장 적절한 체형을 선택해 주세요.", "label":"체형" },
+                    {"inputName":"img", "type":"file", "accept":"image/*", "message":"프로필 사진", "label":"프로필 사진" },
+                    {"inputName":"user_name", "type":"text", "message":"이름", "label":"이름" },
+                ]} 
+                lastStep={true} step={step} setStep={setStep} joinData={joinData} setJoinData={setJoinData} goJoin={() => goUpdate(joinData)}
+            />
         );    
     } 
     return (
-    <Box
-        height='100vh'
-        display='flex'
-        flexDirection='column'
-        alignItems='center'
-        style={{
-            padding:'36px 0 60px',
-            overflowY: 'scroll',
-            scrollbarWidth: 'none'
-        }}
-    >
+    <PageBox>
         {stepComp}
-    </Box>
+    </PageBox>
     )
 }
 

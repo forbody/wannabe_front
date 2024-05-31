@@ -64,6 +64,7 @@ const WannabeCard = ({liking, like, unlike}) => {
                         text: res.message,
                         icon: "success"
                     });
+                    window.location.reload()
                 } else {
                     throw new Error(res.message);
                 }
