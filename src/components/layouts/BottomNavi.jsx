@@ -1,6 +1,6 @@
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IoIosFitness } from "react-icons/io";
 import { PiBowlFoodFill } from "react-icons/pi";
 import { HiHome } from "react-icons/hi2";
@@ -20,20 +20,30 @@ const BottomNavi = () => {
     ]);
 
     const [value, setValue] = useState("홈");
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
+    // const handleChange = (event, newValue) => {
+    //     setValue(newValue);
+    // };
     const location = useLocation();
     
     const noShowBottomNavi = ['/', '/login', '/signup'] // 여기에 페이지 주소를 넣으면 하단 바가 사라집니다.
+
+    useEffect(() => {
+        menus.forEach((m)=>{
+            if (m.path === location.pathname) {
+                setValue(m.value);
+            }
+        })
+    }, [location]);
+
+    // const btnWidth = 
+
     if (!loginUser || noShowBottomNavi.includes(location.pathname)) {
         return null;
-    }
-    
+    }    
     return (
         <Paper 
             sx={{ 
-                width: '430px',
+                maxWidth: '430px',
                 position: 'fixed', 
                 bottom: 0, 
                 zIndex: 2,
@@ -44,9 +54,10 @@ const BottomNavi = () => {
             elevation={3}
         >
             <BottomNavigation
-            showLabels
-            value={value}
-            onChange={handleChange}
+                showLabels
+                value={value}
+                // onChange={handleChange}
+                sx={{maxWidth: '430px',}}
             >
                 {
                     menus.map((m, idx) => (
@@ -58,7 +69,9 @@ const BottomNavi = () => {
                         label={m.label}
                         value={m.value}
                         icon={m.icon}
-                        sx={{ minWidth: '20%' }}
+                        sx={{
+                            minWidth: window.innerWidth >= 430 ? "86px" : `${window.innerWidth / 5}px`
+                        }}
                     />
                     ))
                 }
