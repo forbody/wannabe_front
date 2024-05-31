@@ -3,13 +3,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useUserandRoleModel from "../../hooks/useUserandRoleModel";
 import { useAuth } from "../../hooks/useAuth";
 
-const HideOnScroll = ({ children, window }) => {
-    console.log(window);
+const HideOnScroll = ({ children, window, setShowTopBtn}) => {
     const trigger = useScrollTrigger({
         target: window ? window() : undefined,
     });
-
-    console.log(trigger);
+    setShowTopBtn(trigger);
     return (
         <Slide appear={false} direction="down" in={!trigger} sx={{position: 'sticky'}}>
             {children}
@@ -32,7 +30,7 @@ const Header = (props) => {
     }
 
     return (
-            <HideOnScroll>
+            <HideOnScroll setShowTopBtn={props.setShowTopBtn}>
             <AppBar color="white" style={{boxShadow:"none"}}>
                 <Toolbar>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={goHome}>

@@ -1,10 +1,15 @@
 import { Grid } from "@mui/material";
 import BottomNavi from "./BottomNavi";
 import Header from "./Header";
+import TopButton from "./TopButton";
+import { useEffect, useRef, useState } from "react";
 
 const Main = ({ children }) => {
+    const [showTopBtn, setShowTopBtn] = useState(false);
+
     return (
-        <Grid
+        <>
+            <Grid
                 container
                 margin= "0 auto"
                 direction="column"
@@ -18,10 +23,12 @@ const Main = ({ children }) => {
                     background: 'linear-gradient(135deg, #fdf00e, #33cc33)',
                 }}
             >
-                <Header/>
+                <Header setShowTopBtn={setShowTopBtn} />
                 {children}
                 <BottomNavi />
-        </Grid>
+            </Grid>
+            <TopButton showTopBtn={showTopBtn} />
+        </>
     );
 }
 
