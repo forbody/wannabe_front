@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { BackgroundBox, ForegroundBox } from "../components/styled_comp/StyledDiv";
+import { BackgroundBox, ForegroundBox, PageBox } from "../components/styled_comp/StyledDiv";
 import { useEffect, useState } from "react";
 import FoodRecommend from "../components/food/FoodRecommend";
 import Water from "../components/food/water";
@@ -33,14 +33,8 @@ const Food = () => {
     }
 
     return ( 
-        <Box
-            display='flex'
-            flexDirection='column'
-            alignItems='center'
-            style={{
-                padding: "16px 0",
-                background: timeColor
-            }}
+        <PageBox
+            bgColor={timeColor}
         >
             <BackgroundBox>
                 <ForegroundBox
@@ -90,7 +84,7 @@ const Food = () => {
             >
                 <Water />
             </BackgroundBox>
-        </Box>
+        </PageBox>
     );
 }
 

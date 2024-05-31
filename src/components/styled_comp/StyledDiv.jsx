@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Box } from "@mui/material";
 
 export const BackgroundBox = styled.div`
     width: ${props => (props.half ? '45%' : '90%')};
@@ -38,3 +39,25 @@ export const ForegroundBox = styled.div`
     background-color: #fff
 `
 
+export const PageBox = ({bgColor=null, children}) => {
+    return (
+        <Box
+            sx={{
+                minHeight: "100vh",
+                display: "flex",
+                width: "100%",
+                flexWrap: "wrap",
+                overflowY: "scroll",
+                scrollbarWidth: "none",
+                justifyContent: "flex-start",
+                alignItems: "center",
+                position: 'relateve',
+                backgroundColor: bgColor,
+                margin: "16px 0",
+                flexDirection: "column"
+            }}
+        >
+        {children}
+        </Box>
+    )
+}

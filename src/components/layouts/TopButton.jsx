@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import FloatingActionButtons from "../exercises/NavigationButton";
+import { useLocation } from "react-router-dom";
 
 // 맨 위로 올리는 버튼
 const TopButton = ({showTopBtn}) => {
@@ -19,7 +20,13 @@ const TopButton = ({showTopBtn}) => {
     })
   };
 
+  const location = useLocation();
 
+  // 여기에 페이지 주소를 넣으면 탑 버튼이 사라집니다.
+  const noShowTopButton = ['/', '/login', '/signup'] 
+  if (noShowTopButton.includes(location.pathname)) {
+      return null;
+  }
   
   const style = {
     cursor: "pointer",
