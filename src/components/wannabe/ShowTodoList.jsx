@@ -1,4 +1,4 @@
-import { Box, Grid, IconButton } from "@mui/material";
+import { Box, Grid, IconButton, Typography } from "@mui/material";
 import { ForegroundBox } from "../styled_comp/StyledDiv";
 import { useEffect, useState } from "react";
 import { userApi } from "../../api/services/user";
@@ -102,18 +102,18 @@ const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
         >
             <Grid container spacing={0} alignItems="center">
                 {userImg && (
-                    <Grid item xs={2}>
+                    <Grid item xs={3}>
                         <img
                             src={`http://localhost:8000/${userImg}`}
-                            width="40"
-                            height="40"
+                            width="60"
+                            height="60"
                             alt={"img"}
-                            style={{ borderRadius: "240px", objectFit:'cover' }}
+                            style={{ borderRadius: "240px", objectFit:'cover', backgroundColor:'white' }}
                         />
                     </Grid>
                 )}
-                <Grid item xs={8}>
-                    {userProfile?.user_name}
+                <Grid item xs={7}>
+                    <Typography variant="h5">{userProfile?.user_name}</Typography>
                 </Grid>
 
                 {loginUserId === uploadUserId ? (
