@@ -10,6 +10,7 @@ import MyInfoButtons from '../components/my/MyInfoButtons';
 import Feedback from '../components/Feedback';
 import CelebrityBodyType from '../components/CelebrityBodyType';
 import DailyRoutineRecommendations from '../components/DailyRoutineRecommendations';
+import Loading from './../components/Loading';
 
 const My = () => {
     const { logout } = useAuth()
@@ -49,6 +50,12 @@ const My = () => {
             </BackgroundBox>
             <BackgroundBox style={{ justifyContent: 'center', marginTop:'10px' }}>
                 <MyInfoButtons logout={logout} />
+            </BackgroundBox>
+            <BackgroundBox style={{ justifyContent: 'center', marginTop:'10px' }}>
+                <CelebrityBodyType />
+                <DailyRoutineRecommendations />
+                <Loading />
+                <Feedback />
             </BackgroundBox>
         </Box>
     );
