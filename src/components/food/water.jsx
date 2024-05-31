@@ -80,11 +80,23 @@ const Water = () => {
 
     return (
         <>
+        <Typography
+        display='flex'
+        variant='h6'
+        fontWeight='600'
+        style={{
+            marginBottom:'8px',
+            justifyContent:'center'
+        }}
+        >
+            오늘 마신 물의 양
+        </Typography>
         <ForegroundBox
             display='flex'
             style={{
                 width:'100%',
-                alignContents:'center'
+                alignContents:'center',
+                alignItems:'center'
             }}
             >
             {waterComplete ?
@@ -104,17 +116,6 @@ const Water = () => {
             </>
             :
             <>
-            <Typography
-            display='flex'
-            variant='h6'
-            fontWeight='600'
-            style={{
-                marginBottom:'8px',
-                justifyContent:'center'
-            }}
-            >
-                오늘 마신 물의 양
-            </Typography>
             <PieChart
             series={[
                 {
@@ -126,10 +127,10 @@ const Water = () => {
                 outerRadius: 100,
                 paddingAngle: 2,
                 cornerRadius: 5,
-                cx:'75%',
+                cx: 95
                 },
             ]}
-            maxWidth={360}
+            width={200}
             height={200}
             />
             </>

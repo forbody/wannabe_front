@@ -2,7 +2,7 @@ import { AppBar, IconButton, Toolbar, Avatar, useScrollTrigger, Slide, Button } 
 import { useLocation, useNavigate } from "react-router-dom";
 import useUserandRoleModel from "../../hooks/useUserandRoleModel";
 import { useAuth } from "../../hooks/useAuth";
-import logo_color from "../../assets/logo_color.png"
+import logo_green2 from "../../assets/logo_green2.png"
 
 const HideOnScroll = ({ children, window, setShowTopBtn}) => {
     const trigger = useScrollTrigger({
@@ -36,9 +36,14 @@ const Header = (props) => {
             <AppBar color="white" style={{boxShadow:"none"}}>
                 <Toolbar
                     display="flex"
-                    style={{ justifyContent: "space-between" }}
+                    style={{
+                        justifyContent: "space-between",
+                        borderLeft: "1px solid #eee",
+                        borderRight: "1px solid #eee",
+                        borderBottom: "1px solid #eee"
+                    }}
                 >
-                    <img src={logo_color} alt="logo" width="40px" />
+                    <img src={logo_green2} alt="logo" width="40px" />
                     <Button variant="text" color="secondary" onClick={goHome}>
                     Wannabe
                     </Button>

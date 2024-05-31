@@ -28,7 +28,6 @@ const MyCalendar = () => {
     const [goal, setGoal] = useState();
     // 날짜별 달성도 저장
     const [goalsByDate, setGoalsByDate] = useState({});
-    console.log(goalsByDate);
 
     // getTodo()함수 호출 
     useEffect(() => {
