@@ -1,8 +1,8 @@
-import { AppBar, IconButton, Typography, Toolbar, Avatar, useScrollTrigger, Slide } from "@mui/material";
+import { AppBar, IconButton, Toolbar, Avatar, useScrollTrigger, Slide, Button } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import useUserandRoleModel from "../../hooks/useUserandRoleModel";
 import { useAuth } from "../../hooks/useAuth";
-
+import logo_color from "../../assets/logo_color.png"
 
 const HideOnScroll = ({ children, window, setShowTopBtn}) => {
     const trigger = useScrollTrigger({
@@ -34,11 +34,15 @@ const Header = (props) => {
     return (
             <HideOnScroll setShowTopBtn={props.setShowTopBtn}>
             <AppBar color="white" style={{boxShadow:"none"}}>
-                <Toolbar>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={goHome}>
+                <Toolbar
+                    display="flex"
+                    style={{ justifyContent: "space-between" }}
+                >
+                    <img src={logo_color} alt="logo" width="40px" />
+                    <Button variant="text" color="secondary" onClick={goHome}>
                     Wannabe
-                    </Typography>
-                    <IconButton onClick={goUserMenu} sx={{ p: 0 }}>
+                    </Button>
+                    <IconButton onClick={goUserMenu}>
                         <Avatar alt="userImg" src={ `http://localhost:8000/${userImg}`} sx={{boxShadow:'0px 0px 2px #888'}}/>
                     </IconButton>
                 </Toolbar>

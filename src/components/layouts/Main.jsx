@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import BottomNavi from "./BottomNavi";
 import Header from "./Header";
 import TopButton from "./TopButton";

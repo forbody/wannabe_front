@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { todoApi } from "../api/services/TodoList";
-import { BackgroundBox} from "../components/styled_comp/StyledDiv";
+import { BackgroundBox, PageBox} from "../components/styled_comp/StyledDiv";
 import { Box } from "@mui/material";
 import ShowTodoList from "../components/wannabe/ShowTodoList";
 import WannabeCard from "../components/wannabe/WannabeCard";
@@ -93,12 +93,7 @@ const Wannabe = () => {
     }, [isChange]);
 
     return ( 
-        <Box
-            display='flex'
-            flexDirection='column'
-            alignItems='center'
-            style={{margin: "16px 0"}}
-        >
+        <PageBox>
             <BackgroundBox style={{ justifyContent: 'center'}}>
                 <WannabeCard liking={liking} like={like} unlike={unlike}/>
             </BackgroundBox>
@@ -107,7 +102,7 @@ const Wannabe = () => {
                     <ShowTodoList liking={liking} like={like} unlike={unlike} e={e} key={e.id} setIsChange={setIsChange} />
                 ))}
             </BackgroundBox>
-        </Box>
+        </PageBox>
     );
 }
 
