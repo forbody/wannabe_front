@@ -200,26 +200,6 @@ const TodoForm = () => {
                             item={selectItem}
                         />
                     </Box>
-                    <Box sx={{ marginTop: "10px" }}>
-                        <ToggleButtonGroup
-                            value={recur}
-                            onChange={onSelectRecur}
-                            fullWidth
-                            sx={{ border: "none" }}
-                        >
-                            <ToggleButton value="1" sx={{ color: red[400] }}>
-                                일
-                            </ToggleButton>
-                            <ToggleButton value="2">월</ToggleButton>
-                            <ToggleButton value="3">화</ToggleButton>
-                            <ToggleButton value="4">수</ToggleButton>
-                            <ToggleButton value="5">목</ToggleButton>
-                            <ToggleButton value="6">금</ToggleButton>
-                            <ToggleButton value="7" sx={{ color: blue[400] }}>
-                                토
-                            </ToggleButton>
-                        </ToggleButtonGroup>
-                    </Box>
                     <Grid container spacing={1} sx={{ marginTop: "10px" }}>
                         <Grid item xs={6}>
                             <Button
