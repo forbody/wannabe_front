@@ -4,8 +4,12 @@ import male from "../../assets/MaleBodyShape.JPG";
 import female from "../../assets/FemaleBodyShape.JPG";
 import Step from "../../components/signup/Step";
 import { userApi } from "../../api/services/user";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 const InfoUpdate = () => {
+    const { goToErrPage } = useAuth();
+    const navigate = useNavigate();
     const token = localStorage.getItem("token");
     const [step, setStep] = useState(1);
     const [joinData, setJoinData] = useState({
@@ -39,11 +43,7 @@ const InfoUpdate = () => {
                 throw new Error(res2.message);
             }
         }catch(err) {
-            Swal.fire({
-                title: "에러 발생",
-                text: err.message,
-                icon: "error"
-            });
+            goToErrPage(err, () => navigate('/err'));
         }
     }
 

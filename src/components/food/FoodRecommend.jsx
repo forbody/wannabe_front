@@ -4,9 +4,13 @@ import { foodApi } from "../../api/services/food";
 import { Button, Typography } from '@mui/material';
 import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { todoApi } from "../../api/services/TodoList";
+import { useAuth } from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 
 const FoodRecommend = ({meal}) => {
+    const { goToErrPage } = useAuth();
+    const navigate = useNavigate();
     // 오늘 날짜 받아오기
     const offset = new Date().getTimezoneOffset() * 60000;
     const currentDate = new Date(Date.now() - offset).toISOString().slice(0, 10);
@@ -50,7 +54,7 @@ const FoodRecommend = ({meal}) => {
                 throw new Error(res.message);
             }
         } catch (err) {
-            console.error(err)
+            goToErrPage(err, () => navigate('/err'));
         }
     };
 

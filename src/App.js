@@ -21,7 +21,6 @@ import Error500 from './pages/Error/Error500';
 function App() {
   
   const auth = useProvideAuth(); 
-  // 로그인 하지 않은 경우: 무조건 <Landing />으로 이동
   return (
     <LoginContext.Provider value={auth}>
       <Layout>

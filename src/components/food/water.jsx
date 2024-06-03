@@ -32,11 +32,6 @@ const Water = () => {
             }
         }catch(err) {
             goToErrPage(err, () => navigate('/err'));
-            // Swal.fire({
-            //     title: "에러 발생",
-            //     text: err.message,
-            //     icon: "error"
-            // });
         }
     }
 
@@ -61,11 +56,7 @@ const Water = () => {
                 throw new Error(res.message);
             }
         }catch(err) {
-            Swal.fire({
-                title: "에러 발생",
-                text: err.message,
-                icon: "error"
-            });
+            goToErrPage(err, () => navigate('/err'));
         }
     }
 
