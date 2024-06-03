@@ -7,8 +7,10 @@ import Step from "../signup/Step";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
 import { PageBox } from "../styled_comp/StyledDiv";
+import { useAuth } from "../../hooks/useAuth";
 
 const MyInfoUpdate = () => {
+    const { goToErrPage } = useAuth();
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
     const [step, setStep] = useState(1);
@@ -33,11 +35,7 @@ const MyInfoUpdate = () => {
                 throw new Error(res.message);
             }
         }catch(err) {
-            Swal.fire({
-                title: "에러 발생",
-                text: err.message,
-                icon: "error"
-            });
+            goToErrPage(err, () => navigate('/err'));
         }
     }
     

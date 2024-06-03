@@ -12,7 +12,8 @@ import ExerciseModal from "../components/exercises/ExerciseModal";
 import useUserandRoleModel from "../hooks/useUserandRoleModel";
 import { exerciseApi } from "../api/services/exercise";
 import StarsIcon from '@mui/icons-material/Stars';
-import { bgcolor } from "@mui/system";
+import { bgcolor, borderLeft, width } from "@mui/system";
+import { PiX } from "react-icons/pi";
 
 
 const Exercise = () => {
@@ -83,17 +84,29 @@ const Exercise = () => {
             }}
         >
             {/* 워너비가 말로 전해주는 느낌 */}
-            <Container>
+                <Box
+                    display="flex"
+                    style={{
+                        width: '100%',
+                        height: '160px',
+                        backgroundColor: '#ffffff',
+                        borderLeft: '1px solid #eee',
+                        borderRight: '1px solid #eee',
+                        alignItems: 'center',
+                        zIndex: 2,
+                        justifyContent: 'center'
+                    }}
+                >
                 {modelImg && (
                     <ImageBox>
                     <img
                         src={`http://localhost:8000/${modelImg}`}
                         alt={"img"}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        style={{ width: '300px', height: '300px', objectFit: 'cover' }}
                     />
                     </ImageBox>
                 )}
-            </Container>
+                </Box>
             {/* </BackgroundBox> */}
             {/* <BackgroundBox half> */}
             <Container>
@@ -177,23 +190,23 @@ const Container = styled(Box)(() => ({
 }));
 
 const ImageBox = styled(Box)(() => ({
-    width: '100%',
-    height: '420px', 
-    borderRadius: '5em',
+    width: '300px',
+    height: '300px', 
+    borderRadius: '100%',
     overflow: 'hidden',
-    marginRight: '20px',
+    marginTop: '200px',
     flexShrink: 0,
-    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.8)',
+    border: '16px solid #ffffff50',
+    zIndex: 3
 }));
 
 const SpeechBubble = styled(Box)(() => ({
     position: 'relative',
     background: 'white',
     borderRadius: '2em',
-    padding: '10px',
-    marginLeft: '20px',
+    padding: '8px 16px',
+    marginTop: '180px',
     flexGrow: 3,
-    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.5)', 
     '&:after': {
         content: "''",
         position: 'absolute',
@@ -205,7 +218,7 @@ const SpeechBubble = styled(Box)(() => ({
         borderBottomColor: '#ffffff',
         borderRight: 0,
         borderTop: 0,
-        marginTop: '-44px',
+        marginTop: '-36px',
     }
 }));
 export default Exercise;

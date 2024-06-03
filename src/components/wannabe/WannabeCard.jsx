@@ -14,10 +14,12 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import Swal from 'sweetalert2';
 import WannabeLikeBtn from './WannabeLikeBtn';
 import WannabeDetailModal from './WannabeDetailModal';
+import { useNavigate } from 'react-router-dom';
 
 const WannabeCard = ({liking, like, unlike}) => {
+    const navigate = useNavigate();
     const token = localStorage.getItem("token");
-    const { loginUser } = useAuth();
+    const { loginUser, goToErrPage } = useAuth();
     const theme = useTheme();
     const { userProfile, modelProfile } = useUserandRoleModel();
     const [activeStep, setActiveStep] = useState(0);
@@ -47,7 +49,7 @@ const WannabeCard = ({liking, like, unlike}) => {
             const arr = [modelProfile, ...res.result]
             setRoleModels(arr);
         } catch (err) {
-            console.error("Error: ", err);
+            goToErrPage(err, () => navigate('/err'));
         }
     }
 
@@ -70,11 +72,7 @@ const WannabeCard = ({liking, like, unlike}) => {
                 }
             }
         }catch(err) {
-            Swal.fire({
-                title: "에러 발생",
-                text: err.message,
-                icon: "error"
-            });
+            goToErrPage(err, () => navigate('/err'));
         }
     }
 

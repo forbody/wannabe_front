@@ -7,9 +7,7 @@ import useUserandRoleModel from "../hooks/useUserandRoleModel";
 
 const Food = () => {
     const { userProfile, modelProfile, modelImg } = useUserandRoleModel();
-
     const [meal, setMeal] = useState('');
-    const [timeColor, setTimeColor] = useState('linear-gradient(135deg, #fdf00e, #33cc33)')
     
     // 아침, 점심, 저녁 결정
     useEffect(() => {
@@ -17,13 +15,10 @@ const Food = () => {
         const today_time = today.getHours();
         if (today_time >= 0 && today_time <= 10) {
             setMeal('아침');
-            setTimeColor('linear-gradient(135deg, #ff9b00, #fdf00e)');
         } else if (today_time >= 11 && today_time <= 15) {
             setMeal('점심');
-            setTimeColor('linear-gradient(135deg, #fdf00e, #33cc33)');
         } else if (today_time >= 16 && today_time <= 23) {
             setMeal('저녁');
-            setTimeColor('linear-gradient(135deg, #33cc33, #070070)');
         }
         }, []);
 
@@ -33,9 +28,7 @@ const Food = () => {
     }
 
     return ( 
-        <PageBox
-            bgColor={timeColor}
-        >
+        <PageBox>
             <BackgroundBox>
                 <ForegroundBox
                     display='flex'
@@ -63,7 +56,7 @@ const Food = () => {
                     >
                         {meal} 식단
                     </Typography>
-                    {modelImg && <img src={ `http://localhost:8000/${modelImg}`} width='100' alt={"img"} style={{borderRadius:"100px"}} />}
+                    {modelImg && <img src={ `http://localhost:8000/${modelImg}`} width='200' alt={"img"} style={{borderRadius:"100px"}} />}
                     <Typography
                     style={{
                         padding:'24px 0 0'

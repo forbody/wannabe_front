@@ -4,8 +4,10 @@ import { BackgroundBox, ForegroundBox, PageBox } from "../styled_comp/StyledDiv"
 import ShowTodoList from "../wannabe/ShowTodoList";
 import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 const MyShareList = () => {
+    const { goToErrPage } = useAuth();
     const token = localStorage.getItem("token");
     const [myShareList, setMyShareList] = useState();
     const [isChange, setIsChange] = useState();
@@ -20,7 +22,7 @@ const MyShareList = () => {
                 throw new Error(res.message);
             }
         }catch (err) {
-            console.error(err);
+            goToErrPage(err, () => navigate('/err'));
         }
     }
 
