@@ -18,7 +18,7 @@ const Loading = () => {
             height: '100px !important', // 크기를 키우기
             }}
             />
-      <Box mt={2} fontSize="h4.fontSize" color="primary.main"> {/* 텍스트 크기를 키움 */}
+      <Box mt={2} fontSize="h4.fontSize" color="White"> {/* 텍스트 크기를 키움 */}
         Loading...
         </Box>
     </Box>
