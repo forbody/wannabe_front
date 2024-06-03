@@ -39,6 +39,7 @@ export const ForegroundBox = styled.div`
     background-color: #fff
 `
 
+
 export const PageBox = ({children}) => {
     return (
         <Box
@@ -49,14 +50,13 @@ export const PageBox = ({children}) => {
                 flexWrap: "wrap",
                 overflowY: "scroll",
                 scrollbarWidth: "none",
-                justifyContent: "flex-start",
                 alignItems: "center",
                 position: 'relateve',
                 margin: "16px 0",
-                flexDirection: "column"
+                flexDirection: "column",
             }}
         >
-        {children}
+            {children}
         </Box>
-    )
+    );
 }
