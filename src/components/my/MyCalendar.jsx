@@ -13,8 +13,12 @@ import { useEffect, useState } from 'react';
 import { todoApi } from '../../api/services/TodoList';
 import DayAchieve from './DayAchive';
 import { width } from '@mui/system';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 
 const MyCalendar = () => {
+    const { goToErrPage } = useAuth();
+    const navigate = useNavigate();
     const token = localStorage.getItem("token");
     const offset = new Date().getTimezoneOffset() * 60000;
     const today = new Date(Date.now() - offset).toISOString().slice(0, 10);
@@ -55,7 +59,7 @@ const MyCalendar = () => {
                 setDayGoal(0);
             }
         } catch (err) {
-            console.error("Error: ", err);
+            goToErrPage(err, () => navigate('/err'));
         }
     }
 
@@ -85,7 +89,7 @@ const MyCalendar = () => {
             }
             setGoalsByDate(newGoalsByDate);
         } catch (err) {
-            console.error("Error: ", err);
+            goToErrPage(err, () => navigate('/err'));
         }
     };
 

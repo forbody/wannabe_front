@@ -4,8 +4,12 @@ import { useEffect, useState } from "react";
 import { userApi } from "../../api/services/user";
 import { TiDelete } from "react-icons/ti";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 const MyLikingOrLiker = ({open, handleClose, likingOrLiker, mylike=false}) => {
+    const { goToErrPage } = useAuth();
+    const navigate = useNavigate();
     const token = localStorage.getItem("token");
     const [likingOrLikerProfiles, setlikingOrLikerProfiles] = useState([]);
     
@@ -15,7 +19,8 @@ const MyLikingOrLiker = ({open, handleClose, likingOrLiker, mylike=false}) => {
         try {
             const res = await userApi.getUser(`${id}`, token);
             return res.payload;
-            } catch (err) {
+            } 
+        catch (err) {
             console.error("내가 좋아하는 유저 세부 정보 가져오기 실패", err);
             return null;
         }
@@ -36,11 +41,7 @@ const MyLikingOrLiker = ({open, handleClose, likingOrLiker, mylike=false}) => {
                 throw new Error(res.message);
             }
         }catch(err) {
-            Swal.fire({
-                title: "에러 발생",
-                text: err.message,
-                icon: "error"
-            });
+            goToErrPage(err, () => navigate('/err'));
         }
     }
 

@@ -7,7 +7,10 @@ import MyLikeBtn from '../components/my/MyLikeBtn';
 import MyCalendar from '../components/my/MyCalendar';
 import MyBmiChart from '../components/my/MyBmiChart';
 import MyInfoButtons from '../components/my/MyInfoButtons';
-import { display } from '@mui/system';
+import Feedback from '../components/Feedback';
+import CelebrityBodyType from '../components/CelebrityBodyType';
+import DailyRoutineRecommendations from '../components/DailyRoutineRecommendations';
+import Loading from './../components/Loading';
 
 const My = () => {
     const { logout } = useAuth()
@@ -60,8 +63,23 @@ const My = () => {
             >
                 <MyInfoButtons logout={logout} />
             </BackgroundBox>
+            <BackgroundBox style={{ justifyContent: 'center', marginTop:'10px' }}>
+                <CelebrityBodyType />
+                <DailyRoutineRecommendations />
+                <Loading />
+                <Feedback />
+            </BackgroundBox>
         </PageBox>
     );
+
+    // return (
+    //     <div>
+    //     <h1>My</h1>
+    //     <Feedback />
+    //     </div>
+    // );
+
+
 }
 
 export default My;

@@ -43,7 +43,9 @@ const Header = (props) => {
                         borderBottom: "1px solid #eee"
                     }}
                 >
-                    <img src={logo_green2} alt="logo" width="40px" />
+                    <Button onClick={goHome}>
+                        <img src={logo_green2} alt="logo" width="40px" />
+                    </Button>
                     <Button variant="text" color="secondary" onClick={goHome}>
                     Wannabe
                     </Button>

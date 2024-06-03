@@ -18,7 +18,7 @@ const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
     const currentDate = new Date(Date.now() - offset).toISOString().slice(0, 10);
     localStorage.setItem("date", currentDate);
 
-    const { loginUser, logout, getUserInfoByToken } = useAuth();
+    const { loginUser, logout, getUserInfoByToken, goToErrPage } = useAuth();
 
     const [exercise, setExercise] = useState();
     const [breakfast, setBreakfast] = useState();
@@ -51,7 +51,7 @@ const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
             setLunch(lunch)
             setDinner(dinner)
         } catch (err) {
-            console.error("Error: ", err);
+            goToErrPage(err, () => navigate('/err'));
         }
     };
 
@@ -65,7 +65,7 @@ const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
             await todoApi.deleteShareComment(e.Share_comments[0]?.id, token);
             setIsChange(prev => !prev)
         } catch (err) {
-            console.error("Error: ", err);
+            goToErrPage(err, () => navigate('/err'));
         }
     };
 

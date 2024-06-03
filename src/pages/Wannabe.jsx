@@ -7,10 +7,12 @@ import WannabeCard from "../components/wannabe/WannabeCard";
 import { useAuth } from "../hooks/useAuth";
 import Swal from 'sweetalert2';
 import { userApi } from './../api/services/user';
+import { useNavigate } from "react-router-dom";
 
 const Wannabe = () => {
     const token = localStorage.getItem("token");
-    const { loginUser, getUserInfoByToken } = useAuth();
+    const navigate = useNavigate();
+    const { loginUser, getUserInfoByToken, goToErrPage } = useAuth();
     const [shareList, setShareList] = useState();
     const [isChange, setIsChange] = useState(false);
     const [liking, setLiking] = useState([]);
@@ -29,11 +31,7 @@ const Wannabe = () => {
                 }
             }
         }catch(err) {
-            Swal.fire({
-                title: "에러 발생",
-                text: err.message,
-                icon: "error"
-            });
+            goToErrPage(err, () => navigate('/err'));
         }
     };
 
@@ -48,11 +46,7 @@ const Wannabe = () => {
                 throw new Error(res.message);
             }
         }catch(err) {
-            Swal.fire({
-                title: "에러 발생",
-                text: err.message,
-                icon: "error"
-            });
+            goToErrPage(err, () => navigate('/err'));
         }
     }
 
@@ -67,11 +61,7 @@ const Wannabe = () => {
                 throw new Error(res.message);
             }
         }catch(err) {
-            Swal.fire({
-                title: "에러 발생",
-                text: err.message,
-                icon: "error"
-            });
+            goToErrPage(err, () => navigate('/err'));
         }
     }
 
@@ -80,7 +70,7 @@ const Wannabe = () => {
             const res = await todoApi.getShareList(token);
             setShareList(res.payload)
         } catch (err) {
-            console.error("Error: ", err);
+            goToErrPage(err, () => navigate('/err'));
         }
     }
 

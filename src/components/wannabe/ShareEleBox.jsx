@@ -8,11 +8,13 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { useEffect, useState } from "react";
 import { userApi } from "../../api/services/user";
+import { useNavigate } from "react-router-dom";
 
 const ShareEleBox = ({ children, elements  }) => {
+    const navigate = useNavigate();
     const token = localStorage.getItem("token");
     const [isTrue, setIsTrue] = useState(false);
-    const { loginUser, getUserInfoByToken } = useAuth();
+    const { loginUser, goToErrPage, getUserInfoByToken } = useAuth();
     const [totalCal, setTotalCal] = useState();
     const [order, setOrder] = useState();
 
@@ -53,7 +55,7 @@ const ShareEleBox = ({ children, elements  }) => {
                 token
             );
         } catch (err) {
-            console.error("Error: ", err);
+            goToErrPage(err, () => navigate('/err'));
         }
     };
     return (
