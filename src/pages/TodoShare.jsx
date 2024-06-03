@@ -4,9 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { todoApi } from "../api/services/TodoList";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { useAuth } from "../hooks/useAuth";
 
 const TodoShare = () => {
     const token = localStorage.getItem("token");
+    const { goToErrPage } = useAuth();
     const navigate = useNavigate();
     const [comment, setComment] = useState();
 
@@ -42,7 +44,7 @@ const TodoShare = () => {
                 });
             }
         } catch (err) {
-            console.error("Error: ", err);
+            goToErrPage(err, () => navigate('/err'));
         }
     }
 

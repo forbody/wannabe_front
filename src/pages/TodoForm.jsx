@@ -7,10 +7,12 @@ import { useNavigate } from 'react-router-dom';
 import { todoApi } from '../api/services/TodoList';
 import NumberInput from '../components/todo_list/NumberInput';
 import Swal from 'sweetalert2';
+import { useAuth } from '../hooks/useAuth';
 
 const TodoForm = () => {
     const token = localStorage.getItem("token");
     // 뒤로가기 버튼
+    const { goToErrPage } = useAuth();
     const navigate = useNavigate();
     // 카테고리 토글버튼
     const [category, setCategory] = useState(1);
@@ -55,7 +57,7 @@ const TodoForm = () => {
                 setSortedItems(res.payload.Food);
             }
         } catch (err) {
-            console.error("Error: ", err);
+            goToErrPage(err, () => navigate('/err'));
         }
     };
 
@@ -116,7 +118,7 @@ const TodoForm = () => {
                 });
             }
         } catch (err) {
-            console.error("Error: ", err);
+            goToErrPage(err, () => navigate('/err'));
         }
     };
 

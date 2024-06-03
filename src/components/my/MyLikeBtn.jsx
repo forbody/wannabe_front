@@ -4,8 +4,12 @@ import { userApi } from "../../api/services/user";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import MyLikingOrLiker from "./MyLikingOrLiker";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 const MyLikeBtn = ({userProfile}) => {
+    const { goToErrPage } = useAuth();
+    const navigate = useNavigate();
     const token = localStorage.getItem("token");
     const [liking, setLiking] = useState();
     const [liker, setLiker] = useState();
@@ -32,11 +36,7 @@ const MyLikeBtn = ({userProfile}) => {
                 }
             }
         }catch(err) {
-            Swal.fire({
-                title: "에러 발생",
-                text: err.message,
-                icon: "error"
-            });
+            goToErrPage(err, () => navigate('/err'));
         }
     }
 
@@ -53,11 +53,7 @@ const MyLikeBtn = ({userProfile}) => {
                 }
             }
         }catch(err) {
-            Swal.fire({
-                title: "에러 발생",
-                text: err.message,
-                icon: "error"
-            });
+            goToErrPage(err, () => navigate('/err'));
         }
     }
 

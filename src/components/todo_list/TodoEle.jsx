@@ -3,8 +3,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { orange, red } from "@mui/material/colors";
 import { todoApi } from "../../api/services/TodoList";
+import { useAuth } from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const TodoEle = ({ e, setIsAchieve }) => {
+    const { goToErrPage } = useAuth();
+    const navigate = useNavigate();
     const token = localStorage.getItem("token");
     const onAchieveELe = () => {
         setAchieve();
@@ -15,7 +19,7 @@ const TodoEle = ({ e, setIsAchieve }) => {
         try {
             await todoApi.updateEleAchieve(e.id,token);
         } catch (err) {
-            console.error("Error: ", err);
+            goToErrPage(err, () => navigate('/err'));
         }
     }
     const onDeleteELe = async () => {
@@ -23,7 +27,7 @@ const TodoEle = ({ e, setIsAchieve }) => {
             await todoApi.deleteTodoEle(e.id, token);
             setIsAchieve((prev) => !prev);
         } catch (err) {
-            console.error("Error: ", err);
+            goToErrPage(err, () => navigate('/err'));
         }
         
     };

@@ -18,7 +18,7 @@ import Weekly from "../components/todo_list/Weekly";
 
 const TodoList = () => {
     const token = localStorage.getItem("token");
-    const { loginUser, kakaoLogin }= useAuth();
+    const { loginUser, kakaoLogin, goToErrPage }= useAuth();
     // 카카오 로그인 유저 가운데 구유저/신유저 구분
     const { userProfile } = useUserandRoleModel();
 
@@ -65,7 +65,7 @@ const TodoList = () => {
                 setFood(fo);
             }
         } catch (err) {
-            console.error("Error: ", err);
+            goToErrPage(err, () => navigate('/err'));
         }
     }
 
@@ -89,7 +89,7 @@ const TodoList = () => {
                 navigate("/todolist/share");
             }
         } catch (err) {
-            console.error("Error: ", err);
+            goToErrPage(err, () => navigate('/err'));
         }
     }
     const goTodoForm =() => {

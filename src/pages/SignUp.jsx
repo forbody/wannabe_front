@@ -5,9 +5,11 @@ import male from "../assets/MaleBodyShape.JPG";
 import female from "../assets/FemaleBodyShape.JPG";
 import axios from 'axios';
 import Step from "../components/signup/Step";
+import { useAuth } from "../hooks/useAuth";
 
 const SignUp = () => {
     const navigate = useNavigate();
+    const { goToErrPage } = useAuth();
     const [step, setStep] = useState(1);
     const [joinData, setJoinData] = useState({
         email: "",
@@ -72,11 +74,7 @@ const SignUp = () => {
                 throw new Error("입력값을 확인해주세요");
             }
         } catch (err) {
-            Swal.fire({
-                title: "에러 발생",
-                text: err.message,
-                icon: "error"
-            });
+            goToErrPage(err, () => navigate('/err'));
         }
     });
     let stepComp;

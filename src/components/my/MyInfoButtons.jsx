@@ -7,8 +7,10 @@ import { FaUserMinus } from "react-icons/fa";
 import { Divider, Typography } from '@mui/material';
 import Swal from 'sweetalert2';
 import { userApi } from '../../api/services/user';
+import { useAuth } from '../../hooks/useAuth';
 
 const MyInfoButtons = ({ logout }) => {
+    const { goToErrPage } = useAuth();
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
     const deleteUser = () => {
@@ -38,11 +40,7 @@ const MyInfoButtons = ({ logout }) => {
                 } 
             });
         }catch(err) {
-            Swal.fire({
-                title: "에러 발생",
-                text: err.message,
-                icon: "error"
-            });
+            goToErrPage(err, () => navigate('/err'));
         }
         
     } 
