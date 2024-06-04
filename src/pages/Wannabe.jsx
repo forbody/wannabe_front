@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { todoApi } from "../api/services/TodoList";
-import { BackgroundBox, PageBox} from "../components/styled_comp/StyledDiv";
-import { Box } from "@mui/material";
+import { BackgroundBox, ForegroundBox, PageBox} from "../components/styled_comp/StyledDiv";
+import { Box, Typography } from "@mui/material";
 import ShowTodoList from "../components/wannabe/ShowTodoList";
 import WannabeCard from "../components/wannabe/WannabeCard";
 import { useAuth } from "../hooks/useAuth";
 import Swal from 'sweetalert2';
 import { userApi } from './../api/services/user';
 import { useNavigate } from "react-router-dom";
+import { width } from '@mui/system';
 
 const Wannabe = () => {
     const token = localStorage.getItem("token");
@@ -88,9 +89,14 @@ const Wannabe = () => {
                 <WannabeCard liking={liking} like={like} unlike={unlike}/>
             </BackgroundBox>
             <BackgroundBox style={{ justifyContent: 'center', marginTop : '10px' }}>
-                {shareList?.map((e) => (
+                {shareList?.length !== 0 ? shareList?.map((e) => (
                     <ShowTodoList liking={liking} like={like} unlike={unlike} e={e} key={e.id} setIsChange={setIsChange} />
-                ))}
+                ))
+                :
+                <ForegroundBox style={{width:"100%", textAlign:"center"}}>
+                    <Typography color="#888">공유된 일정이 없습니다</Typography>
+                </ForegroundBox>
+                }
             </BackgroundBox>
         </PageBox>
     );
