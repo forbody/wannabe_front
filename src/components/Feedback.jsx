@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
 import { TextField, Button, Card, CardContent, Typography } from '@mui/material';
 import axios from 'axios';
+import { errorApi } from '../api/services/error';
+
 
 const Feedback = () => {
+    const token = localStorage.getItem("token");
     const [errorDetails, setErrorDetails] = useState('');
     const [feedback, setFeedback] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/api/report-error', { errorDetails });
-            setFeedback(response.data.message);
+            const response = await errorApi.postErr({errorDetails}, token)
+            if(response.code ===200) {
+                setFeedback(response.data.message);
+            } else {
+                setFeedback('실패했습니다!.');
+            }
         } catch (error) {
-            setFeedback('Error submitting details. Please try again later.');
+            console.error(error)
         }
     };
 
