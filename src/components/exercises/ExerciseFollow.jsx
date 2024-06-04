@@ -14,8 +14,10 @@ const ExerciseFollow = ({favExercise}) => {
                         display: 'flex', 
                         flexDirection: 'column', 
                         alignItems: 'center', 
-                        justifyContent: 'center'  }}>
-                    <Typography variant="h6" >{favExercise.name}</Typography>
+                        justifyContent: 'center', 
+                        marginTop: '5px'
+                        }}>
+                    <Typography variant="h6"  >{favExercise.name}</Typography>
                     <ExerImg 
                         src={`http://localhost:8000${favExercise.img}`}
                         alt={favExercise.name}
