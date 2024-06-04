@@ -134,7 +134,7 @@ const TodoForm = () => {
                 scrollbarWidth: "none",
             }}
         >
-            <BackgroundBox style={{ width: "90%" , justifyContent:'center'}}>
+            <BackgroundBox style={{ width: "90%", justifyContent: "center" }}>
                 <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                     일과 등록
                 </Typography>
@@ -206,16 +206,6 @@ const TodoForm = () => {
                         <Grid item xs={6}>
                             <Button
                                 variant="contained"
-                                color="secondary"
-                                fullWidth
-                                onClick={() => onUploadTodoEle()}
-                            >
-                                일과 등록
-                            </Button>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Button
-                                variant="contained"
                                 color="warning"
                                 fullWidth
                                 onClick={() => {
@@ -223,6 +213,16 @@ const TodoForm = () => {
                                 }}
                             >
                                 돌아가기
+                            </Button>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                fullWidth
+                                onClick={() => onUploadTodoEle()}
+                            >
+                                일과 등록
                             </Button>
                         </Grid>
                     </Grid>

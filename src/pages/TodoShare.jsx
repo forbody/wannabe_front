@@ -60,7 +60,7 @@ const TodoShare = () => {
                 scrollbarWidth: "none",
             }}
         >
-            <BackgroundBox style={{ width: "90%" , justifyContent:'center'}}>
+            <BackgroundBox style={{ width: "90%", justifyContent: "center" }}>
                 <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                     일과 공유하기
                 </Typography>
@@ -86,16 +86,6 @@ const TodoShare = () => {
                         <Grid item xs={6}>
                             <Button
                                 variant="contained"
-                                color="secondary"
-                                fullWidth
-                                onClick={() => onShareList()}
-                            >
-                                공유하기
-                            </Button>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Button
-                                variant="contained"
                                 color="warning"
                                 fullWidth
                                 onClick={() => {
@@ -103,6 +93,16 @@ const TodoShare = () => {
                                 }}
                             >
                                 돌아가기
+                            </Button>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                fullWidth
+                                onClick={() => onShareList()}
+                            >
+                                공유하기
                             </Button>
                         </Grid>
                     </Grid>

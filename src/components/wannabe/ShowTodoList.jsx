@@ -57,6 +57,7 @@ const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
 
     const onModifyComments = () => {
         localStorage.setItem("date", e.date);
+        setIsChange(prev => !prev)
         navigate("/todolist/share");
     };
     const onDeleteShare = async () => {

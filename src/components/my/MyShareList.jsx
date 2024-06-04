@@ -28,12 +28,11 @@ const MyShareList = () => {
 
     useEffect(() => {
         getMyShareList()
-    },[token, myShareList])
-
+    },[token, isChange])
+    
     return (
         <PageBox justifyContent="center">
             <BackgroundBox style={{ justifyContent: "center" }}>
-                {console.log(myShareList)}
                 {myShareList?.length ? (
                     myShareList.map((e) => (
                         <ShowTodoList
