@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { todoApi } from "../../api/services/TodoList";
 import { BackgroundBox, ForegroundBox, PageBox } from "../styled_comp/StyledDiv";
 import ShowTodoList from "../wannabe/ShowTodoList";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -28,14 +28,11 @@ const MyShareList = () => {
 
     useEffect(() => {
         getMyShareList()
-    },[token, myShareList])
-
+    },[token, isChange])
+    
     return (
-        <PageBox
-            justifyContent="center"
-        >
+        <PageBox justifyContent="center">
             <BackgroundBox style={{ justifyContent: "center" }}>
-                {console.log(myShareList)}
                 {myShareList?.length ? (
                     myShareList.map((e) => (
                         <ShowTodoList
@@ -53,8 +50,16 @@ const MyShareList = () => {
                             marginTop: "5px",
                         }}
                     >
-                        <Box textAlign="center" color='secondary'>공유된 일과가 없습니다.</Box>
-                        <Box textAlign="center" color='secondary'>나의 일과를 공유해 주세요!</Box>
+                        <Typography
+                            variant="h6"
+                            gutterBottom
+                            textAlign="center"
+                        >
+                            공유된 일과가 없습니다.
+                        </Typography>
+                        <Typography variant="subtitle2" textAlign="center">
+                            나의 일과를 공유해 주세요!
+                        </Typography>
                     </ForegroundBox>
                 )}
                 <Box width="95%" marginTop="10px">

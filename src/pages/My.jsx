@@ -17,29 +17,46 @@ const My = () => {
         return <div>Loading...</div>;
     }
     
-
-    return ( 
+    return (
         <PageBox>
-            {userImg && <img src={ `http://localhost:8000/${userImg}`} width='200' height="200" alt={"img"} style={{ borderRadius:"200px", objectFit : "cover", backgroundColor:'white'}} />}
+            {userImg && (
+                <img
+                    src={`http://localhost:8000/${userImg}`}
+                    width="200"
+                    height="200"
+                    alt={"img"}
+                    style={{
+                        borderRadius: "200px",
+                        objectFit: "cover",
+                        backgroundColor: "white"
+                    }}
+                />
+            )}
             <Typography
-            variant='h6'
-            fontWeight='600'
-            style={{
-                padding:'24px'
-            }}
+                variant="h6"
+                fontWeight="600"
+                style={{
+                    padding: "24px",
+                }}
             >
-            {userProfile?.user_name} 님의 페이지
+                {userProfile?.user_name} 님의 페이지
             </Typography>
-            <BackgroundBox style={{ justifyContent: 'center'}}>
+            <BackgroundBox style={{ justifyContent: "center" }}>
                 <MyLikeBtn userProfile={userProfile} />
             </BackgroundBox>
-            <BackgroundBox style={{ justifyContent: 'center', marginTop:'10px'}}>
+            <BackgroundBox
+                style={{ justifyContent: "center", marginTop: "10px" }}
+            >
                 <MyCalendar />
             </BackgroundBox>
-            <BackgroundBox style={{ justifyContent: 'center', marginTop:'10px' }}>
+            <BackgroundBox
+                style={{ justifyContent: "center", marginTop: "10px" }}
+            >
                 <MyBmiChart userProfile={userProfile} />
             </BackgroundBox>
-            <BackgroundBox style={{ justifyContent: 'center', marginTop:'10px' }}>
+            <BackgroundBox
+                style={{ justifyContent: "center", marginTop: "10px" }}
+            >
                 <MyInfoButtons logout={logout} />
             </BackgroundBox>
         </PageBox>
