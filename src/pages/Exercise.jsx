@@ -123,10 +123,10 @@ const Exercise = () => {
             >
                 <h3 style={{ display: 'flex', alignItems: 'center', fontSize: '20px' }}>
                 <StarsIcon style={{ color: '#ff7961', fontSize: 'inherit', marginRight: '10px' }} />
-                내가 즐겨찾기 한 운동
+                내가 즐겨찾기한 운동
                 </h3>
                 <ForegroundBox>
-                    <br />
+                    {favExercises && favExercises.length > 0 ? (
                     <Carousel
                         showArrows={false}
                         autoPlay={false}
@@ -139,6 +139,11 @@ const Exercise = () => {
                                 <ExerciseFollow favExercise={f} />
                             ))}
                     </Carousel>
+                    ) : (
+                        <div style={{ textAlign: 'center', color: '#888' }}>
+                            즐겨찾기한 항목이 없습니다.
+                        </div>
+                    )}
                 </ForegroundBox>
             </BackgroundBox>
 
