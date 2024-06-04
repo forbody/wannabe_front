@@ -48,7 +48,7 @@ const StepInput = ({ inputData, joinData, addJoinData, bodyShape, uploadProfileI
                                 ) : 
                                 i.type === 'checkbox' ? // 체크박스 타입 분기 처리
                                 (<>
-                                    {i.img && <img src={i.img} alt="bodyshape"/>} 
+                                    {i.img && <img src={i.img} alt="bodyshape" width={300}/>} 
                                     <Typography>{i.message}</Typography>
                                     {i.img === male ? // 체크박스 타입 분기 처리 - 남성일 때
                                     <>
