@@ -47,7 +47,7 @@ const WannabeDetailModal = ({open, handleClose, roleModels, activeStep}) => {
         case 8:
             bodyshape = "큰 삼각 체형"
             gender="여성"
-            description = "사각체형은 사각체형이다"
+            description = "사각체형은 김태희의 체형에 해당해요 -- 1.굵은 몸통 2. 보통의 어깨너비 3.긴 팔 4.긴 총길이 5.보통의 엉덩이길이"
             break;
         case 9:
             bodyshape = "사각 체형"
