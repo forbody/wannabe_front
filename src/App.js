@@ -17,6 +17,7 @@ import MyInfoUpdate from './components/my/MyInfoUpdate';
 import MyShareList from './components/my/MyShareList';
 import Error404 from './pages/Error/Error404';
 import Error500 from './pages/Error/Error500';
+import './App.css';
 
 function App() {
   

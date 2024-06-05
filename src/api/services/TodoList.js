@@ -19,7 +19,7 @@ export const todoApi = {
             "Authorization": token,
         }
     }),
-    updateEleAchieve : (id, token) => api.patch(`/todo_element/achieve/${id}`,{} ,{
+    updateEleAchieve : (id, token) => api.patch(`/todo_element/${id}/achieve/`,{} ,{
         headers: {
             "Authorization": token,
         }
