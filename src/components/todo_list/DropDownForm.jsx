@@ -19,6 +19,7 @@ const DropDownForm = ({ ele,item,setItem }) => {
             onChange={(e) =>handleChange(e)}
             fullWidth
             value={item}
+            
         >
             {elements?.map((e) =>
                 typeof e === "object" ? (
