@@ -83,11 +83,8 @@ const WannabeDetailModal = ({ open, handleClose, roleModels, activeStep }) => {
                 >
                 <CloseIcon />
             </IconButton>
-                {roleModels[activeStep]?.id <= 4 ?
-                    <img src={male} alt="bodyshape" style={{ width: '100%', borderRadius: 8 }} />
-                    :
-                    <img src={female} alt="bodyshape" style={{ width: '100%', borderRadius: 8 }} />
-                }
+
+            <img src={roleModels && `http://localhost:8000/${roleModels[activeStep]?.UserDetail[0]?.img}`}></img>
 
                 {roleModels[activeStep]?.id <= 4 ?
                 <img src={male} alt="bodyshape"/>
