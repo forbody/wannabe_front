@@ -76,6 +76,7 @@ const WannabeDetailModal = ({ open, handleClose, roleModels, activeStep }) => {
                     boxShadow: 24,
                     p: 4,
                     bgcolor: 'background.paper', // 가시성을 위해 배경 색상 설정
+                    margin: 'auto' // 중앙 배치를 위해 추가
                 }}
             >
                 <IconButton
