@@ -1,5 +1,5 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
-import { BackgroundBox, ForegroundBox } from "../components/styled_comp/StyledDiv";
+import { BackgroundBox, ForegroundBox, PageBox } from "../components/styled_comp/StyledDiv";
 import { useNavigate } from "react-router-dom";
 import { todoApi } from "../api/services/TodoList";
 import { useState } from "react";
@@ -49,17 +49,7 @@ const TodoShare = () => {
     }
 
     return (
-        <Box
-            height="100vh"
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            style={{
-                padding: "36px 0 80px",
-                overflowY: "scroll",
-                scrollbarWidth: "none",
-            }}
-        >
+        <PageBox>
             <BackgroundBox style={{ width: "90%", justifyContent: "center" }}>
                 <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                     일과 공유하기
@@ -108,7 +98,7 @@ const TodoShare = () => {
                     </Grid>
                 </ForegroundBox>
             </BackgroundBox>
-        </Box>
+        </PageBox>
     );
 }
 
