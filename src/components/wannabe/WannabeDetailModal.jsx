@@ -99,7 +99,7 @@ const WannabeDetailModal = ({ open, handleClose, roleModels, activeStep }) => {
                 <Typography variant="subtitle" color="secondary" style={{marginTop: "16px"}}>
                     {bodyshapeSwitch(roleModels[activeStep]?.id).bodyshape}이 무엇인가요?
                 </Typography>
-                <Typography variant="caption" style={{color:"#888"}}>
+                <Typography variant="caption" style={{color:"text.secondary"}}>
                     {bodyshapeSwitch(roleModels[activeStep]?.id).description}
                 </Typography>
             </ForegroundBox>
