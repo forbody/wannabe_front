@@ -67,7 +67,7 @@ const WannabeDetailModal = ({ open, handleClose, roleModels, activeStep }) => {
         aria-describedby="wannabe-modal-description"
         >
             <ForegroundBox
-                style={{
+                sx={{
                     position: 'absolute',
                     top: '50%',
                     left: '50%',
@@ -79,7 +79,7 @@ const WannabeDetailModal = ({ open, handleClose, roleModels, activeStep }) => {
                 }}
             >
             <IconButton
-                    style={{ position: 'absolute', right: 8, top: 8 }}
+                    sx={{ position: 'absolute', right: 8, top: 8 }}
                     onClick={handleClose}
                 >
                 <CloseIcon />
@@ -96,7 +96,7 @@ const WannabeDetailModal = ({ open, handleClose, roleModels, activeStep }) => {
                 <Typography>
                     {roleModels[activeStep]?.user_name} 님의 추천 루틴은 {bodyshapeSwitch(roleModels[activeStep]?.id).bodyshape}의 {bodyshapeSwitch(roleModels[activeStep]?.id).gender}유저에게 추천드리는 루틴입니다.
                 </Typography>
-                <Typography variant="subtitle" color="secondary" style={{marginTop: "16px"}}>
+                <Typography variant="subtitle" color="secondary" sx={{marginTop: "16px"}}>
                     {bodyshapeSwitch(roleModels[activeStep]?.id).bodyshape}이 무엇인가요?
                 </Typography>
                 <Typography variant="caption" style={{color:"text.secondary"}}>
