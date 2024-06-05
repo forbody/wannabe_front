@@ -67,14 +67,15 @@ const WannabeDetailModal = ({ open, handleClose, roleModels, activeStep }) => {
         aria-describedby="wannabe-modal-description"
         >
             <ForegroundBox
-            style = {{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: 300,
-                boxShadow: 24,
-                p: 4,
+                style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: 300,
+                    boxShadow: 24,
+                    p: 4,
+                    bgcolor: 'background.paper', // 가시성을 위해 배경 색상 설정
                 }}
             >
             <IconButton
