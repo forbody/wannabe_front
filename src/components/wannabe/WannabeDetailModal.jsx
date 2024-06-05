@@ -12,32 +12,32 @@ const WannabeDetailModal = ({open, handleClose, roleModels, activeStep}) => {
         case 1:
             bodyshape = "표준 체형"
             gender="남성"
-            description = "사각체형은 사각체형이다"
+            description = "표준체형은 대한민국 표준의 체형으로 송중기의 체형에 해당해요 -- 다른 체형에 비해 특형한 특성이 없어요"
             break;
         case 2:
             bodyshape = "작은 역삼각 체형"
             gender="남성"
-            description = "사각체형은 사각체형이다"
+            description = "작은 역삼각체형은 이동욱의 체형에 해당해요 -- 특징으로는 1.가는 몸통 2.넓고 처진 어깨 3.긴 팔 4.큰 머리 5.짧은 엉덩이길이 6.긴 지체"
             break;
         case 3:
             bodyshape = "사각 체형"
             gender="남성"
-            description = "사각체형은 사각체형이다"
+            description = "사각체형은 윤시윤의 체형에 해당해요 -- 1.굵은 몸통 2.보통의 어깨 폭 3.짧은 팔 4.작은 머리 5.긴 엉덩이길이"
             break;
         case 4:
             bodyshape = "큰 사각 체형"
             gender="남성"
-            description = "사각체형은 사각체형이다"
+            description = "큰 사각체형은 마동석의 체형에 해당해요 -- 1. 굵은 몸통 2.추켜진 보통의 어깨 폭 3.긴 팔 4.작은 머리 5.짧은 엉덩이길이"
             break;
         case 5:
             bodyshape = "표준 체형"
             gender="여성"
-            description = "사각체형은 사각체형이다"
+            description = "표준 체형은 박신혜의 체형에 해당해요 "
             break;
         case 6:
             bodyshape = "작은 역삼각 체형"
             gender="여성"
-            description = "사각체형은 사각체형이다"
+            description = "작은 역삼각체형은 수지의 체형에 해당해요 -- 1.가는 몸통 2.보통 너비의 매우 처진 어깨 3.긴 팔 4.큰 머리 5.짧은 엉덩이길이 6.긴 지체"
             break;
         case 7:
             bodyshape = "역삼각 체형"
@@ -47,12 +47,12 @@ const WannabeDetailModal = ({open, handleClose, roleModels, activeStep}) => {
         case 8:
             bodyshape = "큰 삼각 체형"
             gender="여성"
-            description = "사각체형은 사각체형이다"
+            description = "사각체형은 김태희의 체형에 해당해요 -- 1.굵은 몸통 2. 보통의 어깨너비 3.긴 팔 4.긴 총길이 5.보통의 엉덩이길이"
             break;
         case 9:
             bodyshape = "사각 체형"
             gender="여성"
-            description = "사각체형은 사각체형이다"
+            description = "사각 체형은 이하늬의 체형에 해당해요 -- 1.가는 몸통 2.매우 좁고 추켜진 어깨 3.짧은 팔 4.약간 긴 엉덩이길이 5..약은 짧은 지체"
             break;
         }
         return {bodyshape, gender, description};
