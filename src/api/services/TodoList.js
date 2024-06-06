@@ -91,7 +91,7 @@ export const todoApi = {
             "Authorization": token,
         }
     }),
-    getShareListTop3 :(token) => api.patch(`/todo_list/top3`, {
+    getShareListTop3 :(token) => api.get(`/todo_list/top3`, {
         headers: {
             "Authorization": token,
         }
