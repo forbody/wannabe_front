@@ -10,13 +10,16 @@ import { todoApi } from "../../api/services/TodoList";
 import { useNavigate } from "react-router-dom";
 import ShareEleBox from "./ShareEleBox";
 import WannabeLikeBtn from "./WannabeLikeBtn";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 
-const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
+const ShowTodoList = ({ e, isChange, setIsChange, liking, like, unlike }) => {
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
     const offset = new Date().getTimezoneOffset() * 60000;
     const currentDate = new Date(Date.now() - offset).toISOString().slice(0, 10);
     localStorage.setItem("date", currentDate);
+    const [isRecommend, setIsRecommend] = useState();
 
     const { loginUser, logout, getUserInfoByToken, goToErrPage } = useAuth();
 
@@ -33,6 +36,7 @@ const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
         const res = await userApi.getUser(userId, token)
         setUserProfile(res.payload);
     }
+    
 
     const uploadUserId = userProfile?.id;
     const getUserInfo = async () => {
@@ -70,6 +74,37 @@ const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
         }
     };
 
+    const getisRecommend = () => {
+        const temp_list = e.ListRecommend.filter((user) => user.id == loginUserId);
+        setIsRecommend(temp_list)
+    };
+    const onSetRecommend = async (id) => {
+        try {
+            const res = await todoApi.todoListRecommend(id, token);
+            setIsChange(!isChange);
+        } catch (err) {
+            goToErrPage(err, () => navigate("/err"));
+        }
+    };
+    const onSetUnrecommend = async (id) => {
+        try {
+            const res = await todoApi.todoListUnrecommend(id, token);
+            setIsChange(!isChange);
+        } catch (err) {
+            goToErrPage(err, () => navigate("/err"));
+        }
+    };
+
+    const onSetRecommendCount =async () => {
+        try {
+            const count = e?.ListRecommend.length;
+            const id = e?.id
+            const res = await todoApi.modiftyListRecommendCount(id, { count }, token);
+        } catch (err) {
+            goToErrPage(err, () => navigate("/err"));
+        }
+    }
+
     useEffect(() => {
         getUserInfo()
         getUploadUser()
@@ -85,7 +120,12 @@ const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
 
     useEffect(() => {
         getTodoEle();
+        onSetRecommendCount();
     }, []);
+
+    useEffect(() => {
+        getisRecommend();
+    }, [loginUserId, isChange]);
 
     // 아직 loginUser, userProfile을 못 가져온 상태처리
     if (!loginUser || !userProfile ) {
@@ -109,12 +149,18 @@ const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
                             width="60"
                             height="60"
                             alt={"img"}
-                            style={{ borderRadius: "240px", objectFit:'cover', backgroundColor:'white' }}
+                            style={{
+                                borderRadius: "240px",
+                                objectFit: "cover",
+                                backgroundColor: "white",
+                            }}
                         />
                     </Grid>
                 )}
                 <Grid item xs={7}>
-                    <Typography variant="h5">{userProfile?.user_name}</Typography>
+                    <Typography variant="h5">
+                        {userProfile?.user_name}
+                    </Typography>
                 </Grid>
 
                 {loginUserId === uploadUserId ? (
@@ -143,16 +189,35 @@ const ShowTodoList = ({ e, setIsChange, liking, like, unlike }) => {
                         </Grid>
                     </>
                 ) : (
-                    <Grid item xs={2}>
-                        {liking && uploadUserId && (
-                            <WannabeLikeBtn
-                                alreadyliked={liking}
-                                like_id={uploadUserId}
-                                like={like}
-                                unlike={unlike}
-                            />
-                        )}
-                    </Grid>
+                    <>
+                        <Grid item xs={1}>
+                            {isRecommend.length ? (
+                                <IconButton
+                                    sx={{ margin: "0", padding: "0" }}
+                                    onClick={() => onSetUnrecommend(e.id)}
+                                >
+                                    <ThumbUpIcon />
+                                </IconButton>
+                            ) : (
+                                <IconButton
+                                    sx={{ margin: "0", padding: "0" }}
+                                    onClick={() => onSetRecommend(e.id)}
+                                >
+                                    <ThumbUpOutlinedIcon />
+                                </IconButton>
+                            )}
+                        </Grid>
+                        <Grid item xs={1}>
+                            {liking && uploadUserId && (
+                                <WannabeLikeBtn
+                                    alreadyliked={liking}
+                                    like_id={uploadUserId}
+                                    like={like}
+                                    unlike={unlike}
+                                />
+                            )}
+                        </Grid>
+                    </>
                 )}
             </Grid>
             {exercise?.length ? (
