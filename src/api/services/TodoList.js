@@ -75,5 +75,25 @@ export const todoApi = {
         headers: {
             "Authorization": token,
         }
-    })
+    }),
+    todoListRecommend : (id, token) => api.get(`/todo_list/${id}/recommend`, {
+        headers: {
+            "Authorization": token,
+        }
+    }),
+    todoListUnrecommend : (id, token) => api.delete(`/todo_list/${id}/recommend`, {
+        headers: {
+            "Authorization": token,
+        }
+    }),
+    modiftyListRecommendCount : (id, data, token) => api.patch(`/todo_list/${id}/recommend`, data,{
+        headers: {
+            "Authorization": token,
+        }
+    }),
+    getShareListTop3 :(token) => api.get(`/todo_list/top3`, {
+        headers: {
+            "Authorization": token,
+        }
+    }),
 }

@@ -7,6 +7,7 @@ import MyLikeBtn from '../components/my/MyLikeBtn';
 import MyCalendar from '../components/my/MyCalendar';
 import MyBmiChart from '../components/my/MyBmiChart';
 import MyInfoButtons from '../components/my/MyInfoButtons';
+import Loading from'../components/Loading'
 
 const My = () => {
     const { logout } = useAuth()
@@ -14,7 +15,7 @@ const My = () => {
     
     // 아직 userProfile을 못 가져온 상태처리
     if (!userProfile) {
-        return <div>Loading...</div>;
+        return <Loading />;
     }
     
     return (
