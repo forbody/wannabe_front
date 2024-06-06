@@ -13,16 +13,18 @@ import WannabeLikeBtn from "./WannabeLikeBtn";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 
-const ShowTodoList = ({ e, isChange, setIsChange, liking, like, unlike }) => {
+
+const ShowTop3List = ({ e, isChange, setIsChange, liking, like, unlike , ranking}) => {
+    console.log(ranking);
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
     const offset = new Date().getTimezoneOffset() * 60000;
-    const currentDate = new Date(Date.now() - offset).toISOString().slice(0, 10);
+    const currentDate = new Date(Date.now() - offset)
+        .toISOString()
+        .slice(0, 10);
     localStorage.setItem("date", currentDate);
     const [isRecommend, setIsRecommend] = useState();
-
     const { loginUser, logout, getUserInfoByToken, goToErrPage } = useAuth();
-
     const [exercise, setExercise] = useState();
     const [breakfast, setBreakfast] = useState();
     const [lunch, setLunch] = useState();
@@ -31,12 +33,12 @@ const ShowTodoList = ({ e, isChange, setIsChange, liking, like, unlike }) => {
     const [loginUserId, setLoginUserId] = useState();
     const [userProfile, setUserProfile] = useState(null);
 
+
     const getUploadUser = async () => {
-        const userId = e.Users[0].id 
-        const res = await userApi.getUser(userId, token)
+        const userId = e.Users[0].id;
+        const res = await userApi.getUser(userId, token);
         setUserProfile(res.payload);
-    }
-    
+    };
 
     const uploadUserId = userProfile?.id;
     const getUserInfo = async () => {
@@ -50,33 +52,34 @@ const ShowTodoList = ({ e, isChange, setIsChange, liking, like, unlike }) => {
             const lunch = res.payload.filter((e) => e?.order == 2);
             const dinner = res.payload.filter((e) => e?.order == 3);
             const exercise = res.payload.filter((e) => e?.order == 4);
-            setExercise(exercise)
-            setBreakfast(breakfast)
-            setLunch(lunch)
-            setDinner(dinner)
+            setExercise(exercise);
+            setBreakfast(breakfast);
+            setLunch(lunch);
+            setDinner(dinner);
         } catch (err) {
-            goToErrPage(err, () => navigate('/err'));
+            goToErrPage(err, () => navigate("/err"));
         }
     };
 
     const onModifyComments = () => {
         localStorage.setItem("date", e.date);
-        setIsChange(prev => !prev)
+        setIsChange((prev) => !prev);
         navigate("/todolist/share");
     };
     const onDeleteShare = async () => {
         try {
             await todoApi.modifyListShare(e.id, token);
             await todoApi.deleteShareComment(e.Share_comments[0]?.id, token);
-            setIsChange(prev => !prev)
+            setIsChange((prev) => !prev);
         } catch (err) {
-            goToErrPage(err, () => navigate('/err'));
+            goToErrPage(err, () => navigate("/err"));
         }
     };
-
     const getisRecommend = () => {
-        const temp_list = e.ListRecommend?.filter((user) => user.id == loginUserId);
-        setIsRecommend(temp_list)
+        const temp_list = e.ListRecommend?.filter(
+            (user) => user.id == loginUserId
+        );
+        setIsRecommend(temp_list);
     };
     const onSetRecommend = async (id) => {
         try {
@@ -95,19 +98,23 @@ const ShowTodoList = ({ e, isChange, setIsChange, liking, like, unlike }) => {
         }
     };
 
-    const onSetRecommendCount =async () => {
+    const onSetRecommendCount = async () => {
         try {
-            const count = e.ListRecommend?.length;
-            const id = e?.id
-            const res = await todoApi.modiftyListRecommendCount(id, { count }, token);
+            const count = e?.ListRecommend?.length;
+            const id = e?.id;
+            const res = await todoApi.modiftyListRecommendCount(
+                id,
+                { count },
+                token
+            );
         } catch (err) {
             goToErrPage(err, () => navigate("/err"));
         }
-    }
+    };
 
     useEffect(() => {
-        getUserInfo()
-        getUploadUser()
+        getUserInfo();
+        getUploadUser();
     }, [loginUser]);
 
     useEffect(() => {
@@ -128,9 +135,9 @@ const ShowTodoList = ({ e, isChange, setIsChange, liking, like, unlike }) => {
     }, [loginUserId, isChange]);
 
     // 아직 loginUser, userProfile을 못 가져온 상태처리
-    if (!loginUser || !userProfile ) {
+    if (!loginUser || !userProfile) {
         return <div>Loading...</div>;
-    } 
+    }
 
     return (
         <ForegroundBox
@@ -157,7 +164,10 @@ const ShowTodoList = ({ e, isChange, setIsChange, liking, like, unlike }) => {
                         />
                     </Grid>
                 )}
-                <Grid item xs={7}>
+                <Grid item xs={2}>
+                    <img src={ranking} alt="랭킹" width="32px"/>
+                </Grid>
+                <Grid item xs={5}>
                     <Typography variant="h5">
                         {userProfile?.user_name}
                     </Typography>
@@ -245,4 +255,4 @@ const ShowTodoList = ({ e, isChange, setIsChange, liking, like, unlike }) => {
     );
 };
 
-export default ShowTodoList;
+export default ShowTop3List;
