@@ -2,7 +2,6 @@ import { Box, Button, Grid, ToggleButton, ToggleButtonGroup, Typography } from '
 import { BackgroundBox, ForegroundBox } from '../components/styled_comp/StyledDiv';
 import DropDownForm from "../components/todo_list/DropDownForm";
 import { useEffect, useState } from 'react';
-import { blue, red } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 import { todoApi } from '../api/services/TodoList';
 import NumberInput from '../components/todo_list/NumberInput';
@@ -70,7 +69,7 @@ const TodoForm = () => {
         onSetSort();
         setSortValue(0);
         setSelectItem(0);
-    }, [elements]);
+    }, [elements, order]);
 
     useEffect(() => {
         onSetItem();
@@ -82,8 +81,12 @@ const TodoForm = () => {
     };
 
     const onSetItem = () => {
-        const sortedItem = elements?.filter((e) => e.sort === sortValue);
-        setSortedItems(sortedItem);
+        if (sortValue ==0) {
+            setSortedItems(elements)
+        } else {
+            const sortedItem = elements?.filter((e) => e.sort === sortValue);
+            setSortedItems(sortedItem);
+        }
     };
 
     const onUploadTodoEle = async () => {

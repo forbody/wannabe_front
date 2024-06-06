@@ -83,20 +83,35 @@ const Wannabe = () => {
         getShareList()
     }, [isChange]);
 
-    return ( 
+    return (
         <PageBox>
-            <BackgroundBox style={{ justifyContent: 'center'}}>
-                <WannabeCard liking={liking} like={like} unlike={unlike}/>
+            <BackgroundBox style={{ justifyContent: "center" }}>
+                <WannabeCard liking={liking} like={like} unlike={unlike} />
             </BackgroundBox>
-            <BackgroundBox style={{ justifyContent: 'center', marginTop : '10px' }}>
-                {shareList?.length !== 0 ? shareList?.map((e) => (
-                    <ShowTodoList liking={liking} like={like} unlike={unlike} e={e} key={e.id} setIsChange={setIsChange} />
-                ))
-                :
-                <ForegroundBox style={{width:"100%", textAlign:"center"}}>
-                    <Typography color="#888">공유된 일정이 없습니다</Typography>
-                </ForegroundBox>
-                }
+            <BackgroundBox
+                style={{ justifyContent: "center", marginTop: "10px" }}
+            >
+                {shareList?.length !== 0 ? (
+                    shareList?.map((e) => (
+                        <ShowTodoList
+                            liking={liking}
+                            like={like}
+                            unlike={unlike}
+                            e={e}
+                            key={e.id}
+                            isChange={isChange}
+                            setIsChange={setIsChange}
+                        />
+                    ))
+                ) : (
+                    <ForegroundBox
+                        style={{ width: "100%", textAlign: "center" }}
+                    >
+                        <Typography color="#888">
+                            공유된 일정이 없습니다
+                        </Typography>
+                    </ForegroundBox>
+                )}
             </BackgroundBox>
         </PageBox>
     );

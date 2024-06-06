@@ -15,12 +15,7 @@ const DropDownForm = ({ ele,item,setItem }) => {
     }, [ele]);
 
     return (
-        <Select
-            onChange={(e) =>handleChange(e)}
-            fullWidth
-            value={item}
-            
-        >
+        <Select onChange={(e) => handleChange(e)} fullWidth value={item}>
             {elements?.map((e) =>
                 typeof e === "object" ? (
                     <MenuItem key={e.id} value={e.id}>
