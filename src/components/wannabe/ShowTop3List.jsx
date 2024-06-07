@@ -10,12 +10,11 @@ import { todoApi } from "../../api/services/TodoList";
 import { useNavigate } from "react-router-dom";
 import ShareEleBox from "./ShareEleBox";
 import WannabeLikeBtn from "./WannabeLikeBtn";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
+import { BsFire } from "react-icons/bs";
 
 
 const ShowTop3List = ({ e, isChange, setIsChange, liking, like, unlike , ranking}) => {
-    console.log(ranking);
+
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
     const offset = new Date().getTimezoneOffset() * 60000;
@@ -24,7 +23,7 @@ const ShowTop3List = ({ e, isChange, setIsChange, liking, like, unlike , ranking
         .slice(0, 10);
     localStorage.setItem("date", currentDate);
     const [isRecommend, setIsRecommend] = useState();
-    const { loginUser, logout, getUserInfoByToken, goToErrPage } = useAuth();
+    const { loginUser, logout, getUserIdByToken, goToErrPage } = useAuth();
     const [exercise, setExercise] = useState();
     const [breakfast, setBreakfast] = useState();
     const [lunch, setLunch] = useState();
@@ -42,8 +41,8 @@ const ShowTop3List = ({ e, isChange, setIsChange, liking, like, unlike , ranking
 
     const uploadUserId = userProfile?.id;
     const getUserInfo = async () => {
-        const up = await getUserInfoByToken();
-        setLoginUserId(up.id);
+        const userId = await getUserIdByToken();
+        setLoginUserId(userId);
     };
     const getTodoEle = async () => {
         try {
@@ -76,15 +75,15 @@ const ShowTop3List = ({ e, isChange, setIsChange, liking, like, unlike , ranking
         }
     };
     const getisRecommend = () => {
-        const temp_list = e.ListRecommend?.filter(
+        const result = e.ListRecommend?.some(
             (user) => user.id == loginUserId
         );
-        setIsRecommend(temp_list);
+        setIsRecommend(result);
     };
     const onSetRecommend = async (id) => {
         try {
             const res = await todoApi.todoListRecommend(id, token);
-            setIsChange(!isChange);
+            setIsRecommend(true);
         } catch (err) {
             goToErrPage(err, () => navigate("/err"));
         }
@@ -92,7 +91,7 @@ const ShowTop3List = ({ e, isChange, setIsChange, liking, like, unlike , ranking
     const onSetUnrecommend = async (id) => {
         try {
             const res = await todoApi.todoListUnrecommend(id, token);
-            setIsChange(!isChange);
+            setIsRecommend(false);
         } catch (err) {
             goToErrPage(err, () => navigate("/err"));
         }
@@ -165,7 +164,7 @@ const ShowTop3List = ({ e, isChange, setIsChange, liking, like, unlike , ranking
                     </Grid>
                 )}
                 <Grid item xs={2}>
-                    <img src={ranking} alt="랭킹" width="32px"/>
+                    <img src={ranking} alt="랭킹" width="32px" />
                 </Grid>
                 <Grid item xs={5}>
                     <Typography variant="h5">
@@ -201,19 +200,19 @@ const ShowTop3List = ({ e, isChange, setIsChange, liking, like, unlike , ranking
                 ) : (
                     <>
                         <Grid item xs={1}>
-                            {isRecommend.length ? (
+                            {isRecommend ? (
                                 <IconButton
                                     sx={{ margin: "0", padding: "0" }}
                                     onClick={() => onSetUnrecommend(e.id)}
                                 >
-                                    <ThumbUpIcon />
+                                    <BsFire color='coral' />
                                 </IconButton>
                             ) : (
                                 <IconButton
                                     sx={{ margin: "0", padding: "0" }}
                                     onClick={() => onSetRecommend(e.id)}
                                 >
-                                    <ThumbUpOutlinedIcon />
+                                    <BsFire  />
                                 </IconButton>
                             )}
                         </Grid>

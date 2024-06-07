@@ -61,10 +61,19 @@ export const useProvideAuth = () => {
         callback();
     }
 
-    const getUserInfoByToken = async () => {
+    const getUserIdByToken = () => {
         try {
             const userInfo = jwtDecode(loginUser);
             const userId = userInfo.id;
+            return userId;
+        } catch (err) {
+            console.error("Error: ", err);
+        }
+    };
+
+    const getUserInfoByToken = async () => {
+        try {
+            const userId = getUserIdByToken();
             const res = await userApi.getUser(`${userId}`, loginUser);
             return res.payload
         } catch (err) {
@@ -82,6 +91,7 @@ export const useProvideAuth = () => {
         login,
         logout,
         kakaoLogin,
+        getUserIdByToken,
         getUserInfoByToken,
         goToErrPage
     }
