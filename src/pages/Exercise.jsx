@@ -24,6 +24,7 @@ const Exercise = () => {
         '#등',
         '#어깨',
         '#하체',
+        '#팔',
         '#전신',
     ];
     const { loginUser } = useAuth();
@@ -125,7 +126,7 @@ const Exercise = () => {
                 <StarsIcon style={{ color: '#ff7961', fontSize: 'inherit', marginRight: '10px' }} />
                 내가 즐겨찾기한 운동
                 </h3>
-                <ForegroundBox style={{width:"100%"}}>
+                <ForegroundBox style={{width:'100%'}}>
                     {favExercises && favExercises.length > 0 ? (
                     <Carousel
                         showArrows={false}
