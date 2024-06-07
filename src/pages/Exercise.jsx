@@ -24,6 +24,7 @@ const Exercise = () => {
         '#등',
         '#어깨',
         '#하체',
+        '#팔',
         '#전신',
     ];
     const { loginUser } = useAuth();
