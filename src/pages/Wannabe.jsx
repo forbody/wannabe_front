@@ -16,7 +16,7 @@ import third from "../assets/ranking/3rd.png";
 const Wannabe = () => {
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
-    const { loginUser, getUserInfoByToken, goToErrPage } = useAuth();
+    const { loginUser, getUserIdByToken, goToErrPage } = useAuth();
     const [shareList, setShareList] = useState();
     const [isChange, setIsChange] = useState(false);
     const [liking, setLiking] = useState([]);
@@ -27,9 +27,9 @@ const Wannabe = () => {
     // 내가 좋아하는 사람 가져오기 기능
     const getLikings = async () => {
         try {
-            const loginUserInfo = await getUserInfoByToken();
+            const userId = getUserIdByToken();
             if (loginUser) {
-                const res = await userApi.getLikings(loginUserInfo.id, token);
+                const res = await userApi.getLikings(userId, token);
                 if (res.code === 200) {
                     console.log("내가 좋아하는 사람 가져오기 성공");
                     setLiking(res.payload);
