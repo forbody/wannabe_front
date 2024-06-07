@@ -108,10 +108,6 @@ const TodoList = () => {
         <InfoUpdate />
     ) : (
         <PageBox>
-            {/* <Fab variant="extended">
-                <NavigationIcon sx={{ mr: 1 }} />
-                Navigate
-            </Fab> */}
             <Weekly date={date} setDate={setDate} setDay={setDay} />
             <BackgroundBox
                 style={{

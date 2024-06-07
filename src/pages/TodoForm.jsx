@@ -1,5 +1,5 @@
 import { Box, Button, Grid, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
-import { BackgroundBox, ForegroundBox } from '../components/styled_comp/StyledDiv';
+import { BackgroundBox, ForegroundBox, PageBox } from '../components/styled_comp/StyledDiv';
 import DropDownForm from "../components/todo_list/DropDownForm";
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -126,17 +126,7 @@ const TodoForm = () => {
     };
 
     return (
-        <Box
-            height="100vh"
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            style={{
-                padding: "36px 0 80px",
-                overflowY: "scroll",
-                scrollbarWidth: "none",
-            }}
-        >
+        <PageBox>
             <BackgroundBox style={{ width: "90%", justifyContent: "center" }}>
                 <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                     일과 등록
@@ -231,7 +221,7 @@ const TodoForm = () => {
                     </Grid>
                 </ForegroundBox>
             </BackgroundBox>
-        </Box>
+        </PageBox>
     );
 }
 export default TodoForm;

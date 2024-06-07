@@ -106,6 +106,9 @@ const Wannabe = () => {
             <BackgroundBox
                 style={{ justifyContent: "center", marginTop: "10px" }}
             >
+                <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                    워너비 랭킹
+                </Typography>
                 {top3List ? (
                     top3List?.map((e, idx) => (
                         <ShowTop3List
@@ -114,7 +117,6 @@ const Wannabe = () => {
                             unlike={unlike}
                             e={e}
                             key={e.id}
-                            isChange={isChange}
                             setIsChange={setIsChange}
                             ranking={ranking[idx]}
                         />
