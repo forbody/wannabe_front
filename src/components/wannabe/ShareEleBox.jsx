@@ -14,16 +14,16 @@ const ShareEleBox = ({ children, elements  }) => {
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
     const [isTrue, setIsTrue] = useState(false);
-    const { loginUser, goToErrPage, getUserInfoByToken } = useAuth();
+    const { loginUser, goToErrPage, getUserIdByToken } = useAuth();
     const [totalCal, setTotalCal] = useState();
     const [order, setOrder] = useState();
 
     const [loginUserId, setLoginUserId] = useState();
     const [userProfile, setUserProfile] = useState(null);
 
-    const getUserInfo = async () => {
-        const up = await getUserInfoByToken();
-        setLoginUserId(up.id);
+    const getUserInfo = () => {
+        const userId = getUserIdByToken();
+        setLoginUserId(userId);
     };
 
     const uniqueOrder = [...new Set(elements?.map((item) => item.order))];

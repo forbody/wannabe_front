@@ -12,6 +12,7 @@ import ShareEleBox from "./ShareEleBox";
 import WannabeLikeBtn from "./WannabeLikeBtn";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
+import { BsFire } from "react-icons/bs";
 
 const ShowTodoList = ({ e, isChange, setIsChange, liking, like, unlike }) => {
     const token = localStorage.getItem("token");
@@ -21,7 +22,7 @@ const ShowTodoList = ({ e, isChange, setIsChange, liking, like, unlike }) => {
     localStorage.setItem("date", currentDate);
     const [isRecommend, setIsRecommend] = useState();
 
-    const { loginUser, logout, getUserInfoByToken, goToErrPage } = useAuth();
+    const { loginUser, logout, getUserIdByToken, goToErrPage } = useAuth();
 
     const [exercise, setExercise] = useState();
     const [breakfast, setBreakfast] = useState();
@@ -39,10 +40,11 @@ const ShowTodoList = ({ e, isChange, setIsChange, liking, like, unlike }) => {
     
 
     const uploadUserId = userProfile?.id;
-    const getUserInfo = async () => {
-        const up = await getUserInfoByToken();
-        setLoginUserId(up.id);
+    const getUserInfo = () => {
+        const userId = getUserIdByToken();
+        setLoginUserId(userId);
     };
+    
     const getTodoEle = async () => {
         try {
             const res = await todoApi.getEle(e.id, token);
@@ -75,13 +77,13 @@ const ShowTodoList = ({ e, isChange, setIsChange, liking, like, unlike }) => {
     };
 
     const getisRecommend = () => {
-        const temp_list = e.ListRecommend?.filter((user) => user.id == loginUserId);
-        setIsRecommend(temp_list)
+        const result = e.ListRecommend?.some((user) => user.id == loginUserId);
+        setIsRecommend(result);
     };
     const onSetRecommend = async (id) => {
         try {
             const res = await todoApi.todoListRecommend(id, token);
-            setIsChange(!isChange);
+            setIsRecommend(true);
         } catch (err) {
             goToErrPage(err, () => navigate("/err"));
         }
@@ -89,7 +91,7 @@ const ShowTodoList = ({ e, isChange, setIsChange, liking, like, unlike }) => {
     const onSetUnrecommend = async (id) => {
         try {
             const res = await todoApi.todoListUnrecommend(id, token);
-            setIsChange(!isChange);
+            setIsRecommend(false);
         } catch (err) {
             goToErrPage(err, () => navigate("/err"));
         }
@@ -191,19 +193,19 @@ const ShowTodoList = ({ e, isChange, setIsChange, liking, like, unlike }) => {
                 ) : (
                     <>
                         <Grid item xs={1}>
-                            {isRecommend.length ? (
+                            {isRecommend ? (
                                 <IconButton
                                     sx={{ margin: "0", padding: "0" }}
                                     onClick={() => onSetUnrecommend(e.id)}
                                 >
-                                    <ThumbUpIcon />
+                                    <BsFire color='coral' />
                                 </IconButton>
                             ) : (
                                 <IconButton
                                     sx={{ margin: "0", padding: "0" }}
                                     onClick={() => onSetRecommend(e.id)}
                                 >
-                                    <ThumbUpOutlinedIcon />
+                                    <BsFire  />
                                 </IconButton>
                             )}
                         </Grid>
