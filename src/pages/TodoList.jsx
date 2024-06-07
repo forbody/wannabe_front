@@ -5,7 +5,7 @@ import TodoBoxFood from "../components/todo_list/TodoBoxFood"
 import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
 import { useNavigate, useParams } from "react-router-dom";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
-import { cyan } from "@mui/material/colors";
+import { blue, green } from "@mui/material/colors";
 import { useEffect, useState, Suspense, lazy } from "react";
 import { useAuth } from "../hooks/useAuth";
 import InfoUpdate from "../components/signup/InfoUpdate";
@@ -113,7 +113,7 @@ const TodoList = () => {
                 style={{
                     width: "90%",
                     justifyContent: "center",
-                    marginTop: "10px"
+                    marginTop: "10px",
                 }}
             >
                 <Box
@@ -128,7 +128,7 @@ const TodoList = () => {
                         onClick={() => goTodoShareForm()}
                     >
                         <FileUploadIcon
-                            sx={{ color: cyan[400] }}
+                            sx={{ color: blue[600] }}
                             fontSize="large"
                         />
                     </IconButton>
@@ -136,7 +136,10 @@ const TodoList = () => {
                         sx={{ margin: "0", padding: "0" }}
                         onClick={() => goTodoForm()}
                     >
-                        <AddBoxRoundedIcon color="secondary" fontSize="large" />
+                        <AddBoxRoundedIcon
+                            sx={{ color: green[600] }}
+                            fontSize="large"
+                        />
                     </IconButton>
                 </Box>
                 <TodoBoxExercise element={exercise} setIsAchieve={setIsAchieve}>
