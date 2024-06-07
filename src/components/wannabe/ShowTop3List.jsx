@@ -1,4 +1,4 @@
-import { Box, Grid, IconButton, Typography } from "@mui/material";
+import { Avatar, Badge, Box, Grid, IconButton, Typography } from "@mui/material";
 import { ForegroundBox } from "../styled_comp/StyledDiv";
 import { useEffect, useState } from "react";
 import { userApi } from "../../api/services/user";
@@ -11,10 +11,10 @@ import { useNavigate } from "react-router-dom";
 import ShareEleBox from "./ShareEleBox";
 import WannabeLikeBtn from "./WannabeLikeBtn";
 import { BsFire } from "react-icons/bs";
+import styled from "styled-components";
 
 
-const ShowTop3List = ({ e, isChange, setIsChange, liking, like, unlike , ranking}) => {
-
+const ShowTop3List = ({ e, setIsChange, liking, like, unlike , ranking}) => {
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
     const offset = new Date().getTimezoneOffset() * 60000;
@@ -111,6 +111,7 @@ const ShowTop3List = ({ e, isChange, setIsChange, liking, like, unlike , ranking
         }
     };
 
+
     useEffect(() => {
         getUserInfo();
         getUploadUser();
@@ -127,11 +128,12 @@ const ShowTop3List = ({ e, isChange, setIsChange, liking, like, unlike , ranking
     useEffect(() => {
         getTodoEle();
         onSetRecommendCount();
-    }, []);
+        setIsChange((prev) => !prev);
+    }, [isRecommend]);
 
     useEffect(() => {
         getisRecommend();
-    }, [loginUserId, isChange]);
+    }, [loginUserId]);
 
     // 아직 loginUser, userProfile을 못 가져온 상태처리
     if (!loginUser || !userProfile) {
@@ -150,23 +152,35 @@ const ShowTop3List = ({ e, isChange, setIsChange, liking, like, unlike , ranking
             <Grid container spacing={0} alignItems="center">
                 {userImg && (
                     <Grid item xs={3}>
-                        <img
-                            src={`http://localhost:8000/${userImg}`}
-                            width="60"
-                            height="60"
-                            alt={"img"}
-                            style={{
-                                borderRadius: "240px",
-                                objectFit: "cover",
-                                backgroundColor: "white",
+                        <Badge
+                            overlap="circular"
+                            anchorOrigin={{
+                                vertical: "bottom",
+                                horizontal: "right",
                             }}
-                        />
+                            badgeContent={
+                                <SmallAvatar
+                                    alt="Remy Sharp"
+                                    src={ranking}
+                                />
+                            }
+                        >
+                            <Avatar
+                                src={`http://localhost:8000/${userImg}`}
+                                
+                                alt={"img"}
+                                style={{
+                                    borderRadius: "240px",
+                                    objectFit: "cover",
+                                    width:"60px",
+                                    height:"60px",
+                                    backgroundColor: "white",
+                                }}
+                            />
+                        </Badge>
                     </Grid>
                 )}
-                <Grid item xs={2}>
-                    <img src={ranking} alt="랭킹" width="32px" />
-                </Grid>
-                <Grid item xs={5}>
+                <Grid item xs={7}>
                     <Typography variant="h5">
                         {userProfile?.user_name}
                     </Typography>
@@ -205,14 +219,14 @@ const ShowTop3List = ({ e, isChange, setIsChange, liking, like, unlike , ranking
                                     sx={{ margin: "0", padding: "0" }}
                                     onClick={() => onSetUnrecommend(e.id)}
                                 >
-                                    <BsFire color='coral' />
+                                    <BsFire color="coral" />
                                 </IconButton>
                             ) : (
                                 <IconButton
                                     sx={{ margin: "0", padding: "0" }}
                                     onClick={() => onSetRecommend(e.id)}
                                 >
-                                    <BsFire  />
+                                    <BsFire />
                                 </IconButton>
                             )}
                         </Grid>
@@ -253,5 +267,9 @@ const ShowTop3List = ({ e, isChange, setIsChange, liking, like, unlike , ranking
         </ForegroundBox>
     );
 };
+const SmallAvatar = styled(Avatar)(() => ({
+    width: 40,
+    height: 40,
+}));
 
 export default ShowTop3List;

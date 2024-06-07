@@ -21,9 +21,7 @@ const ShowTodoList = ({ e, isChange, setIsChange, liking, like, unlike }) => {
     const currentDate = new Date(Date.now() - offset).toISOString().slice(0, 10);
     localStorage.setItem("date", currentDate);
     const [isRecommend, setIsRecommend] = useState();
-
     const { loginUser, logout, getUserIdByToken, goToErrPage } = useAuth();
-
     const [exercise, setExercise] = useState();
     const [breakfast, setBreakfast] = useState();
     const [lunch, setLunch] = useState();
@@ -97,15 +95,19 @@ const ShowTodoList = ({ e, isChange, setIsChange, liking, like, unlike }) => {
         }
     };
 
-    const onSetRecommendCount =async () => {
+    const onSetRecommendCount = async () => {
         try {
-            const count = e.ListRecommend?.length;
-            const id = e?.id
-            const res = await todoApi.modiftyListRecommendCount(id, { count }, token);
+            const count = e?.ListRecommend?.length;
+            const id = e?.id;
+            const res = await todoApi.modiftyListRecommendCount(
+                id,
+                { count },
+                token
+            );
         } catch (err) {
             goToErrPage(err, () => navigate("/err"));
         }
-    }
+    };
 
     useEffect(() => {
         getUserInfo()
@@ -123,11 +125,12 @@ const ShowTodoList = ({ e, isChange, setIsChange, liking, like, unlike }) => {
     useEffect(() => {
         getTodoEle();
         onSetRecommendCount();
-    }, []);
+        setIsChange((prev) => !prev);
+    }, [isRecommend]);
 
     useEffect(() => {
         getisRecommend();
-    }, [loginUserId, isChange]);
+    }, [loginUserId]);
 
     // 아직 loginUser, userProfile을 못 가져온 상태처리
     if (!loginUser || !userProfile ) {
