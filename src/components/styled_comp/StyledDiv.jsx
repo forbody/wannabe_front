@@ -40,7 +40,7 @@ export const ForegroundBox = styled.div`
 `
 
 
-export const PageBox = ({children}) => {
+export const PageBox = ({ justifyContent='flex-start', children }) => {
     return (
         <Box
             sx={{
@@ -51,12 +51,13 @@ export const PageBox = ({children}) => {
                 overflowY: "scroll",
                 scrollbarWidth: "none",
                 alignItems: "center",
-                position: 'relateve',
+                position: "relateve",
                 margin: "16px 0",
                 flexDirection: "column",
+                justifyContent: justifyContent,
             }}
         >
             {children}
         </Box>
     );
-}
+};
