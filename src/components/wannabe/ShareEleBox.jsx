@@ -9,6 +9,7 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { useEffect, useState } from "react";
 import { userApi } from "../../api/services/user";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const ShareEleBox = ({ children, elements  }) => {
     const navigate = useNavigate();
@@ -54,6 +55,13 @@ const ShareEleBox = ({ children, elements  }) => {
                 },
                 token
             );
+            if(res2.code ==200) {
+                Swal.fire({
+                    title: "일정이 추가되었습니다.",
+                    // text: "That thing is still around?",
+                    icon: "success",
+                });
+            }
         } catch (err) {
             goToErrPage(err, () => navigate('/err'));
         }
